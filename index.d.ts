@@ -1,6 +1,6 @@
 import { Properties } from "csstype";
 
-interface Property extends Properties<number> {
+interface Property extends Properties<string | number> {
   [key: string]: Property | string | number;
 }
 

@@ -11,5 +11,6 @@ module.exports = function (obj) {
     hash = (hash << 5) - hash + chr;
     hash |= 0;
   }
-  return Math.abs(hash).toString(36);
+  var hashStr = Math.abs(hash).toString(36);
+  return (/^[0-9]/.test(hashStr) ? "a" : "") + hashStr;
 };
