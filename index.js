@@ -13,7 +13,7 @@ function serialize(sel, obj) {
 
   var css = Object.keys(rules)
     .map(function (sel) {
-      return sel + " { " + decls(rules[sel]) + " }";
+      return sel + " {\n" + decls(rules[sel]) + "\n}";
     })
     .join("\n");
 
@@ -22,7 +22,8 @@ function serialize(sel, obj) {
   function decls(obj) {
     return Object.keys(obj).reduce(function (css, prop) {
       return (
-        (css ? css + " " : "") +
+        (css ? css + "\n" : "") +
+        "  " +
         prop.replace(/([A-Z])/g, function (_, x) {
           return "-" + x.toLowerCase();
         }) +
