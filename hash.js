@@ -1,16 +1,19 @@
 module.exports = function (obj) {
   var x = JSON.stringify(obj);
-  var hash = 0,
+  var h = 0,
     i,
     chr;
   if (x.length === 0) {
-    return hash;
+    return h;
   }
   for (i = 0; i < x.length; i++) {
     chr = x.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0;
+    h = (h << 5) - h + chr;
+    h |= 0;
   }
-  var hashStr = Math.abs(hash).toString(36);
-  return (/^[0-9]/.test(hashStr) ? "a" : "") + hashStr;
+  var hs = h.toString(36);
+  return hs.replace(
+    /^[^a-z]/,
+    () => "abcdefghijklmnopqrstuvwxyz".charAt(Math.abs(h) % 26),
+  );
 };
