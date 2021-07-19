@@ -12,8 +12,7 @@ module.exports = function (obj) {
     h |= 0;
   }
   var hs = h.toString(36);
-  return hs.replace(
-    /^[^a-z]/,
-    () => "abcdefghijklmnopqrstuvwxyz".charAt(Math.abs(h) % 26),
+  return hs.replace(/^[^a-z]/, () =>
+    "abcdefghijklmnopqrstuvwxyz".charAt(Math.abs(h) % 26)
   );
 };

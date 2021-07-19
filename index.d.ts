@@ -4,4 +4,6 @@ interface Property extends Properties<string | number> {
   [key: string]: Property | string | number;
 }
 
-declare const css: (styles: Property) => string;
+export type Styles = Record<string, Property>;
+
+declare const css: (styles: Styles) => string;

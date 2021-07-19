@@ -1,7 +1,13 @@
 var hash = require("./hash");
 
 exports.css = function (obj) {
-  return serialize("." + hash(obj), obj);
+  return Object.keys(obj)
+    .map(function (name) {
+      return serialize("." + hash(obj[name]), obj[name]);
+    })
+    .reduce(function (rules, rule) {
+      return rules + "\n" + rule;
+    }, "");
 };
 
 function serialize(sel, obj) {
