@@ -3,7 +3,8 @@
   "description": "Zero-runtime CSS-in-TS",
   "version": "0.4.0",
   "scripts": {
-    "format": "prettier --write *.js"
+    "format": "prettier --write *.src.js extract.js *.ts",
+    "prepublishOnly": "terser index.src.js -o index.js && terser common.src.js -o common.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "csstype": "^3.0.8"
   },
   "devDependencies": {
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "terser": "^5.7.1"
   }
 }

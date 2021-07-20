@@ -1,7 +1,11 @@
-var hash = require("./hash");
+var common = require("./common"),
+  hash = common.hash,
+  process = common.process;
 
 exports.css = function (obj) {
-  return serialize("." + hash(obj), obj);
+  return process(function (o) {
+    return serialize("." + hash(o), o);
+  }, obj);
 };
 
 function serialize(sel, obj) {
