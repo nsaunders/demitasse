@@ -5,8 +5,13 @@
     "dev": "node build --serve"
   },
   "devDependencies": {
+    "@types/react": "^17.0.15",
+    "@types/react-dom": "^17.0.9",
+    "classnames": "^2.3.1",
     "demitasse": "^0.5.0",
     "esbuild": "^0.12.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   }

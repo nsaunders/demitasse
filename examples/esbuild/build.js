@@ -2,9 +2,12 @@ const serve = process.argv.includes("--serve");
 
 require("ts-node").register({
   transpileOnly: true,
+  compilerOptions: { module: "commonjs" },
 });
 
 require("demitasse").css = require("demitasse/extract").css;
+
+const stylesPath = require.resolve("./src/styles.ts");
 
 const clients = [];
 
@@ -12,8 +15,9 @@ const outdir = "dist";
 
 require("esbuild")
   .build({
-    entryPoints: ["./src/index.ts", "./src/styles.css"],
+    entryPoints: ["./src/main.ts", "./src/styles.css"],
     bundle: true,
+    minify: !serve,
     outdir,
     banner: {
       js: serve
@@ -44,17 +48,30 @@ require("esbuild")
           }));
 
           build.onLoad({ filter: /\/src\/styles\.css$/, namespace }, () => {
-            const modules = ["./src/App.ts"].map(require.resolve);
+            const contents =
+              Object
+                .values(require(stylesPath))
+                .flatMap(x => {
+                  switch (typeof x) {
+                    case "object":
+                      return Object.values(x);
+                    case "string":
+                      return [x];
+                    default:
+                      return [];
+                  }
+                })
+                .join("\n");
 
-            const contents = modules
-              .map(require)
-              .map(({ styles }) => styles)
-              .flatMap(Object.values)
-              .join("\n");
-
-            modules.forEach(key => {
-              delete require.cache[key];
-            });
+            module
+              .children
+              .filter(({ filename }) => filename.endsWith("/styles.ts"))
+              .flatMap(({ children }) => children)
+              .map(({ filename }) => filename)
+              .concat(stylesPath)
+              .forEach(key => {
+                delete require.cache[key];
+              });
 
             return {
               contents,
