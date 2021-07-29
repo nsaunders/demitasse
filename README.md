@@ -13,3 +13,25 @@ runtime cost or configuration burden of other CSS-in-JS approaches.
 📦 Locally-scoped class names
 
 🔎 Transparent and uncomplicated build configuration
+
+## API
+
+The `css` function forms the basis for the entire API.
+
+### Parameter
+
+This function accepts either:
+* an object defining a single "anonymous"
+  [ruleset](https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax#css_rulesets);
+  or
+* a record of objects, each of which defines a
+  [ruleset](https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax#css_rulesets).
+
+### Return
+
+In the former case, the `css` function returns a generated class name, which you
+can then attach to the corresponding HTML element to apply the ruleset.
+
+In the latter case, the `css` function returns a record of generated class
+names. Essentially, this return value maps human-readable ruleset aliases to
+the generated class names that are used at runtime.
