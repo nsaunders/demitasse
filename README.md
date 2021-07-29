@@ -16,9 +16,11 @@ runtime cost or configuration burden of other CSS-in-JS approaches.
 
 ## API
 
-The `css` function forms the basis for the entire API.
+### `css`
 
-### Parameter
+The `css` function forms the basis of the entire API.
+
+#### Parameter
 
 This function accepts either:
 * an object defining a single "anonymous"
@@ -27,7 +29,7 @@ This function accepts either:
 * a record of objects, each of which defines a
   [ruleset](https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax#css_rulesets).
 
-### Return
+#### Return
 
 In the former case, the `css` function returns a generated class name, which you
 can then attach to the corresponding HTML element to apply the ruleset.
