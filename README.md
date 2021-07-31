@@ -78,7 +78,7 @@ export const styles = /*#__PURE__*/ css({
   },
 });
 
-export const IconButton: FC<{ icon: ReactNode }> = ({ icon, children }) => (
+export const Button: FC<{ icon: ReactNode }> = ({ icon, children }) => (
   <button className={styles.container}>
     <div className={styles.icon}>{icon}</div>
     <div className={styles.label}>{children}</div>
