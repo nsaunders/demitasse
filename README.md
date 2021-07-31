@@ -64,7 +64,7 @@ export function styleLinks() {
 ##### Multiple Rulesets
 ```typescript
 import { css } from "demitasse";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 export const styles = /*#__PURE__*/ css({
   container: {
