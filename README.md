@@ -19,7 +19,7 @@ runtime cost or configuration burden of other CSS-in-JS approaches.
 
 ### `css`
 
-The `css` function forms the basis of the entire API.
+The `css` function constitutes the entire API.
 
 #### Parameter
 
