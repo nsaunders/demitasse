@@ -26,8 +26,7 @@ This function accepts either:
 * an object defining a single "anonymous"
   [ruleset](https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax#css_rulesets);
   or
-* a record of objects, each of which defines a
-  [ruleset](https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax#css_rulesets).
+* a record defining multiple rulesets.
 
 #### Return
 
