@@ -38,7 +38,7 @@ In the latter case, the `css` function returns a record of generated class
 names. Essentially, this return value maps human-readable ruleset aliases to
 the generated class names that are used at runtime.
 
-#### Example
+#### Examples
 
 ##### Single Ruleset
 ```typescript
