@@ -15,7 +15,11 @@ runtime cost or configuration burden of other CSS-in-JS approaches.
 
 🔎 Transparent and uncomplicated build configuration
 
-## API
+## Default API
+
+The default API is perhaps best understood as the "runtime" API, although it
+produces no CSS and essentially functions only as an index of the CSS rulesets
+generated at build time.
 
 ### `css`
 
@@ -85,3 +89,27 @@ export const Button: FC<{ icon: ReactNode }> = ({ icon, children }) => (
   </button>
 );
 ```
+
+## Extraction API
+
+Rather than prescribing specific bundlers, transpilers, plugins, or other build
+tools, the extraction API provides a small utility that will help you to build
+your own CSS extraction mechanism on the basis of other tools. This allows you
+to reuse knowledge, to avoid surprises, and to integrate CSS extraction into
+your existing build process with less friction.
+
+Extracting CSS involves redirecting default `css` function calls to the
+analogous function in the extraction API. For example, a vanilla NodeJS build
+script might look something like this:
+
+```typescript
+require("demitasse").css = require("demitasse/extract").css;
+require("ts-node").register({ transpileOnly: true });
+const output = require("./src/style-index.ts");
+// TODO: Write CSS output to a file, pipe it to PostCSS, or whatever!
+```
+
+There's no magic here: The `require("demitasse/extract").css` function has the
+same signature as the default version; but, instead of returning generated class
+names, it returns the corresponding CSS code that you can then deliver to the
+browser by whatever means are appropriate for your use case.
