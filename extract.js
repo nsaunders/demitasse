@@ -4,16 +4,33 @@ var common = require("./common"),
 
 exports.css = function (obj) {
   return process(function (o) {
-    return serialize("." + hash(o), o);
+    var rulesets = serialize("." + hash(o), o);
+    var keyframes = "";
+    var keyframesObj = getAnimationKeyframes(o);
+    if (keyframesObj.length) {
+      keyframes = keyframesObj
+        .map(function (o) {
+          return serialize(hash(o), o, "@keyframes");
+        })
+        .join("\n");
+    }
+    return [keyframes, rulesets]
+      .filter(function (x) {
+        return x;
+      })
+      .join("\n");
   }, obj);
 };
 
-function serialize(sel, obj) {
-  var rules = flatten(sel, obj).reduce(function (rules, x) {
-    rules[x[0]] = rules[x[0]] || {};
-    rules[x[0]][x[1]] = x[2];
-    return rules;
-  }, {});
+function serialize(sel, obj, type) {
+  var rules =
+    type === "@keyframes"
+      ? obj
+      : flatten(sel, obj).reduce(function (rules, x) {
+          rules[x[0]] = rules[x[0]] || {};
+          rules[x[0]][x[1]] = x[2];
+          return rules;
+        }, {});
 
   var css = Object.keys(rules)
     .map(function (sel) {
@@ -21,7 +38,9 @@ function serialize(sel, obj) {
     })
     .join("\n");
 
-  return css;
+  return type === "@keyframes"
+    ? "@keyframes " + sel + " {\n  " + css.replace(/\n/gm, "\n  ") + "\n}"
+    : css;
 
   function decls(obj) {
     return Object.keys(obj).reduce(function (css, prop) {
@@ -95,6 +114,9 @@ function serialize(sel, obj) {
   function flatten(sel, obj) {
     return Object.keys(obj).reduce(function (rules, x) {
       if (typeof obj[x] === "object") {
+        if (x === "animationKeyframes") {
+          return rules.concat([[sel, x, hash(obj[x])]]);
+        }
         return rules.concat(flatten(combineSel(sel, x), obj[x]));
       }
       return rules.concat([[sel, x, obj[x]]]);
@@ -104,4 +126,16 @@ function serialize(sel, obj) {
   function combineSel(parent, child) {
     return child.replace(/&/g, parent);
   }
+}
+
+function getAnimationKeyframes(obj) {
+  var acc = [];
+  Object.keys(obj).forEach(function (key) {
+    if (key === "animationKeyframes") {
+      acc.push(obj[key]);
+    } else if (typeof obj[key] === "object") {
+      [].push.apply(acc, getAnimationKeyframes(obj[key]));
+    }
+  });
+  return acc;
 }

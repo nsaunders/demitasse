@@ -1,9 +1,9 @@
 import { Properties } from "csstype";
 
-interface Property extends Properties<string | number> {
-  [key: string]: Property | string | number;
-}
+type Length = string | number;
 
-declare const css: <T extends Property | Record<string, Property>>(
+type Styles = Properties<Length> & Partial<{ [key: string]: Styles | string | number }>;
+
+declare const css: <T extends Styles | Record<string, Styles>>(
   styles: T
-) => T extends Record<infer K, Property> ? Record<K, string> : string;
+) => T extends Record<infer K, Styles> ? Record<K, string> : string;
