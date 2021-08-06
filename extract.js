@@ -115,7 +115,7 @@ function serialize(sel, obj, type) {
     return Object.keys(obj).reduce(function (rules, x) {
       if (typeof obj[x] === "object") {
         if (x === "animationKeyframes") {
-          return rules.concat([[sel, x, hash(obj[x])]]);
+          return rules.concat([[sel, "animationName", hash(obj[x])]]);
         }
         return rules.concat(flatten(combineSel(sel, x), obj[x]));
       }
