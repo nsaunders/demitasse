@@ -15,6 +15,11 @@ without the typical runtime cost or configuration burden of other approaches.
 
 🔎 Transparent and uncomplicated build configuration
 
+## Installation
+```bash
+npm install -D demitasse
+```
+
 ## Default API
 
 The default API is perhaps best understood as the "runtime" API, although it
