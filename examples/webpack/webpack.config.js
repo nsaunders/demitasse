@@ -98,8 +98,8 @@ module.exports = ({ production }) => ({
            used because the keys in the style index aren't relevant when
            producing a CSS file for an entire app. (The keys may be relevant,
            however, when building a component library: They can be used for
-           filenames in a CSS-file-per-component model. But that is well
-           beyond the scope of this example project.)
+           filenames in a CSS-file-per-component model, as demonstrated in the
+           "basic" example.
         6. Because of how the style index is structured, each value may
            constitute a single ruleset or multiple. It is possible to
            structure the style index differently if you would prefer to
