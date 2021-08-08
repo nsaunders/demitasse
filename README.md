@@ -33,6 +33,18 @@ This function accepts either:
   or
 * a record defining multiple rulesets.
 
+As with similar libraries, CSS property names are written in camel-case, e.g.
+`backgroundColor`. Vendor-prefixed property names are written in Pascal case,
+e.g. `WebkitAppearance`.
+
+A special `animationKeyframes` property can be used to create a `@keyframes`
+rule automatically in the context in which it is used. This replaces the
+`animationName` property, which can still be used if you would like to
+reference a `@keyframes` rule defined elsewhere.
+
+Nested rulesets are also supported. Nested selectors can use `&` to reference
+the parent class name, e.g. `&:hover` or `& + &`.
+
 #### Return
 
 In the former case, the `css` function returns a generated class name, which you
