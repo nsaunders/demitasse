@@ -48,3 +48,21 @@ The generated CSS output is then passed on to
 [css-loader](https://webpack.js.org/loaders/css-loader), and finally
 [mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin)
 to be emitted in the form of a static CSS file.
+
+## Try it
+
+**First, install dependencies:**
+```bash
+npm install
+```
+
+**To run the dev server:**
+```bash
+npm run dev
+```
+
+**To create a production build:**
+```bash
+npm run build
+ls dist
+```
