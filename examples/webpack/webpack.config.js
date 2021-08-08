@@ -42,9 +42,14 @@ module.exports = ({ production }) => ({
     new HtmlPlugin({ title: "Webpack Example" }),
     new VirtualModulesPlugin({
       "./src/styles.css": `
-        require("ts-node").register({
-          transpileOnly: true,
-        });
+        if (!(".ts" in require.extensions)) {
+          require("ts-node").register({
+            transpileOnly: true,
+            compilerOptions: {
+              module: "commonjs",
+            },
+          });
+        }
 
         require("demitasse").css = require("demitasse/extract").css;
 

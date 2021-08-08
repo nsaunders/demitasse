@@ -11,8 +11,8 @@ export const styles = /*#__PURE__*/ css({
   paddingLeft: 8,
   border: 0,
   borderRadius: 4,
-  background: "#eee",
-  color: "#333",
+  background: "#001f76",
+  color: "#fff",
   fontFamily: "monospace",
   "&:focus": {
     boxShadow: "0 0 0 2px #ccc",
