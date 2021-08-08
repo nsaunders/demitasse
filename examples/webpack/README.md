@@ -14,8 +14,8 @@ This example project demonstrates how to configure
    use case is
    [adding vendor prefixes](https://github.com/postcss/autoprefixer)
    automatically without adding noise to your code.
-4. [css-loader](https://webpack.js.org/loaders/css-loader) converts the plain
-   CSS string content into the module format required by
+4. [css-loader](https://webpack.js.org/loaders/css-loader) converts plain CSS
+   string content into the module format required by
    [mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin)
    (used in this project) or
    [style-loader](https://webpack.js.org/loaders/style-loader) (not used here).
@@ -28,8 +28,9 @@ This example project demonstrates how to configure
    system.
 
 Note that, of these, val-loader is likely the only library that is strictly
-required for CSS extraction. Beyond that, you can choose whatever mix of tools
-best suits your use case and personal preferences.
+required for demitasse's CSS extraction. Beyond that, you can choose whatever
+mix of tools best suits your use case and personal preferences.
+
 
 ## How it works
 
@@ -38,7 +39,7 @@ throughout the app. Essentially, it functions as an index of style rules.
 
 A [val-loader](https://webpack.js.org/loaders/val-loader)-compatible Node.js
 script uses the style rule index to generate static CSS. This script exists as
-a virtual module [`./src/styles.css`](./webpack.config.js#L43-L89) because its
+a virtual module [`./src/styles.css`](./webpack.config.js#L43-L121) because its
 source seems most relevant in the context of webpack configuration, but it could
 just as easily inhabit its own physical module.
 
