@@ -1,4 +1,4 @@
-# ☕ demitasse  <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/demitasse.svg" alt="License"></a>
+# ☕ demitasse  <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
 **Zero-runtime CSS-in-TypeScript**
 
 Demitasse offers the developer experience of CSS-in-TypeScript (CSS-in-JS)
