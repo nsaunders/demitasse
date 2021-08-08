@@ -10,7 +10,7 @@ This example project demonstrates how to configure
    generate a module dynamically, i.e. to use a Node.js script to produce the
    contents of a module.
 3. [postcss-loader](https://webpack.js.org/loaders/postcss-loader)
-   integrates [PostCSS](https://postcss.org) processing with Webpack. A common
+   integrates [PostCSS](https://postcss.org) processing with webpack. A common
    use case is
    [adding vendor prefixes](https://github.com/postcss/autoprefixer)
    automatically without adding noise to your code.
