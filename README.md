@@ -47,10 +47,13 @@ the parent class name, e.g. `&:hover` or `& + &`.
 
 #### Return
 
-In the former case, the `css` function returns a generated class name, which you
+The return value depends on whether the `css` function is called with a single ruleset
+or with a record of multiple rulesets.
+
+In the former case, the function returns a generated class name, which you
 can then attach to the corresponding HTML element to apply the ruleset.
 
-In the latter case, the `css` function returns a record of generated class
+In the latter case, the function returns a record of generated class
 names. Essentially, this return value maps human-readable ruleset aliases to
 the generated class names that are used at runtime.
 
