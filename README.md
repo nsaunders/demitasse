@@ -17,7 +17,7 @@ without the typical runtime cost or configuration burden of other approaches.
 
 ## Installation
 ```bash
-npm install -D demitasse
+npm install demitasse
 ```
 
 ## Default API
