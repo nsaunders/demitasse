@@ -3,6 +3,9 @@ const path = require("path");
 
 require("ts-node").register({
   transpileOnly: true,
+  compilerOptions: {
+    module: "commonjs",
+  },
 });
 
 require("demitasse").css = require("demitasse/extract").css;
