@@ -57,6 +57,9 @@ function serialize(sel, obj, type) {
     }, "");
 
     function normalizeValue(value, prop) {
+      if (value === "") {
+        return "''";
+      }
       if (typeof value !== "number" || value === 0) {
         return value;
       }
