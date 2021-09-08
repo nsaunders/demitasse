@@ -16,7 +16,7 @@ function process(f) {
     }
     return keys
       .map(function (key) {
-        return [key, f([groupName, groupHash, key].join("-"), rules[key])];
+        return [key, f([groupName, groupHash, key.replace(/[A-Z]/g, function(x) { return "-" + x.toLowerCase() ; })].join("-"), rules[key])];
       })
       .reduce(function (obj, rule) {
         obj[rule[0]] = rule[1];

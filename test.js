@@ -76,6 +76,20 @@ test("Extracting complex ruleset with nesting", function () {
   assert.deepEqual(actual, expected);
 });
 
+test("Normalizing class names", function() {
+  const actual = extract.css("error", {
+    assistiveText: {
+      color: "red",
+    },
+  });
+  const expected = {
+    assistiveText: `.error-lotcfg-assistive-text {
+  color: red;
+}`
+  };
+  return assert.deepEqual(actual, expected);
+});
+
 test("Normalizing values", function () {
   const actual = extract.css("sidebar", {
     content: "",
