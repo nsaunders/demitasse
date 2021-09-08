@@ -25,21 +25,25 @@ npm install demitasse
 
 The default API is perhaps best understood as the "runtime" API, although it
 produces no CSS and essentially functions only as an index of the CSS rulesets
-generated at build time (explained [below](#extraction-api)).
+generated at build time. (For more, see [Extraction API](#extraction-api).).
 
-### `css`
+### `css(groupName: string, styles: object): string | Record<string, string>`
 
 The `css` function constitutes the entire API.
 
-#### Parameter
+#### Parameters
 
-This function accepts either:
-* an object defining a single "anonymous"
-  [ruleset](https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax#css_rulesets);
-  or
-* a record defining multiple rulesets.
+##### `groupName`
 
-As with similar libraries, CSS property names are written in camel-case, e.g.
+The name specified here, e.g. `link-btn`, will be prepended to each class
+name, e.g. `link-btn-3azf08l-content`. This identifier provides an easier
+debugging experience and avoids side effects that might otherwise result from
+duplicative style rules.
+
+##### `styles`
+
+Style rules are specified here in JavaScript object form. As with similar
+libraries, CSS property names are written in camel-case, e.g.
 `backgroundColor`. Vendor-prefixed property names are written in Pascal case,
 e.g. `WebkitAppearance`.
 
@@ -51,17 +55,20 @@ reference a `@keyframes` rule defined elsewhere.
 Nested rulesets are also supported. Nested selectors can use `&` to reference
 the parent class name, e.g. `&:hover` or `& + &`.
 
+
+Finally, this object may define either one or multiple (a record of) style
+rules, which determines the return type as described below.
+
 #### Return
 
-The return value depends on whether the `css` function is called with a single ruleset
-or with a record of multiple rulesets.
+A different value is returned depending on whether the `css` function is called
+with a single or multiple style rules.
 
 In the former case, the function returns a generated class name, which you
-can then attach to the corresponding HTML element to apply the ruleset.
+can then attach to the corresponding HTML element to apply the rule.
 
-In the latter case, the function returns a record of generated class
-names. Essentially, this return value maps human-readable ruleset aliases to
-the generated class names that are used at runtime.
+In the latter case, the function returns a record of generated class names
+corresponding to the provided style rules.
 
 #### Examples
 
@@ -69,7 +76,7 @@ the generated class names that are used at runtime.
 ```typescript
 import { css } from "demitasse";
 
-export const styles = /*#__PURE__*/ css({
+export const styles = /*#__PURE__*/ css("link", {
   color: "#00f",
   "&:hover": {
     color: "#06f"
@@ -91,7 +98,7 @@ export function styleLinks() {
 import { css } from "demitasse";
 import { FC, ReactNode } from "react";
 
-export const styles = /*#__PURE__*/ css({
+export const styles = /*#__PURE__*/ css("button", {
   container: {
     display: "inline-flex",
   },
@@ -125,7 +132,7 @@ NodeJS build script might look something like this:
 
 ```typescript
 require("demitasse").css = require("demitasse/extract").css;
-require("ts-node").register({ transpileOnly: true });
+require("ts-node").register({ transpileOnly: true, compilerOptions: { module: "commonjs" } });
 const output = require("./src/style-index.ts");
 // TODO: Write CSS output to a file, pipe it to PostCSS, or whatever!
 ```
