@@ -27,7 +27,7 @@ The default API is perhaps best understood as the "runtime" API, although it
 produces no CSS and essentially functions only as an index of the CSS rulesets
 generated at build time. (For more, see [Extraction API](#extraction-api).).
 
-### `css(groupName: string, styles: object): string | Record<string, string>`
+### `css`
 
 The `css` function constitutes the entire API.
 
