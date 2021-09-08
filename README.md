@@ -93,7 +93,7 @@ export function styleLinks() {
 }
 ```
 
-##### Multiple Rulesets
+##### Multiple Rules
 ```typescript
 import { css } from "demitasse";
 import { FC, ReactNode } from "react";
