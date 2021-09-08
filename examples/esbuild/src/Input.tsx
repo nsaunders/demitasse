@@ -2,7 +2,7 @@ import React, { FC, HTMLProps } from "react";
 import { css } from "demitasse";
 import cx from "classnames";
 
-export const styles = /*#__PURE__*/ css({
+export const styles = /*#__PURE__*/ css("input", {
   appearance: "none",
   outline: "none",
   paddingTop: 4,

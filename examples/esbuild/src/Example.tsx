@@ -4,7 +4,7 @@ import cx from "classnames";
 import { Button } from "./Button";
 import { Input } from "./Input";
 
-export const styles = /*#__PURE__*/css({
+export const styles = /*#__PURE__*/css("example", {
   container: {
     display: "flex",
     margin: -2,
