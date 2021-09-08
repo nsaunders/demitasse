@@ -1,7 +1,7 @@
 {
   "name": "demitasse",
   "description": "Zero-runtime CSS-in-TS",
-  "version": "0.5.3",
+  "version": "1.0.0",
   "scripts": {
     "format": "prettier --write *.src.js extract.js *.ts test.js",
     "prepublishOnly": "terser index.src.js -o index.js && terser common.src.js -o common.js",
