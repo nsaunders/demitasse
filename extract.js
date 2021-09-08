@@ -1,18 +1,8 @@
 var common = require("./common"),
   process = common.process;
 
-exports.css = process(function (groupName, groupHash, key, rule) {
-  return serializeCSS(
-    cssModel(
-      "." +
-        [groupName, groupHash, key]
-          .filter(function (x) {
-            return x;
-          })
-          .join("-"),
-      rule
-    )
-  );
+exports.css = process(function (id, rule) {
+  return serializeCSS(cssModel("." + id, rule));
 });
 
 function camelToSnake(p) {

@@ -12,11 +12,11 @@ function process(f) {
       );
     }).length;
     if (!multi) {
-      return f(groupName, groupHash, null, rules);
+      return f([groupName, groupHash].join("-"), rules);
     }
     return keys
       .map(function (key) {
-        return [key, f(groupName, groupHash, key, rules[key])];
+        return [key, f([groupName, groupHash, key].join("-"), rules[key])];
       })
       .reduce(function (obj, rule) {
         obj[rule[0]] = rule[1];
