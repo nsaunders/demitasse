@@ -5,7 +5,7 @@
   "scripts": {
     "format": "prettier --write *.src.js extract.js *.ts test.js",
     "prepublishOnly": "terser index.src.js -o index.js && terser common.src.js -o common.js",
-    "test": "terser index.src.js -o index.js && terser common.src.js -o common.js && node test"
+    "test": "terser index.src.js -o index.js && terser common.src.js -o common.js && node ./test.js"
   },
   "repository": {
     "type": "git",
