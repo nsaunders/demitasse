@@ -3,8 +3,9 @@
   "description": "Zero-runtime CSS-in-TS",
   "version": "0.5.3",
   "scripts": {
-    "format": "prettier --write *.src.js extract.js *.ts",
-    "prepublishOnly": "terser index.src.js -o index.js && terser common.src.js -o common.js"
+    "format": "prettier --write *.src.js extract.js *.ts test.js",
+    "prepublishOnly": "terser index.src.js -o index.js && terser common.src.js -o common.js",
+    "test": "terser index.src.js -o index.js && terser common.src.js -o common.js && node test"
   },
   "repository": {
     "type": "git",

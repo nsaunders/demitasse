@@ -1,7 +1,10 @@
 var common = require("./common"),
-  hash = common.hash,
   process = common.process;
 
-exports.css = function (obj) {
-  return process(hash, obj);
-};
+exports.css = process(function (groupName, groupHash, key) {
+  return [groupName, groupHash, key]
+    .filter(function (x) {
+      return x;
+    })
+    .join("-");
+});

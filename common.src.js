@@ -1,4 +1,31 @@
-exports.hash = function (obj) {
+exports.process = process;
+
+function process(f) {
+  return function (groupName, rules) {
+    var groupHash = hash(rules);
+    var keys = Object.keys(rules);
+    var multi = keys.filter(function (key) {
+      return (
+        typeof rules[key] === "object" &&
+        key !== "animationKeyframes" &&
+        !~key.indexOf("&")
+      );
+    }).length;
+    if (!multi) {
+      return f(groupName, groupHash, null, rules);
+    }
+    return keys
+      .map(function (key) {
+        return [key, f(groupName, groupHash, key, rules[key])];
+      })
+      .reduce(function (obj, rule) {
+        obj[rule[0]] = rule[1];
+        return obj;
+      }, {});
+  };
+}
+
+function hash(obj) {
   var x = JSON.stringify(obj);
   var h = 0,
     i,
@@ -15,23 +42,4 @@ exports.hash = function (obj) {
   return hs.replace(/^[^a-z]/, () =>
     "abcdefghijklmnopqrstuvwxyz".charAt(Math.abs(h) % 26)
   );
-};
-
-exports.process = function (f, o) {
-  var keys = Object.keys(o);
-  if (
-    keys.filter(function (k) {
-      return typeof o[k] !== "object";
-    }).length
-  ) {
-    return f(o);
-  }
-  return keys
-    .map(function (k) {
-      return [k, f(o[k])];
-    })
-    .reduce(function (obj, x) {
-      obj[x[0]] = x[1];
-      return obj;
-    }, {});
-};
+}
