@@ -1,9 +1,63 @@
-var common = require("./common"),
-  process = common.process;
+export function css(_groupName, _rules, _options) {
+  return { _groupName, _rules, _options };
+}
 
-exports.css = process(function (id, rule) {
-  return serializeCSS(cssModel("." + id, rule));
-});
+export function toString(css) {
+  var f = process(function (id, rule) {
+    return serializeCSS(cssModel("." + id, rule));
+  }, css._debug);
+  var serialized = f(css._groupName, css._rules);
+  return typeof serialized === "string" ? serialized : Object.values(serialized).join("\n");
+}
+
+export function toClassNames(css) {
+  var f = process(function (id) { return id; }, css._debug);
+  return f(css._groupName, css._rules);
+}
+
+function process(f, debug) {
+  return function (groupName, rules) {
+    var groupHash = hash(rules);
+    var keys = Object.keys(rules);
+    var multi = keys.filter(function (key) {
+      return (
+        typeof rules[key] === "object" &&
+        key !== "animationKeyframes" &&
+        !~key.indexOf("&")
+      );
+    }).length;
+    if (!multi) {
+      return f([groupName, groupHash].join("-"), rules);
+    }
+    return keys
+      .map(function (key) {
+        return [key, f([groupName, groupHash, key.replace(/[A-Z]/g, function(x) { return "-" + x.toLowerCase() ; })].join("-"), rules[key])];
+      })
+      .reduce(function (obj, rule) {
+        obj[rule[0]] = rule[1];
+        return obj;
+      }, {});
+  };
+}
+
+function hash(obj) {
+  var x = JSON.stringify(obj);
+  var h = 0,
+    i,
+    chr;
+  if (x.length === 0) {
+    return h;
+  }
+  for (i = 0; i < x.length; i++) {
+    chr = x.charCodeAt(i);
+    h = (h << 5) - h + chr;
+    h |= 0;
+  }
+  var hs = h.toString(36);
+  return hs.replace(/^[^a-z]/, () =>
+    "abcdefghijklmnopqrstuvwxyz".charAt(Math.abs(h) % 26)
+  );
+}
 
 function camelToSnake(p) {
   return p.replace(/([A-Z])/g, function (_, x) {
@@ -65,7 +119,7 @@ function normalizeValue(value, prop) {
     "strokeOpacity",
     "strokeWidth",
   ];
-  return ~unitless.indexOf(prop) ? value : value + "px";
+  return ~unitless.indexOf(prop) ? value : value + (~prop.indexOf("Duration") ? "ms" : "px");
 }
 
 function cssModel(acc, rule) {

@@ -1,12 +1,11 @@
-var extract = require("./extract");
-var runtime = require("./");
-var assert = require("assert/strict");
+import { css, toClassNames, toString } from "./index.mjs";
+import { strict as assert } from "assert";
 
 test("Extracting basic ruleset", function () {
-  const actual = extract.css("simple-button", {
+  const actual = toString(css("simple-button", {
     background: "blue",
     color: "white",
-  });
+  }));
   const expected = `.simple-button-qnye6s {
   background: blue;
   color: white;
@@ -15,14 +14,14 @@ test("Extracting basic ruleset", function () {
 });
 
 test("Extracting basic ruleset with nesting", function () {
-  const actual = extract.css("link", {
+  const actual = toString(css("link", {
     textDecoration: "none",
     "&:not(:disabled)": {
       "&:hover": {
         textDecoration: "underline",
       },
     },
-  });
+  }));
   const expected = `.link-kpvpel0 {
   text-decoration: none;
 }
@@ -33,27 +32,25 @@ test("Extracting basic ruleset with nesting", function () {
 });
 
 test("Extracting complex ruleset", function () {
-  const actual = extract.css("fancy-button", {
+  const actual = toString(css("fancy-button", {
     surface: {
       background: "gray",
     },
     content: {
       color: "white",
     },
-  });
-  const expected = {
-    surface: `.fancy-button-n54nb0z-surface {
+  }));
+  const expected = `.fancy-button-n54nb0z-surface {
   background: gray;
-}`,
-    content: `.fancy-button-n54nb0z-content {
+}
+.fancy-button-n54nb0z-content {
   color: white;
-}`,
-  };
+}`;
   assert.deepEqual(actual, expected);
 });
 
 test("Extracting complex ruleset with nesting", function () {
-  const actual = extract.css("checkbox", {
+  const actual = toString(css("checkbox", {
     input: {
       appearance: "none",
       border: "1px solid black",
@@ -63,53 +60,53 @@ test("Extracting complex ruleset with nesting", function () {
         textDecoration: "line-through",
       },
     },
-  });
-  const expected = {
-    input: `.checkbox-kj82hoq-input {
+  }));
+  const expected = `.checkbox-kj82hoq-input {
   appearance: none;
   border: 1px solid black;
-}`,
-    label: `:checked + .checkbox-kj82hoq-label {
+}
+:checked + .checkbox-kj82hoq-label {
   text-decoration: line-through;
-}`,
-  };
+}`;
   assert.deepEqual(actual, expected);
 });
 
 test("Normalizing class names", function() {
-  const actual = extract.css("error", {
+  const actual = toString(css("error", {
     assistiveText: {
       color: "red",
     },
-  });
-  const expected = {
-    assistiveText: `.error-lotcfg-assistive-text {
+  }));
+  const expected = `.error-lotcfg-assistive-text {
   color: red;
-}`
-  };
+}`;
   return assert.deepEqual(actual, expected);
 });
 
 test("Normalizing values", function () {
-  const actual = extract.css("sidebar", {
+  const actual = toString(css("sidebar", {
     content: "",
     top: 0,
     bottom: 0,
     left: 0,
     width: 300,
-  });
-  const expected = `.sidebar-xs63xsl {
+    transitionDuration: 500,
+    animationDuration: 750,
+  }));
+  const expected = `.sidebar-wz2sih {
   content: '';
   top: 0;
   bottom: 0;
   left: 0;
   width: 300px;
+  transition-duration: 500ms;
+  animation-duration: 750ms;
 }`;
   assert.equal(actual, expected);
 });
 
 test("Keyframes", function () {
-  const actual = extract.css("pulse", {
+  const actual = toString(css("pulse", {
     animationKeyframes: {
       "0%": {
         transform: "scale(1)",
@@ -124,7 +121,7 @@ test("Keyframes", function () {
         transform: "scale(1)",
       },
     },
-  });
+  }));
   const expected = `@keyframes pulse-ao0hgb {
   0% {
     transform: scale(1);
@@ -146,19 +143,15 @@ test("Keyframes", function () {
 });
 
 test("Matching runtime class name for basic ruleset", function () {
-  var className = runtime.css("black", { background: "black" });
-  assert.match(
-    extract.css("black", { background: "black" }),
-    new RegExp(`\\.${className}`)
-  );
+  var s = css("black", { background: "black" });
+  var className = toClassNames(s);
+  assert.match(toString(s),new RegExp(`\\.${className}`));
 });
 
-test("Matching runtime class name for basic ruleset", function () {
-  var className = runtime.css("black", { text: { color: "white" } }).text;
-  assert.match(
-    extract.css("black", { text: { color: "white" } }).text,
-    new RegExp(`\\.${className}`)
-  );
+test("Matching runtime class name for map ruleset", function () {
+  var s = css("black", { text: { color: "white" } });
+  var className = toClassNames(s).text;
+  assert.match(toString(s), new RegExp(`\\.${className}`));
 });
 
 function test(label, run) {
