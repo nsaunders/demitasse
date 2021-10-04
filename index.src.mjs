@@ -5,13 +5,13 @@ export function css(_groupName, _rules, _options) {
 export function toString(css) {
   var f = process(function (id, rule) {
     return serializeCSS(cssModel("." + id, rule));
-  }, css._debug);
+  }, css._options && css._options.debug);
   var serialized = f(css._groupName, css._rules);
   return typeof serialized === "string" ? serialized : Object.values(serialized).join("\n");
 }
 
 export function toClassNames(css) {
-  var f = process(function (id) { return id; }, css._debug);
+  var f = process(function (id) { return id; }, css._options && css._options.debug);
   return f(css._groupName, css._rules);
 }
 
@@ -27,11 +27,11 @@ function process(f, debug) {
       );
     }).length;
     if (!multi) {
-      return f([groupName, groupHash].join("-"), rules);
+      return f(debug ? [groupName, groupHash].join("-") : hash({ groupName: groupName, groupHash: groupHash }), rules);
     }
     return keys
       .map(function (key) {
-        return [key, f([groupName, groupHash, key.replace(/[A-Z]/g, function(x) { return "-" + x.toLowerCase() ; })].join("-"), rules[key])];
+        return [key, f(debug ? [groupName, groupHash, key.replace(/[A-Z]/g, function(x) { return "-" + x.toLowerCase() ; })].join("-") : hash({ groupName: groupName, groupHash: groupHash, key: key, rule: rules[key] }), rules[key])];
       })
       .reduce(function (obj, rule) {
         obj[rule[0]] = rule[1];

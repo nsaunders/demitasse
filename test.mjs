@@ -6,7 +6,7 @@ test("Extracting basic ruleset", function () {
     background: "blue",
     color: "white",
   }));
-  const expected = `.simple-button-qnye6s {
+  const expected = `.rvrc34 {
   background: blue;
   color: white;
 }`;
@@ -22,10 +22,10 @@ test("Extracting basic ruleset with nesting", function () {
       },
     },
   }));
-  const expected = `.link-kpvpel0 {
+  const expected = `.un7dwx {
   text-decoration: none;
 }
-.link-kpvpel0:not(:disabled):hover {
+.un7dwx:not(:disabled):hover {
   text-decoration: underline;
 }`;
   assert.equal(actual, expected);
@@ -40,10 +40,10 @@ test("Extracting complex ruleset", function () {
       color: "white",
     },
   }));
-  const expected = `.fancy-button-n54nb0z-surface {
+  const expected = `.faavx5 {
   background: gray;
 }
-.fancy-button-n54nb0z-content {
+.gpb1nu {
   color: white;
 }`;
   assert.deepEqual(actual, expected);
@@ -61,11 +61,11 @@ test("Extracting complex ruleset with nesting", function () {
       },
     },
   }));
-  const expected = `.checkbox-kj82hoq-input {
+  const expected = `.bjakbh {
   appearance: none;
   border: 1px solid black;
 }
-:checked + .checkbox-kj82hoq-label {
+:checked + .rlobej {
   text-decoration: line-through;
 }`;
   assert.deepEqual(actual, expected);
@@ -77,7 +77,7 @@ test("Normalizing class names", function() {
       color: "red",
     },
   }));
-  const expected = `.error-lotcfg-assistive-text {
+  const expected = `.zx0trp1 {
   color: red;
 }`;
   return assert.deepEqual(actual, expected);
@@ -93,7 +93,7 @@ test("Normalizing values", function () {
     transitionDuration: 500,
     animationDuration: 750,
   }));
-  const expected = `.sidebar-wz2sih {
+  const expected = `.b5264e {
   content: '';
   top: 0;
   bottom: 0;
@@ -122,7 +122,7 @@ test("Keyframes", function () {
       },
     },
   }));
-  const expected = `@keyframes pulse-ao0hgb {
+  const expected = `@keyframes v130c69 {
   0% {
     transform: scale(1);
   }
@@ -136,8 +136,8 @@ test("Keyframes", function () {
     transform: scale(1);
   }
 }
-.pulse-ao0hgb {
-  animation-name: pulse-ao0hgb;
+.v130c69 {
+  animation-name: v130c69;
 }`;
   assert.equal(actual, expected);
 });
@@ -148,9 +148,21 @@ test("Matching runtime class name for basic ruleset", function () {
   assert.match(toString(s),new RegExp(`\\.${className}`));
 });
 
-test("Matching runtime class name for map ruleset", function () {
+test("Matching runtime class name for multi ruleset", function () {
   var s = css("black", { text: { color: "white" } });
   var className = toClassNames(s).text;
+  assert.match(toString(s), new RegExp(`\\.${className}`));
+});
+
+test("Debug with basic ruleset", function () {
+  var s = css("foo-bar", { textDecoration: "underline" }, { debug: true });
+  var className = toClassNames(s);
+  assert.match(toString(s), new RegExp(`\\.${className}`));
+});
+
+test("Debug with multi ruleset", function () {
+  var s = css("foo-bar", { buzz: { textDecoration: "underline" } }, { debug: true });
+  var className = toClassNames(s).buzz;
   assert.match(toString(s), new RegExp(`\\.${className}`));
 });
 

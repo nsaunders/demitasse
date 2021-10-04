@@ -23,6 +23,9 @@ export type Time = string | number;
 export type Rules = Properties<Length, Time> &
   Partial<{ [key: string]: Rules | string | number }>;
 
+/**
+ * @ignore
+ */
 type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (
   x: infer R
 ) => any
@@ -34,7 +37,7 @@ type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (
  *
  * @typeParam R - Style rules
  */
-declare interface CSS<R> {
+declare type CSS<R> = {
   /**
    * A unique namespace for the rules
    * @internal
