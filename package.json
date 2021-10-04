@@ -1,7 +1,7 @@
 {
   "name": "demitasse",
   "description": "Zero-runtime CSS-in-TS",
-  "version": "1.0.1",
+  "version": "2.0.0-alpha.0",
   "scripts": {
     "docs": "typedoc index.d.ts && replace '\\(README\\.md#' '(#' docs/README.md",
     "format": "prettier --write *.src.js *.ts test.mjs",
