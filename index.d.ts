@@ -33,7 +33,7 @@ type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (
   : never;
 
 /**
- * A container for related style rules, namespaced by `groupName`
+ * A group of style rules
  *
  * @typeParam R - Style rules
  */
@@ -60,11 +60,13 @@ declare type CSS<R> = {
 /**
  * Creates CSS rules.
  *
- * @param groupName - A unique namespace, included in generated class names
+ * @param groupName - A unique namespace used to generate class names
  * @param rules - A style rule or record of style rules
  * @param options - Additional options
  * @param options.debug - When `true`, group names and record keys are presented
  * in the generated class names.
+ *
+ * @typeParam R - A style rule or record of style rules
  *
  * @remarks Style rules support nested selectors, where `&` must be used within
  * the selector and are replaced with the parent selector.
