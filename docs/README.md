@@ -21,7 +21,7 @@
 
 Ƭ **CSS**<`R`\>: `Object`
 
-A container for related style rules, namespaced by `groupName`
+A group of style rules
 
 **`typeparam`** Style rules
 
@@ -41,7 +41,7 @@ A container for related style rules, namespaced by `groupName`
 
 #### Defined in
 
-[index.d.ts:40](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L40)
+[index.d.ts:40](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L40)
 
 ___
 
@@ -55,7 +55,7 @@ A length value
 
 #### Defined in
 
-[index.d.ts:8](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L8)
+[index.d.ts:8](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L8)
 
 ___
 
@@ -70,7 +70,7 @@ the selector and are replaced with the parent selector.
 
 #### Defined in
 
-[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L23)
+[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L23)
 
 ___
 
@@ -84,7 +84,7 @@ A time value
 
 #### Defined in
 
-[index.d.ts:15](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L15)
+[index.d.ts:15](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L15)
 
 ## Functions
 
@@ -99,15 +99,15 @@ the selector and are replaced with the parent selector.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `R` | extends [`Rules`](#rules) \| `Record`<`string`, [`Rules`](#rules)\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `R` | extends [`Rules`](#rules) \| `Record`<`string`, [`Rules`](#rules)\> | A style rule or record of style rules |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `groupName` | `string` | A unique namespace, included in generated class names |
+| `groupName` | `string` | A unique namespace used to generate class names |
 | `rules` | `R` | A style rule or record of style rules |
 | `options?` | `Object` | Additional options |
 | `options.debug?` | `boolean` | When `true`, group names and record keys are presented in the generated class names. |
@@ -121,7 +121,7 @@ a style sheet via [toString](#tostring).
 
 #### Defined in
 
-[index.d.ts:75](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L75)
+[index.d.ts:77](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L77)
 
 ___
 
@@ -151,7 +151,7 @@ Converts [CSS](#css) to a class name or map thereof.
 
 #### Defined in
 
-[index.d.ts:87](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L87)
+[index.d.ts:89](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L89)
 
 ___
 
@@ -184,4 +184,4 @@ The generated style sheet
 
 #### Defined in
 
-[index.d.ts:99](https://github.com/nsaunders/demitasse/blob/1b5c816/index.d.ts#L99)
+[index.d.ts:101](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L101)
