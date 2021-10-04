@@ -6,7 +6,7 @@ on:
       - package.json
 
 jobs:
-  update:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
