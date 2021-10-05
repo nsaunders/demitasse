@@ -15,13 +15,18 @@ export type Length = string | number;
 export type Time = string | number;
 
 /**
- * A style rule or map of style rules.
+ * A style rule
  *
  * @remarks Style rules support nested selectors, where `&` must be used within
  * the selector and are replaced with the parent selector.
  */
-export type Rules = Properties<Length, Time> &
-  Partial<{ [key: string]: Rules | string | number }>;
+export type Rule = Properties<Length, Time> &
+  Partial<{ [key: string]: Rule | string | number }>;
+
+/**
+ * A style rule or record of style rules
+ */
+export type Rules = Rule | Record<string, Rule>;
 
 /**
  * @ignore
@@ -74,28 +79,29 @@ declare type CSS<R> = {
  * @returns CSS that is convertible to class names via {@link toClassNames} or
  * a style sheet via {@link toString}.
  */
-export declare function css<R extends Record<string, Rules> | Rules>(groupName: string, rules: R, options?: { debug?: boolean; }): CSS<R>;
+export declare function css<R extends Rules>(groupName: string, rules: R, options?: { debug?: boolean; }): CSS<R>;
 
 /**
- * Converts {@link CSS} to a class name or map thereof.
+ * Converts {@link CSS} to a class name or record of style names.
  *
- * @typeParam S - The subtype of CSS value, used to determine whether the return
- * type is a string or a map
+ * @typeParam R - A style rule or record of style rules
  *
- * @param css - The CSS value to convert to class names
+ * @param css - The CSS to convert to class names
  *
- * @returns - A class name or map of class names depending on the `css` argument
+ * @returns - A class name or record of class names depending on the `css` argument
  */
-export declare function toClassNames<S extends CSS<Record<string, Rules> | Rules>>(css: S): S extends CSS<infer R> ? UnionToIntersection<R extends Record<infer K, Rules> ? K extends `${infer _}&${infer _}` ? string : Record<K, string> : string> : string;
+export declare function toClassNames<R extends Rules>(css: CSS<R>): UnionToIntersection<R extends Record<infer K, Rule> ? K extends `${infer _}&${infer _}` ? string : Record<K, string> : string>;
 
 /**
  * Converts {@link CSS} to a style sheet.
- * 
+ *
  * @param css - The CSS value from which to generate the style sheet
  *
- * @remarks This is recommended for use at build time to generate a static CSS
- * style sheet that must be shipped alongside the JavaScript bundle.
+ * @remarks This is recommended for use at build time to generate a static style
+ * sheet.
  *
  * @returns The generated style sheet
  */
-export declare function toString<R>(css: CSS<R>): string;
+export declare function toString<
+  T extends CSS<Rules> | CSS<Rules>[] | Record<string, CSS<Rules> | CSS<Rules>[]>
+>(css: T): T extends Record<infer K, CSS<unknown> | CSS<unknown>[]> ? Record<K, string> : string;

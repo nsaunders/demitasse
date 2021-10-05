@@ -3,6 +3,20 @@ export function css(_groupName, _rules, _options) {
 }
 
 export function toString(css) {
+  if (css instanceof Array) {
+    return css.map(toString).join("\n");
+  }
+  if (typeof css === "object") {
+    var keys = Object.keys(css);
+    if (keys.length === keys.filter(function(k) { return css[k] && (css[k]._groupName || css[k] instanceof Array); }).length) {
+      return keys
+        .map(function(k) {  return [k, toString(css[k])]; })
+        .reduce(function(obj, o) {
+          obj[o[0]] = o[1];
+          return obj;
+        }, {});
+    }
+  }
   var f = process(function (id, rule) {
     return serializeCSS(cssModel("." + id, rule));
   }, css._options && css._options.debug);

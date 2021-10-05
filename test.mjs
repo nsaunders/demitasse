@@ -1,20 +1,20 @@
 import { css, toClassNames, toString } from "./index.mjs";
 import { strict as assert } from "assert";
 
-test("Extracting basic ruleset", function () {
-  const actual = toString(css("simple-button", {
+test("toString on single rule", function () {
+  var actual = toString(css("simple-button", {
     background: "blue",
     color: "white",
   }));
-  const expected = `.rvrc34 {
+  var expected = `.rvrc34 {
   background: blue;
   color: white;
 }`;
   assert.equal(actual, expected);
 });
 
-test("Extracting basic ruleset with nesting", function () {
-  const actual = toString(css("link", {
+test("toString on single rule with nesting", function () {
+  var actual = toString(css("link", {
     textDecoration: "none",
     "&:not(:disabled)": {
       "&:hover": {
@@ -22,7 +22,7 @@ test("Extracting basic ruleset with nesting", function () {
       },
     },
   }));
-  const expected = `.un7dwx {
+  var expected = `.un7dwx {
   text-decoration: none;
 }
 .un7dwx:not(:disabled):hover {
@@ -31,8 +31,8 @@ test("Extracting basic ruleset with nesting", function () {
   assert.equal(actual, expected);
 });
 
-test("Extracting complex ruleset", function () {
-  const actual = toString(css("fancy-button", {
+test("toString on record of rules", function () {
+  var actual = toString(css("fancy-button", {
     surface: {
       background: "gray",
     },
@@ -40,7 +40,7 @@ test("Extracting complex ruleset", function () {
       color: "white",
     },
   }));
-  const expected = `.faavx5 {
+  var expected = `.faavx5 {
   background: gray;
 }
 .gpb1nu {
@@ -49,8 +49,8 @@ test("Extracting complex ruleset", function () {
   assert.deepEqual(actual, expected);
 });
 
-test("Extracting complex ruleset with nesting", function () {
-  const actual = toString(css("checkbox", {
+test("toString on record of rules with nesting", function () {
+  var actual = toString(css("checkbox", {
     input: {
       appearance: "none",
       border: "1px solid black",
@@ -61,7 +61,7 @@ test("Extracting complex ruleset with nesting", function () {
       },
     },
   }));
-  const expected = `.bjakbh {
+  var expected = `.bjakbh {
   appearance: none;
   border: 1px solid black;
 }
@@ -71,20 +71,8 @@ test("Extracting complex ruleset with nesting", function () {
   assert.deepEqual(actual, expected);
 });
 
-test("Normalizing class names", function() {
-  const actual = toString(css("error", {
-    assistiveText: {
-      color: "red",
-    },
-  }));
-  const expected = `.zx0trp1 {
-  color: red;
-}`;
-  return assert.deepEqual(actual, expected);
-});
-
-test("Normalizing values", function () {
-  const actual = toString(css("sidebar", {
+test("toString normalizing values", function () {
+  var actual = toString(css("sidebar", {
     content: "",
     top: 0,
     bottom: 0,
@@ -93,7 +81,7 @@ test("Normalizing values", function () {
     transitionDuration: 500,
     animationDuration: 750,
   }));
-  const expected = `.b5264e {
+  var expected = `.b5264e {
   content: '';
   top: 0;
   bottom: 0;
@@ -105,8 +93,8 @@ test("Normalizing values", function () {
   assert.equal(actual, expected);
 });
 
-test("Keyframes", function () {
-  const actual = toString(css("pulse", {
+test("toString with keyframes", function () {
+  var actual = toString(css("pulse", {
     animationKeyframes: {
       "0%": {
         transform: "scale(1)",
@@ -122,7 +110,7 @@ test("Keyframes", function () {
       },
     },
   }));
-  const expected = `@keyframes v130c69 {
+  var expected = `@keyframes v130c69 {
   0% {
     transform: scale(1);
   }
@@ -142,28 +130,91 @@ test("Keyframes", function () {
   assert.equal(actual, expected);
 });
 
-test("Matching runtime class name for basic ruleset", function () {
+test("toString/toClassNames matching class name on simple rule", function () {
   var s = css("black", { background: "black" });
   var className = toClassNames(s);
   assert.match(toString(s),new RegExp(`\\.${className}`));
 });
 
-test("Matching runtime class name for multi ruleset", function () {
+test("toString/toClassNames matching class name on record of rules", function () {
   var s = css("black", { text: { color: "white" } });
   var className = toClassNames(s).text;
   assert.match(toString(s), new RegExp(`\\.${className}`));
 });
 
-test("Debug with basic ruleset", function () {
+test("toString/toClassNames matching class name on simple rule", function () {
   var s = css("foo-bar", { textDecoration: "underline" }, { debug: true });
   var className = toClassNames(s);
   assert.match(toString(s), new RegExp(`\\.${className}`));
 });
 
-test("Debug with multi ruleset", function () {
+test("toString/toClassNames matching class name on record of rules", function () {
   var s = css("foo-bar", { buzz: { textDecoration: "underline" } }, { debug: true });
   var className = toClassNames(s).buzz;
   assert.match(toString(s), new RegExp(`\\.${className}`));
+});
+
+test("toClassNames including detail in debug mode with simple rule", function () {
+  var s = css("zip-zap", { color: "yellow" }, { debug: true });
+  assert.match(toClassNames(s), /^zip\-zap/);
+});
+
+test("toClassNames including detail in debug mode with record of rules", function () {
+  var s = css("zip-zap", { asdfFooBar: { color: "yellow" } }, { debug: true });
+  assert.match(toClassNames(s).asdfFooBar, /^zip\-zap(.*)asdf\-foo\-bar$/);
+});
+
+test("toString array of rules", function () {
+  var s = [css("my-button", { background: "blue", color: "white" }), css("my-input", { boxShadow: "0 0 0 1px blue" })];
+  assert.equal(toString(s), `.bjydbe {
+  background: blue;
+  color: white;
+}
+.zlkfo83 {
+  box-shadow: 0 0 0 1px blue;
+}`);
+});
+
+test("toString record of rules", function () {
+  var s = {
+    button: css("my-button", { background: "blue", color: "white" }),
+    input: css("my-input", { boxShadow: "0 0 0 1px blue" })
+  };
+  var out = toString(s);
+  assert.equal(out.button, `.bjydbe {
+  background: blue;
+  color: white;
+}`);
+  assert.equal(out.input, `.zlkfo83 {
+  box-shadow: 0 0 0 1px blue;
+}`);
+});
+
+test("toString record of array of rules", function () {
+  var disc = css("disc", {
+    shape: {
+      borderRadius: 9999,
+    },
+    color: {
+      background: "gray",
+    },
+  });
+
+  var discButton = css("disc-button", {
+    outline: "none",
+  });
+
+  var out = toString({ db: [disc, discButton] });
+
+  assert.equal(out.db, `.j1dxve9 {
+  border-radius: 9999px;
+}
+.a9il1gm {
+  background: gray;
+}
+.fjtrgf {
+  outline: none;
+}`);
 });
 
 function test(label, run) {
