@@ -1,11 +1,10 @@
 const serve = process.argv.includes("--serve");
 
 require("ts-node").register({
-  transpileOnly: true,
-  compilerOptions: { module: "commonjs" },
+  compilerOptions: {
+    module: "commonjs",
+  },
 });
-
-require("demitasse").css = require("demitasse/extract").css;
 
 const stylesPath = require.resolve("./src/styles.ts");
 
@@ -48,20 +47,7 @@ require("esbuild")
           }));
 
           build.onLoad({ filter: /\/src\/styles\.css$/, namespace }, () => {
-            const contents =
-              Object
-                .values(require(stylesPath))
-                .flatMap(x => {
-                  switch (typeof x) {
-                    case "object":
-                      return Object.values(x);
-                    case "string":
-                      return [x];
-                    default:
-                      return [];
-                  }
-                })
-                .join("\n");
+            const contents = require(stylesPath).default;
 
             module
               .children
