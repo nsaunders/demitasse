@@ -6,6 +6,7 @@
 
 - [CSS](#css)
 - [Length](#length)
+- [Rule](#rule)
 - [Rules](#rules)
 - [Time](#time)
 
@@ -41,7 +42,7 @@ A group of style rules
 
 #### Defined in
 
-[index.d.ts:40](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L40)
+[index.d.ts:45](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L45)
 
 ___
 
@@ -55,22 +56,34 @@ A length value
 
 #### Defined in
 
-[index.d.ts:8](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L8)
+[index.d.ts:8](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L8)
 
 ___
 
-### Rules
+### Rule
 
-Ƭ **Rules**: `Properties`<[`Length`](#length), [`Time`](#time)\> & `Partial`<`Object`\>
+Ƭ **Rule**: `Properties`<[`Length`](#length), [`Time`](#time)\> & `Partial`<`Object`\>
 
-A style rule or map of style rules.
+A style rule
 
 **`remarks`** Style rules support nested selectors, where `&` must be used within
 the selector and are replaced with the parent selector.
 
 #### Defined in
 
-[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L23)
+[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L23)
+
+___
+
+### Rules
+
+Ƭ **Rules**: [`Rule`](#rule) \| `Record`<`string`, [`Rule`](#rule)\>
+
+A style rule or record of style rules
+
+#### Defined in
+
+[index.d.ts:29](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L29)
 
 ___
 
@@ -84,7 +97,7 @@ A time value
 
 #### Defined in
 
-[index.d.ts:15](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L15)
+[index.d.ts:15](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L15)
 
 ## Functions
 
@@ -101,7 +114,7 @@ the selector and are replaced with the parent selector.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `R` | extends [`Rules`](#rules) \| `Record`<`string`, [`Rules`](#rules)\> | A style rule or record of style rules |
+| `R` | extends [`Rules`](#rules) | A style rule or record of style rules |
 
 #### Parameters
 
@@ -121,67 +134,67 @@ a style sheet via [toString](#tostring).
 
 #### Defined in
 
-[index.d.ts:77](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L77)
+[index.d.ts:82](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L82)
 
 ___
 
 ### toClassNames
 
-▸ **toClassNames**<`S`\>(`css`): `S` extends [`CSS`](#css)<infer R\> ? `UnionToIntersection`<`R` extends `Record`<infer K, [`Rules`](#rules)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\> : `string`
+▸ **toClassNames**<`R`\>(`css`): `UnionToIntersection`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>
 
-Converts [CSS](#css) to a class name or map thereof.
+Converts [CSS](#css) to a class name or record of style names.
 
 #### Type parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `S` | extends [`CSS`](#css)<[`Rules`](#rules) \| `Record`<`string`, [`Rules`](#rules)\>\> | The subtype of CSS value, used to determine whether the return type is a string or a map |
+| `R` | extends [`Rules`](#rules) | A style rule or record of style rules |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `css` | `S` | The CSS value to convert to class names |
+| `css` | [`CSS`](#css)<`R`\> | The CSS to convert to class names |
 
 #### Returns
 
-`S` extends [`CSS`](#css)<infer R\> ? `UnionToIntersection`<`R` extends `Record`<infer K, [`Rules`](#rules)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\> : `string`
+`UnionToIntersection`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>
 
-- A class name or map of class names depending on the `css` argument
+- A class name or record of class names depending on the `css` argument
 
 #### Defined in
 
-[index.d.ts:89](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L89)
+[index.d.ts:93](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L93)
 
 ___
 
 ### toString
 
-▸ **toString**<`R`\>(`css`): `string`
+▸ **toString**<`T`\>(`css`): `T` extends `Record`<infer K, [`CSS`](#css)<`unknown`\> \| [`CSS`](#css)<`unknown`\>[]\> ? `Record`<`K`, `string`\> : `string`
 
 Converts [CSS](#css) to a style sheet.
 
-**`remarks`** This is recommended for use at build time to generate a static CSS
-style sheet that must be shipped alongside the JavaScript bundle.
+**`remarks`** This is recommended for use at build time to generate a static style
+sheet.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `R` |
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`CSS`](#css)<[`Rules`](#rules)\> \| [`CSS`](#css)<[`Rules`](#rules)\>[] \| `Record`<`string`, [`CSS`](#css)<[`Rules`](#rules)\> \| [`CSS`](#css)<[`Rules`](#rules)\>[]\> |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `css` | [`CSS`](#css)<`R`\> | The CSS value from which to generate the style sheet |
+| `css` | `T` | The CSS value from which to generate the style sheet |
 
 #### Returns
 
-`string`
+`T` extends `Record`<infer K, [`CSS`](#css)<`unknown`\> \| [`CSS`](#css)<`unknown`\>[]\> ? `Record`<`K`, `string`\> : `string`
 
 The generated style sheet
 
 #### Defined in
 
-[index.d.ts:101](https://github.com/nsaunders/demitasse/blob/5bf1b6e/index.d.ts#L101)
+[index.d.ts:105](https://github.com/nsaunders/demitasse/blob/b9a077f/index.d.ts#L105)
