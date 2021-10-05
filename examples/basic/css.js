@@ -8,24 +8,7 @@ require("ts-node").register({
   },
 });
 
-require("demitasse").css = require("demitasse/extract").css;
-
-const sheets =
-  Object
-    .entries(require("./src/styles.ts"))
-    .map(([name, content]) => [
-      name,
-      (x => {
-        switch (typeof x) {
-          case "string":
-            return x;
-          case "object":
-            return Object.values(x).join("\n");
-          default:
-            return null;
-        }
-      })(content)
-    ]);
+const sheets = Object.entries(require("./src/styles.ts").default);
 
 const outDir = path.join(__dirname, "css");
 

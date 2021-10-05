@@ -1,8 +1,8 @@
 import { FC, HTMLAttributes } from "react";
-import { css } from "demitasse";
+import { css, toClassNames } from "demitasse";
 import cx from "classnames";
 
-export const styles = /*#__PURE__*/ css("button", {
+const styles = /*#__PURE__*/ css("button", {
   appearance: "none",
   outline: "none",
   paddingTop: 4,
@@ -20,5 +20,9 @@ export const styles = /*#__PURE__*/ css("button", {
 });
 
 export const Button: FC<HTMLAttributes<HTMLButtonElement>> = ({ className, ...props }) => (
-  <button className={cx(className, styles)} {...props} />
+  <button className={cx(className, toClassNames(styles))} {...props} />
 );
+
+export const buttonStyles = [
+  styles,
+];

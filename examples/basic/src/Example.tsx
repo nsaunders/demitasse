@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
-import { css } from "demitasse";
+import { VFC, useState } from "react";
+import { css, toClassNames } from "demitasse";
 import cx from "classnames";
-import { Button } from "./Button";
-import { Input } from "./Input";
+import { Button, buttonStyles } from "./Button";
+import { Input, inputStyles } from "./Input";
 
-export const styles = /*#__PURE__*/css("example", {
+const styles = /*#__PURE__*/css("example", {
   container: {
     display: "flex",
     margin: -2,
@@ -17,24 +17,31 @@ export const styles = /*#__PURE__*/css("example", {
   },
 });
 
-export const Example: FC<{ children?: undefined; }> = () => {
+export const Example: VFC<unknown> = () => {
+  const { container, display, item } = toClassNames(styles);
   const [count, setCount] = useState(0);
   return (
-    <div className={styles.container}>
+    <div className={container}>
       <Button
         className={styles.item}
         onClick={() => { setCount(count ? count - 1 : count); }}>
         -
       </Button>
       <Input
-        className={cx(styles.item, styles.display)}
+        className={cx(item, display)}
         value={count}
         onChange={() => {}} />
       <Button
-        className={styles.item}
+        className={item}
         onClick={() => { setCount(count + 1); }}>
         +
       </Button>
     </div>
   );
 };
+
+export const exampleStyles = [
+  ...buttonStyles,
+  ...inputStyles,
+  styles,
+];
