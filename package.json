@@ -22,7 +22,8 @@
     "typescript"
   ],
   "dependencies": {
-    "csstype": "^3.0.8"
+    "csstype": "^3.0.8",
+    "esm": "^3.2.25"
   },
   "devDependencies": {
     "prettier": "^2.3.2",

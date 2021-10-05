@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 2
       - id: check
         name: check
-        run: NEW_VERSION=$(git diff -U0 HEAD~ -- package.json | grep -Po "(?<=\+\s{2}\"version\"\:\s\")([^\"]+)"); echo "::set-output name=new_version::$NEW_VERSION"
+        run: NEW_VERSION=$(git diff -U0 HEAD~ -- package.json | grep -Po "(?<=\+\s{2}\"version\"\:\s\")([^\"]+)" || true); echo "::set-output name=new_version::$NEW_VERSION"
       - if: steps.check.outputs.new_version != ''
         name: tag
         uses: actions/github-script@v3
