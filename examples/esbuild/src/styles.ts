@@ -1,10 +1,10 @@
-import { buttonStyles } from "./Button";
-import { exampleStyles } from "./Example";
-import { inputStyles } from "./Input";
+import { styles as button } from "./Button";
+import { styles as example } from "./Example";
+import { styles as input } from "./Input";
 import { toString } from "demitasse";
 
 export default toString([
-  ...buttonStyles,
-  ...exampleStyles,
-  ...inputStyles,
+  ...button,
+  ...example,
+  ...input,
 ]);
