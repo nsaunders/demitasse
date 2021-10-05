@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { VFC, useState } from "react";
 import { css, toClassNames } from "demitasse";
 import cx from "classnames";
-import { Button, buttonStyles } from "./Button";
-import { Input, inputStyles } from "./Input";
+import { Button, styles as buttonStyles } from "./Button";
+import { Input, styles as inputStyles } from "./Input";
 
-const styles = /*#__PURE__*/css("example", {
+const exampleStyles = /*#__PURE__*/css("example", {
   container: {
     display: "flex",
     margin: -2,
@@ -17,8 +17,8 @@ const styles = /*#__PURE__*/css("example", {
   },
 });
 
-export const Example: FC<{ children?: undefined; }> = () => {
-  const classes = toClassNames(styles);
+export const Example: VFC<unknown> = () => {
+  const classes = toClassNames(exampleStyles);
   const [count, setCount] = useState(0);
   return (
     <div className={classes.container}>
@@ -40,8 +40,8 @@ export const Example: FC<{ children?: undefined; }> = () => {
   );
 };
 
-export const exampleStyles = [
+export const styles = [
   ...buttonStyles,
   ...inputStyles,
-  styles
+  exampleStyles
 ];

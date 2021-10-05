@@ -2,7 +2,7 @@ import { FC, HTMLProps } from "react";
 import { css, toClassNames } from "demitasse";
 import cx from "classnames";
 
-const styles = /*#__PURE__*/ css("input", {
+const inputStyles = /*#__PURE__*/ css("input", {
   appearance: "none",
   outline: "none",
   paddingTop: 4,
@@ -22,9 +22,9 @@ const styles = /*#__PURE__*/ css("input", {
 });
 
 export const Input: FC<HTMLProps<HTMLInputElement>> = ({ className, ...props }) => (
-  <input className={cx(className, toClassNames(styles))} type="text" {...props} />
+  <input className={cx(className, toClassNames(inputStyles))} type="text" {...props} />
 );
 
-export const inputStyles = [
-  styles,
+export const styles = [
+  inputStyles,
 ];
