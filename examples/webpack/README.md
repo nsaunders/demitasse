@@ -31,24 +31,6 @@ Note that, of these, val-loader is likely the only library that is strictly
 required for demitasse's CSS extraction. Beyond that, you can choose whatever
 mix of tools best suits your use case and personal preferences.
 
-
-## How it works
-
-The [`./src/styles.ts`](./src/styles.ts) module exports the style rules used
-throughout the app. Essentially, it functions as an index of style rules.
-
-A [val-loader](https://webpack.js.org/loaders/val-loader)-compatible Node.js
-script uses the style rule index to generate static CSS. This script exists as
-a virtual module [`./src/styles.css`](./webpack.config.js#L43-L121) because its
-source seems most relevant in the context of webpack configuration, but it could
-just as easily inhabit its own physical module.
-
-The generated CSS output is then passed on to
-[postcss-loader](https://webpack.js.org/loaders/postcss-loader),
-[css-loader](https://webpack.js.org/loaders/css-loader), and finally
-[mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin)
-to be emitted in the form of a static CSS file.
-
 ## Try it
 
 **First, install dependencies:**
