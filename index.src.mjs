@@ -1,12 +1,12 @@
 export function demi(moduleId, rules, options) {
   return [
     [[moduleId, rules, options || {}]], // We want to be able to spread this into an existing array of CSS in order to combine with dependencies.
-    toClassNames(moduleId, rules, options || {})
+    toClassNames(moduleId, rules, options || {}),
   ];
 }
 
 export function cssExport(moduleId, cssArray) {
-  return cssArray.map(function(css) {
+  return cssArray.map(function (css) {
     css[3] = moduleId;
     return css;
   });
@@ -14,7 +14,7 @@ export function cssExport(moduleId, cssArray) {
 
 export function sheets(cssArray) {
   return cssArray
-    .map(function(args) {
+    .map(function (args) {
       var moduleId = args[0];
       var rules = args[1];
       var options = args[2];
@@ -23,30 +23,35 @@ export function sheets(cssArray) {
         return serializeCSS(cssModel("." + id, rule));
       }, options && options.debug);
       var serialized = f(moduleId, rules);
-      return [sheetId, typeof serialized === "string" ? serialized : Object.values(serialized).join("\n")];
+      return [
+        sheetId,
+        typeof serialized === "string"
+          ? serialized
+          : Object.values(serialized).join("\n"),
+      ];
     })
-    .reduce(function(acc, sheet) {
-      var existing = acc.filter(function(x) { return x[1] === sheet[1]; })[0];
+    .reduce(function (acc, sheet) {
+      var existing = acc.filter(function (x) {
+        return x[1] === sheet[1];
+      })[0];
       if (existing) {
         existing[0] = "_common";
         existing[2] += 1;
-      }
-      else {
+      } else {
         acc.push([sheet[0], sheet[1], 1]);
       }
       return acc;
     }, [])
-    .sort(function(a, b) {
+    .sort(function (a, b) {
       var x = a[2];
       var y = b[2];
       return x > y ? -1 : x < y ? 1 : 0;
     })
-    .reduce(function(outputs, sheet) {
+    .reduce(function (outputs, sheet) {
       var existing = outputs[sheet[0]];
       if (!existing) {
         outputs[sheet[0]] = sheet[1];
-      }
-      else {
+      } else {
         outputs[sheet[0]] = existing + "\n" + sheet[1];
       }
       return outputs;
@@ -54,7 +59,9 @@ export function sheets(cssArray) {
 }
 
 function toClassNames(moduleId, rules, options) {
-  var f = process(function (id) { return id; }, options && options.debug);
+  var f = process(function (id) {
+    return id;
+  }, options && options.debug);
   return f(moduleId, rules);
 }
 
@@ -70,11 +77,35 @@ function process(f, debug) {
       );
     }).length;
     if (!multi) {
-      return f(debug ? [groupName, groupHash].join("-") : hash({ groupName: groupName, groupHash: groupHash }), rules);
+      return f(
+        debug
+          ? [groupName, groupHash].join("-")
+          : hash({ groupName: groupName, groupHash: groupHash }),
+        rules
+      );
     }
     return keys
       .map(function (key) {
-        return [key, f(debug ? [groupName, groupHash, key.replace(/[A-Z]/g, function(x) { return "-" + x.toLowerCase() ; })].join("-") : hash({ groupName: groupName, groupHash: groupHash, key: key, rule: rules[key] }), rules[key])];
+        return [
+          key,
+          f(
+            debug
+              ? [
+                  groupName,
+                  groupHash,
+                  key.replace(/[A-Z]/g, function (x) {
+                    return "-" + x.toLowerCase();
+                  }),
+                ].join("-")
+              : hash({
+                  groupName: groupName,
+                  groupHash: groupHash,
+                  key: key,
+                  rule: rules[key],
+                }),
+            rules[key]
+          ),
+        ];
       })
       .reduce(function (obj, rule) {
         obj[rule[0]] = rule[1];
@@ -162,7 +193,9 @@ function normalizeValue(value, prop) {
     "strokeOpacity",
     "strokeWidth",
   ];
-  return ~unitless.indexOf(prop) ? value : value + (~prop.indexOf("Duration") ? "ms" : "px");
+  return ~unitless.indexOf(prop)
+    ? value
+    : value + (~prop.indexOf("Duration") ? "ms" : "px");
 }
 
 function cssModel(acc, rule) {

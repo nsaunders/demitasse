@@ -6,7 +6,7 @@
   "module": "index.mjs",
   "scripts": {
     "docs": "typedoc index.d.ts && replace '\\(README\\.md#' '(#' docs/README.md",
-    "format": "prettier --write *.src.js *.ts test.mjs",
+    "format": "prettier --write index.src.mjs index.d.ts test.mjs",
     "prepublishOnly": "terser index.src.mjs -o index.mjs",
     "test": "terser index.src.mjs -o index.mjs && node ./test.mjs"
   },

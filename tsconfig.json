@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    "strict": true,
+    "lib": ["es2015"]
   },
   "include": ["index.d.ts"]
 }
