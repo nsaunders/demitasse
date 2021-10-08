@@ -1,32 +1,61 @@
-export function css(_groupName, _rules, _options) {
-  return { _groupName, _rules, _options };
+export function demi(moduleId, rules, options) {
+  return [
+    [[moduleId, rules, options || {}]], // We want to be able to spread this into an existing array of CSS in order to combine with dependencies.
+    toClassNames(moduleId, rules, options || {})
+  ];
 }
 
-export function toString(css) {
-  if (css instanceof Array) {
-    return css.map(toString).join("\n");
-  }
-  if (typeof css === "object") {
-    var keys = Object.keys(css);
-    if (keys.length === keys.filter(function(k) { return css[k] && (css[k]._groupName || css[k] instanceof Array); }).length) {
-      return keys
-        .map(function(k) {  return [k, toString(css[k])]; })
-        .reduce(function(obj, o) {
-          obj[o[0]] = o[1];
-          return obj;
-        }, {});
-    }
-  }
-  var f = process(function (id, rule) {
-    return serializeCSS(cssModel("." + id, rule));
-  }, css._options && css._options.debug);
-  var serialized = f(css._groupName, css._rules);
-  return typeof serialized === "string" ? serialized : Object.values(serialized).join("\n");
+export function cssExport(moduleId, cssArray) {
+  return cssArray.map(function(css) {
+    css[3] = moduleId;
+    return css;
+  });
 }
 
-export function toClassNames(css) {
-  var f = process(function (id) { return id; }, css._options && css._options.debug);
-  return f(css._groupName, css._rules);
+export function sheets(cssArray) {
+  return cssArray
+    .map(function(args) {
+      var moduleId = args[0];
+      var rules = args[1];
+      var options = args[2];
+      var sheetId = args[3] || args[0];
+      var f = process(function (id, rule) {
+        return serializeCSS(cssModel("." + id, rule));
+      }, options && options.debug);
+      var serialized = f(moduleId, rules);
+      return [sheetId, typeof serialized === "string" ? serialized : Object.values(serialized).join("\n")];
+    })
+    .reduce(function(acc, sheet) {
+      var existing = acc.filter(function(x) { return x[1] === sheet[1]; })[0];
+      if (existing) {
+        existing[0] = "_common";
+        existing[2] += 1;
+      }
+      else {
+        acc.push([sheet[0], sheet[1], 1]);
+      }
+      return acc;
+    }, [])
+    .sort(function(a, b) {
+      var x = a[2];
+      var y = b[2];
+      return x > y ? -1 : x < y ? 1 : 0;
+    })
+    .reduce(function(outputs, sheet) {
+      var existing = outputs[sheet[0]];
+      if (!existing) {
+        outputs[sheet[0]] = sheet[1];
+      }
+      else {
+        outputs[sheet[0]] = existing + "\n" + sheet[1];
+      }
+      return outputs;
+    }, {});
+}
+
+function toClassNames(moduleId, rules, options) {
+  var f = process(function (id) { return id; }, options && options.debug);
+  return f(moduleId, rules);
 }
 
 function process(f, debug) {
