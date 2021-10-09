@@ -47,7 +47,7 @@ export declare function demi<I extends Readonly<string>, R extends Rules>(
 ];
 
 export declare function cssExport<I extends Readonly<string>>(
-  sheetId: I extends "_common" ? never : I,
+  moduleId: I extends "_common" ? never : I,
   rules: CSS<"NotExported" | "Exported">[]
 ): CSS<"Exported">[];
 
