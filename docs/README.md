@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L27)
+[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L27)
 
 ___
 
@@ -45,7 +45,7 @@ A length value
 
 #### Defined in
 
-[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L9)
+[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L9)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L23)
+[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L23)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L18)
+[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L18)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L21)
+[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L21)
 
 ___
 
@@ -95,13 +95,13 @@ A time value
 
 #### Defined in
 
-[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L16)
+[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L16)
 
 ## Functions
 
 ### cssExport
 
-▸ **cssExport**<`I`\>(`sheetId`, `rules`): [`CSS`](#css)<``"Exported"``\>[]
+▸ **cssExport**<`I`\>(`moduleId`, `rules`): [`CSS`](#css)<``"Exported"``\>[]
 
 #### Type parameters
 
@@ -113,7 +113,7 @@ A time value
 
 | Name | Type |
 | :------ | :------ |
-| `sheetId` | `I` extends ``"_common"`` ? `never` : `I` |
+| `moduleId` | `I` extends ``"_common"`` ? `never` : `I` |
 | `rules` | [`CSS`](#css)<``"NotExported"`` \| ``"Exported"``\>[] |
 
 #### Returns
@@ -122,7 +122,7 @@ A time value
 
 #### Defined in
 
-[index.d.ts:49](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L49)
+[index.d.ts:49](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L49)
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:32](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L32)
+[index.d.ts:32](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L32)
 
 ___
 
@@ -171,4 +171,4 @@ ___
 
 #### Defined in
 
-[index.d.ts:54](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L54)
+[index.d.ts:54](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L54)
