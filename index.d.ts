@@ -24,18 +24,17 @@ export type Options = {
   debug?: boolean;
 };
 
-type ExportStatus = "NotExported" | "Exported";
-
-export type CSS<R extends ExportStatus = "NotExported"> = any[] & {
-  _exportStatus: R;
-};
+export type CSS<S extends "NotExported" | "Exported"> = A.Type<
+  [string, Rules, Options],
+  S
+>;
 
 export declare function demi<I extends Readonly<string>, R extends Rules>(
   moduleId: I extends "_common" ? never : I,
   rules: R,
   options?: Options
 ): [
-  CSS,
+  CSS<"NotExported">[],
   A.Compute<
     U.IntersectOf<
       R extends Record<infer K, Rule>
@@ -47,9 +46,9 @@ export declare function demi<I extends Readonly<string>, R extends Rules>(
   >
 ];
 
-export declare function cssExport<I extends Readonly<string>, R extends Rules>(
+export declare function cssExport<I extends Readonly<string>>(
   sheetId: I extends "_common" ? never : I,
-  rules: [string, R, Options][]
-): CSS<"Exported">;
+  rules: CSS<"NotExported" | "Exported">[]
+): CSS<"Exported">[];
 
-export declare function sheets(css: CSS<"Exported">): Record<string, string>;
+export declare function sheets(css: CSS<"Exported">[]): Record<string, string>;
