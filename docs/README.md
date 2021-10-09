@@ -5,7 +5,6 @@
 ### Type aliases
 
 - [CSS](#css)
-- [ExportStatus](#exportstatus)
 - [Length](#length)
 - [Options](#options)
 - [Rule](#rule)
@@ -22,27 +21,17 @@
 
 ### CSS
 
-Ƭ **CSS**<`R`\>: `any`[] & { `_exportStatus`: `R`  }
+Ƭ **CSS**<`S`\>: `A.Type`<[`string`, [`Rules`](#rules), [`Options`](#options)], `S`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `R` | extends [`ExportStatus`](#exportstatus)``"NotExported"`` |
+| `S` | extends ``"NotExported"`` \| ``"Exported"`` |
 
 #### Defined in
 
-[index.d.ts:29](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L29)
-
-___
-
-### ExportStatus
-
-Ƭ **ExportStatus**: ``"NotExported"`` \| ``"Exported"``
-
-#### Defined in
-
-[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L27)
+[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L27)
 
 ___
 
@@ -56,7 +45,7 @@ A length value
 
 #### Defined in
 
-[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L9)
+[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L9)
 
 ___
 
@@ -72,7 +61,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L23)
+[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L23)
 
 ___
 
@@ -82,7 +71,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L18)
+[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L18)
 
 ___
 
@@ -92,7 +81,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L21)
+[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L21)
 
 ___
 
@@ -106,41 +95,40 @@ A time value
 
 #### Defined in
 
-[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L16)
+[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L16)
 
 ## Functions
 
 ### cssExport
 
-▸ **cssExport**<`I`, `R`\>(`sheetId`, `rules`): [`CSS`](#css)<``"Exported"``\>
+▸ **cssExport**<`I`\>(`sheetId`, `rules`): [`CSS`](#css)<``"Exported"``\>[]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `I` | extends `string` |
-| `R` | extends [`Rules`](#rules) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `sheetId` | `I` extends ``"_common"`` ? `never` : `I` |
-| `rules` | [`string`, `R`, [`Options`](#options)][] |
+| `rules` | [`CSS`](#css)<``"NotExported"`` \| ``"Exported"``\>[] |
 
 #### Returns
 
-[`CSS`](#css)<``"Exported"``\>
+[`CSS`](#css)<``"Exported"``\>[]
 
 #### Defined in
 
-[index.d.ts:50](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L50)
+[index.d.ts:49](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L49)
 
 ___
 
 ### demi
 
-▸ **demi**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css), `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+▸ **demi**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
 
 #### Type parameters
 
@@ -159,11 +147,11 @@ ___
 
 #### Returns
 
-[[`CSS`](#css), `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+[[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
 
 #### Defined in
 
-[index.d.ts:33](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L33)
+[index.d.ts:32](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L32)
 
 ___
 
@@ -175,7 +163,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `css` | [`CSS`](#css)<``"Exported"``\> |
+| `css` | [`CSS`](#css)<``"Exported"``\>[] |
 
 #### Returns
 
@@ -183,4 +171,4 @@ ___
 
 #### Defined in
 
-[index.d.ts:55](https://github.com/nsaunders/demitasse/blob/124d84f/index.d.ts#L55)
+[index.d.ts:54](https://github.com/nsaunders/demitasse/blob/5d84361/index.d.ts#L54)
