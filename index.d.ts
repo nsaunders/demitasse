@@ -40,6 +40,8 @@ export declare function demi<I extends Readonly<string>, R extends Rules>(
       R extends Record<infer K, Rule>
         ? K extends `${infer _}&${infer _}`
           ? string
+          : K extends `@${infer _}`
+          ? string
           : Record<K, string>
         : string
     >

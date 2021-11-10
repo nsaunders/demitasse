@@ -72,6 +72,7 @@ function process(f, debug) {
     var multi = keys.filter(function (key) {
       return (
         typeof rules[key] === "object" &&
+        key[0] !== "@" &&
         key !== "animationKeyframes" &&
         !~key.indexOf("&")
       );
@@ -212,6 +213,16 @@ function cssModel(acc, rule) {
         });
         return obj;
       }
+      if (key[0] === "@") {
+        if (!obj[acc]) {
+          obj[acc] = {};
+        }
+        if (!obj[acc][key]) {
+          obj[acc][key] = {};
+        }
+        obj[acc][key] = rule[key];
+        return obj;
+      }
       return Object.assign(
         {},
         obj,
@@ -263,16 +274,38 @@ function serializeCSS(obj) {
           "\n}",
         ].join("");
       }
-      return (
-        key +
-        " {" +
-        Object.keys(obj[key])
-          .map(function (prop) {
-            return "\n  " + prop + ": " + obj[key][prop] + ";";
-          })
-          .join("") +
-        "\n}"
-      );
+      return Object.keys(obj[key])
+        .map(function (k) {
+          if (typeof obj[key][k] === "object") {
+            return [obj[key][k], k];
+          }
+          var tmp = {};
+          tmp[k] = obj[key][k];
+          return [tmp];
+        })
+        .reduce(function (acc, x) {
+          var existing = acc.filter(function (y) {
+            return x[1] === y[1];
+          })[0];
+          if (existing) {
+            Object.assign(existing[0], x[0]);
+          } else {
+            acc.push(x);
+          }
+          return acc;
+        }, [])
+        .map(function (x) {
+          var indent = x[1] ? "  " : "";
+          var rule =
+            Object.keys(x[0]).reduce(function (acc, k) {
+              return acc + "\n  " + indent + k + ": " + x[0][k] + ";";
+            }, indent + key + " {") +
+            "\n" +
+            indent +
+            "}";
+          return x[1] ? x[1] + " {\n" + rule + "\n}" : rule;
+        })
+        .join("\n");
     })
     .join("\n");
 }

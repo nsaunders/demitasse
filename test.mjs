@@ -142,6 +142,56 @@ test("CSS output with keyframes", function () {
   assert.equal(actual, expected);
 });
 
+test("CSS output with at-rule (basic)", function () {
+  var actual = sheets(
+    demi("foo", {
+      color: "pink",
+      background: "red",
+      "@supports (display: grid)": {
+        color: "white",
+        background: "green",
+      },
+    })[0]
+  )["foo"];
+  var expected = `.qnoo90g {
+  color: pink;
+  background: red;
+}
+@supports (display: grid) {
+  .qnoo90g {
+    color: white;
+    background: green;
+  }
+}`;
+  assert.equal(actual, expected);
+});
+
+test("CSS output with at-rule (multi)", function () {
+  var actual = sheets(
+    demi("foo", {
+      bar: {
+        color: "pink",
+        background: "red",
+        "@supports (display: grid)": {
+          color: "white",
+          background: "green",
+        },
+      },
+    })[0]
+  )["foo"];
+  var expected = `.ol1x4g {
+  color: pink;
+  background: red;
+}
+@supports (display: grid) {
+  .ol1x4g {
+    color: white;
+    background: green;
+  }
+}`;
+  assert.equal(actual, expected);
+});
+
 test("CSS output matches class name on simple rule", function () {
   var d = demi("black", { background: "black" });
   assert.match(sheets(d[0])["black"], new RegExp(`\\.${d[1]}`));
