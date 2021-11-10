@@ -166,6 +166,24 @@ test("CSS output with at-rule (basic)", function () {
   assert.equal(actual, expected);
 });
 
+test("CSS output with at-rule (nesting)", function () {
+  var actual = sheets(
+    demi("foo", {
+      "@supports (display: grid)": {
+        "&:hover": {
+          color: "green",
+        },
+      },
+    })[0]
+  )["foo"];
+  var expected = `@supports (display: grid) {
+  .w1myv4i:hover {
+    color: green;
+  }
+}`;
+  assert.equal(actual, expected);
+});
+
 test("CSS output with at-rule (multi)", function () {
   var actual = sheets(
     demi("foo", {
@@ -187,6 +205,24 @@ test("CSS output with at-rule (multi)", function () {
   .ol1x4g {
     color: white;
     background: green;
+  }
+}`;
+  assert.equal(actual, expected);
+});
+
+test("CSS output with at-rule (multi, nesting)", function () {
+  var actual = sheets(
+    demi("foo", {bar:{
+      "@supports (display: grid)": {
+        "&:hover": {
+          color: "green",
+        },
+      },
+    }})[0]
+  )["foo"];
+  var expected = `@supports (display: grid) {
+  .o2j59k:hover {
+    color: green;
   }
 }`;
   assert.equal(actual, expected);

@@ -214,14 +214,15 @@ function cssModel(acc, rule) {
         return obj;
       }
       if (key[0] === "@") {
-        if (!obj[acc]) {
-          obj[acc] = {};
-        }
-        if (!obj[acc][key]) {
-          obj[acc][key] = {};
-        }
-        obj[acc][key] = rule[key];
-        return obj;
+        var inner = cssModel(acc, rule[key]);
+        Object
+          .keys(inner)
+          .forEach(function(k) {
+            var tmp = {};
+            tmp[key] = inner[k];
+            inner[k] = Object.assign({}, obj[k], tmp);
+          });
+        return Object.assign({}, obj, inner);
       }
       return Object.assign(
         {},
