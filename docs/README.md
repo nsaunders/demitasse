@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L27)
+[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L27)
 
 ___
 
@@ -45,7 +45,7 @@ A length value
 
 #### Defined in
 
-[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L9)
+[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L9)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L23)
+[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L23)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L18)
+[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L18)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L21)
+[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L21)
 
 ___
 
@@ -95,7 +95,7 @@ A time value
 
 #### Defined in
 
-[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L16)
+[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L16)
 
 ## Functions
 
@@ -122,13 +122,13 @@ A time value
 
 #### Defined in
 
-[index.d.ts:49](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L49)
+[index.d.ts:51](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L51)
 
 ___
 
 ### demi
 
-▸ **demi**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+▸ **demi**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `K` extends \`@${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
 
 #### Type parameters
 
@@ -147,11 +147,11 @@ ___
 
 #### Returns
 
-[[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+[[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `K` extends \`@${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
 
 #### Defined in
 
-[index.d.ts:32](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L32)
+[index.d.ts:32](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L32)
 
 ___
 
@@ -171,4 +171,4 @@ ___
 
 #### Defined in
 
-[index.d.ts:54](https://github.com/nsaunders/demitasse/blob/4cde73e/index.d.ts#L54)
+[index.d.ts:56](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L56)
