@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "echo \"This example doesn't include a live demo.\"",
-    "build": "node css"
+    "build": "node build-css"
   },
   "dependencies": {
     "@types/react": "^17.0.15",
