@@ -175,14 +175,14 @@ get started.
 
 ## CSS Features
 
-####✅ Single rule
+#### ✅ Single rule
 ```typescript
 const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
   color: "black"
 });
 ```
 
-####✅ Multi rule
+#### ✅ Multi rule
 ```typescript
 const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
   container: {
@@ -195,7 +195,7 @@ const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
 });
 ```
 
-####✅ Nested selectors
+#### ✅ Nested selectors
 ```typescript
 const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
   color: "black",
@@ -205,7 +205,7 @@ const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
 });
 ```
 
-####✅ Animation keyframes
+#### ✅ Animation keyframes
 ```typescript
 const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
   animationKeyframes: {
@@ -221,7 +221,7 @@ const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
 });
 ```
 
-####✅ At-rules
+#### ✅ At-rules
 ```typescript
 const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
   "@supports (display: grid)": {
@@ -230,7 +230,7 @@ const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
 });
 ```
 
-####✅ Implicit units
+#### ✅ Implicit units
 ```typescript
 const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
   transitionDuration: 1000, // 1000ms
@@ -238,7 +238,7 @@ const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
 });
 ```
 
-####👍 Theming support
+#### 👍 Theming support
 
 via [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 ```typescript
@@ -247,7 +247,7 @@ const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
 });
 ```
 
-####🤷 Dynamic CSS
+#### 🤷 Dynamic CSS
 
 For dynamic CSS, probably just use inline styles in addition to style sheets and
 class names. Inline styles are usually criticized because:
