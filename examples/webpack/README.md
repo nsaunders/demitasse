@@ -33,6 +33,8 @@ mix of tools best suits your use case and personal preferences.
 
 ## Try it
 
+[Run in CodeSandbox](https://codesandbox.io/s/github/nsaunders/demitasse/tree/master/examples/webpack?file=/src/Example.tsx)
+
 **First, install dependencies:**
 ```bash
 npm install
@@ -40,7 +42,7 @@ npm install
 
 **To run the dev server:**
 ```bash
-npm run dev
+npm start
 ```
 
 **To create a production build:**
