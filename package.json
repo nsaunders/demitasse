@@ -1,7 +1,7 @@
 {
   "name": "demitasse",
   "description": "Zero-runtime CSS-in-TS",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-alpha.7",
   "main": "index.js",
   "module": "index.mjs",
   "scripts": {
