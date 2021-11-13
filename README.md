@@ -10,7 +10,7 @@ without the typical runtime cost or configuration burden of other approaches.
 
 👬 Colocate styles and markup in the same TypeScript module…or don't.
 
-⚒️ Extract static CSS at build time.
+⚒️  Extract static CSS at build time.
 
 📦 Locally-scoped class names
 
@@ -21,127 +21,248 @@ without the typical runtime cost or configuration burden of other approaches.
 npm install demitasse
 ```
 
-## Default API
+## How to use
 
-The default API is perhaps best understood as the "runtime" API, although it
-produces no CSS and essentially functions only as an index of the CSS rulesets
-generated at build time. (For more, see [Extraction API](#extraction-api).).
+### Step 1: Imports
 
-### `css`
-
-The `css` function constitutes the entire API.
-
-#### Parameters
-
-##### `groupName`
-
-The name specified here, e.g. `link-btn`, will be prepended to each class
-name, e.g. `link-btn-3azf08l-content`. This identifier provides an easier
-debugging experience and avoids side effects that might otherwise result from
-duplicative style rules.
-
-##### `styles`
-
-Style rules are specified here in JavaScript object form. As with similar
-libraries, CSS property names are written in camel-case, e.g.
-`backgroundColor`. Vendor-prefixed property names are written in Pascal case,
-e.g. `WebkitAppearance`.
-
-A special `animationKeyframes` property can be used to create a `@keyframes`
-rule automatically in the context in which it is used. This replaces the
-`animationName` property, which can still be used if you would like to
-reference a `@keyframes` rule defined elsewhere.
-
-Nested rulesets are also supported. Nested selectors can use `&` to reference
-the parent class name, e.g. `&:hover` or `& + &`.
-
-
-Finally, this object may define either one or multiple (a record of) style
-rules, which determines the return type as described below.
-
-#### Return
-
-A different value is returned depending on whether the `css` function is called
-with a single or multiple style rules.
-
-In the former case, the function returns a generated class name, which you
-can then attach to the corresponding HTML element to apply the rule.
-
-In the latter case, the function returns a record of generated class names
-corresponding to the provided style rules.
-
-#### Examples
-
-##### Single Ruleset
 ```typescript
-import { css } from "demitasse";
-
-export const styles = /*#__PURE__*/ css("link", {
-  color: "#00f",
-  "&:hover": {
-    color: "#06f"
-  },
-  "&:active": {
-    color: "#f30",
-  },
-});
-
-export function styleLinks() {
-  document.querySelectorAll("a").forEach(anchor => {
-    anchor.className = styles;
-  });
-}
+import { demi, cssExport } from "demitasse";
+import { ComponentBase, css as baseCSS } from "./component-base"; // optional
 ```
 
-##### Multiple Rules
+* The `demi` function is used to define CSS rules. It outputs a record of CSS
+  class names (or just a single class name) along with the CSS model (a data
+  structure from which a style sheet will be generated).
+* The `cssExport` function is used to export the aforementioned CSS models.
+* The `css as baseCSS` import will be used to re-export the CSS model exported
+  from another module. This is required when the current module has some CSS
+  dependency, e.g. when leveraging a base component.
+
+> ℹ️  In the example above, we imported a variable called `css` from the upstream
+> module. This follows a suggested convention of exporting CSS models as `css`.
+
+### Step 2: Create a CSS module ID and options
+
 ```typescript
-import { css } from "demitasse";
-import { FC, ReactNode } from "react";
+const
+  cssModuleId = "fancy-button",
+  cssOptions = { debug: !!process.env.DEBUG_CSS }; // optional
+```
 
-export const styles = /*#__PURE__*/ css("button", {
-  container: {
-    display: "inline-flex",
-  },
-  icon: {
-    marginRight: 8,
-  },
-  label: {
-    flex: 1,
-  },
-});
+* The `cssModuleId` serves dual purposes:
+  * When generating style sheets, the name of the style sheet is the module ID,
+    e.g. `fancy-button.css`.
+  * When the `debug` option is enabled, generated class names will include the
+    module ID to allow CSS rules to be identified more easily.
+* The `options` object supports a single `debug` option. This option expands the
+  generated class names, which usually look something like `a4eds5a`, into more
+  recognizable names like `fancy-button-a4eds5a-container`.
 
-export const Button: FC<{ icon: ReactNode }> = ({ icon, children }) => (
-  <button className={styles.container}>
-    <div className={styles.icon}>{icon}</div>
-    <div className={styles.label}>{children}</div>
-  </button>
+### Step 3: Create style rules
+
+```typescript
+const [fancyButtonCSS, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  appearance: "none",
+  font: "inherit",
+  border: 0,
+  padding: "4px 8px 4px 8px",
+  background: "#06f",
+  color: "#fff",
+  "&:hover": {
+    animationKeyframes: {
+      "0%, 100%": {
+        transform: "none",
+      },
+      "50%": {
+        transform: "scale(1.1)",
+      }
+    },
+    animationDuration: 1000,
+    animationIterationCount: "infinite"
+  }
+}, cssOptions);
+```
+
+* The `fancyButtonCSS` variable references the CSS model that will be exported
+  later in order to generate the style sheet.
+* The `styles` variable references the generated class name.
+
+> ℹ️  This example shows a single rule, which is why `styles` would reference a
+> single generated class name string. It is also possible to specify a record of
+> rules, in which case `styles` would return a record of generated class names.
+
+### Step 4: Use generated class names
+
+This library is framework-agnostic; but suppose you are building a simple React
+component `FancyButton` on the basis of some other component `ContainerBase`.
+Here is how you would use the `styles` object from the previous step:
+
+```typescript
+export const FancyButton: FC<...> = ({ children, ...props }) => (
+  <ContainerBase as="button" className={styles} {...props}>
+    {children}
+  </ContainerBase>
 );
 ```
 
-## Extraction API
-
-Rather than prescribing specific bundlers, transpilers, plugins, or other build
-tools, the extraction API provides a small utility that will help you to build
-your own CSS extraction mechanism on the basis of other tools. This allows you
-to reuse knowledge, to avoid surprises, and to integrate CSS extraction into
-your existing build process smoothly.
-
-Extracting CSS involves redirecting [default `css` function](#default-api) calls
-to the corresponding function in the extraction API. For example, a vanilla
-NodeJS build script might look something like this:
+### Step 5: Export CSS models
 
 ```typescript
-require("demitasse").css = require("demitasse/extract").css;
-require("ts-node").register({ transpileOnly: true, compilerOptions: { module: "commonjs" } });
-const output = require("./src/style-index.ts");
-// TODO: Write CSS output to a file, pipe it to PostCSS, or whatever!
+export const css = /*#__PURE__*/ cssExport(cssModuleId, [
+  ...baseCSS,
+  ...fancyButtonCSS,
+]);
 ```
 
-There's no magic here: The `require("demitasse/extract").css` function has the
-same signature as its [default counterpart](#default-api); but, instead of
-returning generated class names, it returns the corresponding CSS code that you
-can then deliver to the browser by whatever means are appropriate for your use
-case.
+* The `cssExport` function prepares the CSS models to allow the corresponding
+  style sheet outputs to be produced.
+* The `cssModuleId` is provided again to distinguish re-exports.
+  * Within style sheet output, re-exported CSS is sorted to the top based on the
+    number of times it is used. This helps to ensure that base styles can be
+    overridden by component-specific styles as expected.
+  * Re-exported CSS is also included in a `_common` style sheet to prevent
+    duplication across dependent components' style sheets.
+* The CSS models are spread into a single array. For simpler use cases without
+  CSS dependencies, this is unnecessary: You can simplify this to something like
+  `cssExport(cssModuleId, fancyButtonCSS)`.
+
+> ℹ️  This example follows a suggested convention of naming CSS exports as `css`.
+
+### Step 6: Create style sheet module
+
+e.g. **`src/styles.ts`**:
+```typescript
+import { css as fancyButton } from "./fancy-button";
+import { css as textBox } from "./text-box";
+// ...
+import { sheets } from "demitasse";
+
+export default sheets([
+  ...fancyButton,
+  ...textBox,
+]);
+```
+
+* CSS models are imported from each component module.
+* The `sheets` function is used to produce static CSS style sheet outputs.
+* The style sheets are exported as a record, with each key corresponding to a
+  module name, and values as generated CSS code.
+
+> ℹ️  It is unnecessary to include any modules that client code wouldn't depend
+> on directly. For example, you shouldn't include the CSS for a `ContainerBase`
+> component intended only for internal use because it will automatically be
+> included in the dependent module's CSS output and/or `_common.css`, and it
+> doesn't warrant its own `container-base.css` file.
+
+### Step 7: Generate style sheet outputs
+
+The module shown in Step 6 now exports a record object in the following format:
+
+```json
+{
+  "_common": "/* CSS shared across multiple modules/components */",
+  "index": "/* CSS from all modules */",
+  "fancy-button": "/* CSS from the fancy-button module/component */",
+  "text-box": "/* CSS from the text-box module/component */"
+}
+```
+
+The remaining task is to extend the existing build process for your app or
+component library to include writing the CSS code in this object to CSS files
+and/or adding it to the JavaScript bundle. Strictly speaking, this is beyond the
+scope of this library, but some [examples](#examples) are provided to help you
+get started.
+
+## CSS Features
+
+####✅ Single rule
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  color: "black"
+});
+```
+
+####✅ Multi rule
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  container: {
+    appearance: "none",
+    padding: 0
+  },
+  content: {
+    padding: 4
+  }
+});
+```
+
+####✅ Nested selectors
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  color: "black",
+  "&:hover": {
+    color: "red"
+  }
+});
+```
+
+####✅ Animation keyframes
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  animationKeyframes: {
+    "0%, 100%": {
+      opacity: 0
+    },
+    "50%": {
+      opacity: 1
+    }
+  },
+  animationDuration: 1000,
+  animationIterationCount: "infinite"
+});
+```
+
+####✅ At-rules
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  "@supports (display: grid)": {
+    display: "grid"
+  }
+});
+```
+
+####✅ Implicit units
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  transitionDuration: 1000, // 1000ms
+  width: 100, // 100px
+});
+```
+
+####👍 Theming support
+
+via [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+```typescript
+const [css, styles] = /*#__PURE__*/ demi(cssModuleId, {
+  color: "var(--primary-color)",
+});
+```
+
+####🤷 Dynamic CSS
+
+For dynamic CSS, probably just use inline styles in addition to style sheets and
+class names. Inline styles are usually criticized because:
+
+* **performance concerns**. But this is not likely a significant factor for
+  these one-off edge cases.
+* **specificity (priority)**. But for dynamic CSS values determined at runtime,
+  high specificity is almost certainly what you want, i.e. feature not bug.
+* **maintainability**. But if you believe that CSS and markup shouldn't be
+  colocated, then CSS-in-JS is probably not the architecture you are looking
+  for. Go [Get BEM](http://getbem.com) or something. 😉
+
+## API
+
+Formal API documentation is available [here](./docs).
 
 ## Examples
 
