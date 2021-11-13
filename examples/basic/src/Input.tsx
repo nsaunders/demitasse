@@ -1,8 +1,10 @@
 import { VFC, HTMLProps } from "react";
-import { css, toClassNames } from "demitasse";
+import { demi, cssExport } from "demitasse";
 import cx from "classnames";
 
-const inputStyles = /*#__PURE__*/ css("input", {
+const cssModuleId = "input";
+
+const [inputCSS, styles] = /*#__PURE__*/ demi(cssModuleId, {
   appearance: "none",
   outline: "none",
   paddingTop: 4,
@@ -22,9 +24,7 @@ const inputStyles = /*#__PURE__*/ css("input", {
 });
 
 export const Input: VFC<HTMLProps<HTMLInputElement>> = ({ className, ...props }) => (
-  <input className={cx(className, toClassNames(inputStyles))} type="text" {...props} />
+  <input className={cx(className, styles)} type="text" {...props} />
 );
 
-export const styles = [
-  inputStyles,
-];
+export const css = /*#__PURE__*/ cssExport(cssModuleId, inputCSS);

@@ -1,10 +1,12 @@
 import { VFC, useState } from "react";
-import { css, toClassNames } from "demitasse";
+import { demi, cssExport } from "demitasse";
 import cx from "classnames";
-import { Button, styles as buttonStyles } from "./Button";
-import { Input, styles as inputStyles } from "./Input";
+import { Button, css as buttonCSS } from "./Button";
+import { Input, css as inputCSS } from "./Input";
 
-const exampleStyles = /*#__PURE__*/css("example", {
+const cssModuleId = "example";
+
+const [exampleCSS, styles] = /*#__PURE__*/demi(cssModuleId, {
   container: {
     display: "flex",
     margin: -2,
@@ -18,21 +20,21 @@ const exampleStyles = /*#__PURE__*/css("example", {
 });
 
 export const Example: VFC<unknown> = () => {
-  const classes = toClassNames(exampleStyles);
   const [count, setCount] = useState(0);
+  const { container, item, display } = styles;
   return (
-    <div className={classes.container}>
+    <div className={container}>
       <Button
-        className={classes.item}
+        className={item}
         onClick={() => { setCount(count ? count - 1 : count); }}>
         -
       </Button>
       <Input
-        className={cx(classes.item, classes.display)}
+        className={cx(item, display)}
         value={count}
         onChange={() => {}} />
       <Button
-        className={classes.item}
+        className={item}
         onClick={() => { setCount(count + 1); }}>
         +
       </Button>
@@ -40,8 +42,8 @@ export const Example: VFC<unknown> = () => {
   );
 };
 
-export const styles = [
-  ...buttonStyles,
-  ...inputStyles,
-  exampleStyles,
-];
+export const css = /*#__PURE__*/ cssExport(cssModuleId, [
+  ...buttonCSS,
+  ...inputCSS,
+  ...exampleCSS,
+]);

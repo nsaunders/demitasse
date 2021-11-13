@@ -3,14 +3,12 @@
     "dev": "echo \"This example doesn't include a live demo.\"",
     "build": "node css"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/react": "^17.0.15",
     "classnames": "^2.3.1",
-    "demitasse": "^2.0.0-alpha.3",
+    "demitasse": "^2.0.0-alpha.7",
+    "esm": "^3.2.25",
     "react": "^17.0.2",
     "ts-node": "^10.1.0"
-  },
-  "dependencies": {
-    "esm": "^3.2.25"
   }
 }
