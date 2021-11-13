@@ -6,6 +6,8 @@ CSS file alongside your main JavaScript bundle.
 
 ## Try it
 
+[Open in CodeSandbox](https://codesandbox.io/s/github/nsaunders/demitasse/tree/master/examples/esbuild?file=/src/Example.tsx)
+
 **First, install dependencies:**
 ```bash
 npm install
