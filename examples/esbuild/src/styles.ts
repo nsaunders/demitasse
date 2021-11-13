@@ -1,10 +1,10 @@
-import { styles as button } from "./Button";
-import { styles as example } from "./Example";
-import { styles as input } from "./Input";
-import { toString } from "demitasse";
+import { css as button } from "./Button";
+import { css as example } from "./Example";
+import { css as input } from "./Input";
+import { sheets } from "demitasse";
 
-export default toString([
+export default Object.values(sheets([
   ...button,
   ...example,
   ...input,
-]);
+])).join("\n");
