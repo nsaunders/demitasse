@@ -215,13 +215,11 @@ function cssModel(acc, rule) {
       }
       if (key[0] === "@") {
         var inner = cssModel(acc, rule[key]);
-        Object
-          .keys(inner)
-          .forEach(function(k) {
-            var tmp = {};
-            tmp[key] = inner[k];
-            inner[k] = Object.assign({}, obj[k], tmp);
-          });
+        Object.keys(inner).forEach(function (k) {
+          var tmp = {};
+          tmp[key] = inner[k];
+          inner[k] = Object.assign({}, obj[k], tmp);
+        });
         return Object.assign({}, obj, inner);
       }
       return Object.assign(
@@ -249,12 +247,19 @@ function serializeCSS(obj) {
       return existing.concat(key);
     }, [])
     .map(function (key) {
-      if (obj[key]._tag === "keyframes") {
+      var o = JSON.parse(JSON.stringify(obj[key]));
+      Object.keys(o).forEach(function (k) {
+        if (k[0] === "@") {
+          Object.assign(o, o[k]);
+          delete o[k];
+        }
+      });
+      if (o._tag === "keyframes") {
         return [
           "@keyframes ",
           key,
           " {",
-          Object.keys(obj[key])
+          Object.keys(o)
             .filter(function (key) {
               return key !== "_tag";
             })
@@ -263,9 +268,9 @@ function serializeCSS(obj) {
                 "\n  ",
                 keyframeKey,
                 " {\n    ",
-                Object.keys(obj[key][keyframeKey])
+                Object.keys(o[keyframeKey])
                   .map(function (prop) {
-                    return prop + ": " + obj[key][keyframeKey][prop] + ";";
+                    return prop + ": " + o[keyframeKey][prop] + ";";
                   })
                   .join(""),
                 "\n  }",

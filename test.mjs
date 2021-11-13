@@ -212,17 +212,87 @@ test("CSS output with at-rule (multi)", function () {
 
 test("CSS output with at-rule (multi, nesting)", function () {
   var actual = sheets(
-    demi("foo", {bar:{
-      "@supports (display: grid)": {
-        "&:hover": {
-          color: "green",
+    demi("foo", {
+      bar: {
+        "@supports (display: grid)": {
+          "&:hover": {
+            color: "green",
+          },
         },
       },
-    }})[0]
+    })[0]
   )["foo"];
   var expected = `@supports (display: grid) {
   .o2j59k:hover {
     color: green;
+  }
+}`;
+  assert.equal(actual, expected);
+});
+
+test("CSS output with at-rule, nesting, and animation keyframes (single)", function () {
+  var actual = sheets(
+    demi("foo", {
+      "@supports (display: grid)": {
+        "&:hover": {
+          animationKeyframes: {
+            "0%": {
+              opacity: 0,
+            },
+            "100%": {
+              opacity: 1,
+            },
+          },
+        },
+      },
+    })[0]
+  )["foo"];
+  var expected = `@supports (display: grid) {
+  .h5d5oq:hover {
+    animation-name: h5d5oq-hover;
+  }
+}
+@keyframes h5d5oq-hover {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}`;
+  assert.equal(actual, expected);
+});
+
+test("CSS output with at-rule, nesting, and animation keyframes (multi)", function () {
+  var actual = sheets(
+    demi("foo", {
+      bar: {
+        "@supports (display: grid)": {
+          "&:hover": {
+            animationKeyframes: {
+              "0%": {
+                opacity: 0,
+              },
+              "100%": {
+                opacity: 1,
+              },
+            },
+          },
+        },
+      },
+    })[0]
+  )["foo"];
+  var expected = `@supports (display: grid) {
+  .jdyqbf9:hover {
+    animation-name: jdyqbf9-hover;
+  }
+}
+@keyframes jdyqbf9-hover {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }`;
   assert.equal(actual, expected);
