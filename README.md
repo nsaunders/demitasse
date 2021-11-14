@@ -161,7 +161,6 @@ The module shown in Step 6 now exports a record object in the following format:
 ```json
 {
   "_common": "/* CSS shared across multiple modules/components */",
-  "index": "/* CSS from all modules */",
   "fancy-button": "/* CSS from the fancy-button module/component */",
   "text-box": "/* CSS from the text-box module/component */"
 }
