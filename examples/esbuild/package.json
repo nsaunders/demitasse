@@ -5,6 +5,7 @@
     "start": "node build --serve"
   },
   "dependencies": {
+    "@types/node": "^16.11.7",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
     "classnames": "^2.3.1",
