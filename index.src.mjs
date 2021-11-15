@@ -1,8 +1,12 @@
-export function demi(moduleId, rules, options) {
+export function cssRules(moduleId, rules, options) {
   return [
     [[moduleId, rules, options || {}]], // We want to be able to spread this into an existing array of CSS in order to combine with dependencies.
     toClassNames(moduleId, rules, options || {}),
   ];
+}
+
+export function demi() {
+  return cssRules.apply(null, arguments);
 }
 
 export function cssExport(moduleId, cssArray) {
