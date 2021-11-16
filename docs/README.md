@@ -14,6 +14,7 @@
 ### Functions
 
 - [cssExport](#cssexport)
+- [cssRules](#cssrules)
 - [demi](#demi)
 - [sheets](#sheets)
 
@@ -23,6 +24,11 @@
 
 Ƭ **CSS**<`S`\>: `A.Type`<[`string`, [`Rules`](#rules), [`Options`](#options)], `S`\>
 
+A structure created [cssRules](#cssrules) that contains CSS rules
+
+**`typeparam`** Identifies whether the CSS has been exported, useful for
+determining to which style sheet generated CSS should be written
+
 #### Type parameters
 
 | Name | Type |
@@ -31,7 +37,7 @@
 
 #### Defined in
 
-[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L27)
+[index.d.ts:45](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L45)
 
 ___
 
@@ -45,13 +51,18 @@ A length value
 
 #### Defined in
 
-[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L9)
+[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L9)
 
 ___
 
 ### Options
 
 Ƭ **Options**: `Object`
+
+Options for creating CSS via [cssRules](#cssrules)
+
+**`property`** debug - Debug mode flag; when enabled, class names are
+significantly longer but can be used to identify CSS rules more easily.
 
 #### Type declaration
 
@@ -61,7 +72,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:23](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L23)
+[index.d.ts:35](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L35)
 
 ___
 
@@ -69,9 +80,11 @@ ___
 
 Ƭ **Rule**: `Properties`<[`Length`](#length), [`Time`](#time)\> & `Partial`<`Object`\>
 
+The type of a rule
+
 #### Defined in
 
-[index.d.ts:18](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L18)
+[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L21)
 
 ___
 
@@ -79,9 +92,11 @@ ___
 
 Ƭ **Rules**: [`Rule`](#rule) \| `Record`<`string`, [`Rule`](#rule)\>
 
+The type of either a rule or a record of rules
+
 #### Defined in
 
-[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L21)
+[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L27)
 
 ___
 
@@ -95,7 +110,7 @@ A time value
 
 #### Defined in
 
-[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L16)
+[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L16)
 
 ## Functions
 
@@ -103,32 +118,72 @@ A time value
 
 ▸ **cssExport**<`I`\>(`moduleId`, `rules`): [`CSS`](#css)<``"Exported"``\>[]
 
+Prepares CSS rules for conversion into style sheets.
+
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `I` | extends `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `I` | extends `string` | CSS module identifier |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `moduleId` | `I` extends ``"_common"`` ? `never` : `I` |
-| `rules` | [`CSS`](#css)<``"NotExported"`` \| ``"Exported"``\>[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleId` | `I` extends ``"_common"`` ? `never` : `I` | CSS module identifier |
+| `rules` | [`CSS`](#css)<``"NotExported"`` \| ``"Exported"``\>[] | The CSS that should be included in this module (including dependencies) |
 
 #### Returns
 
 [`CSS`](#css)<``"Exported"``\>[]
 
+CSS that is ready to convert into style sheets
+
 #### Defined in
 
-[index.d.ts:51](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L51)
+[index.d.ts:98](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L98)
+
+___
+
+### cssRules
+
+▸ **cssRules**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `K` extends \`@${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+
+Constructs CSS rules.
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `I` | extends `string` | CSS module identifier |
+| `R` | extends [`Rules`](#rules) | Rule structure |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleId` | `I` extends ``"_common"`` ? `never` : `I` | CSS module identifier |
+| `rules` | `R` | CSS rules |
+| `options?` | [`Options`](#options) | Additional options |
+
+#### Returns
+
+[[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `K` extends \`@${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+
+A tuple/pair containing the CSS and a generated class name (or
+record thereof, when multiple rules are defined)
+
+#### Defined in
+
+[index.d.ts:63](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L63)
 
 ___
 
 ### demi
 
-▸ **demi**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `K` extends \`@${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+▸ `Const` **demi**<`I`, `R`\>(`moduleId`, `rules`, `options?`): [[`CSS`](#css)<``"NotExported"``\>[], `A.Compute`<`U.IntersectOf`<`R` extends `Record`<infer K, [`Rule`](#rule)\> ? `K` extends \`${infer \_}&${infer \_}\` ? `string` : `K` extends \`@${infer \_}\` ? `string` : `Record`<`K`, `string`\> : `string`\>\>]
+
+**`deprecated`**
 
 #### Type parameters
 
@@ -151,7 +206,7 @@ ___
 
 #### Defined in
 
-[index.d.ts:32](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L32)
+[index.d.ts:85](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L85)
 
 ___
 
@@ -159,16 +214,22 @@ ___
 
 ▸ **sheets**(`css`): `Record`<`string`, `string`\>
 
+Generates style sheets.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `css` | [`CSS`](#css)<``"Exported"``\>[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `css` | [`CSS`](#css)<``"Exported"``\>[] | The exported CSS to convert into style sheets |
 
 #### Returns
 
 `Record`<`string`, `string`\>
 
+A record of style sheets, where each key is a module identifier
+(filename without the ".css" extension) and each corresponding value is
+static CSS content
+
 #### Defined in
 
-[index.d.ts:56](https://github.com/nsaunders/demitasse/blob/e6f851f/index.d.ts#L56)
+[index.d.ts:112](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L112)
