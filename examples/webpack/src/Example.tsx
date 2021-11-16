@@ -1,12 +1,12 @@
 import { VFC, useState } from "react";
-import { demi, cssExport } from "demitasse";
+import { cssRules, cssExport } from "demitasse";
 import cx from "classnames";
 import { Button, css as buttonCSS } from "./Button";
 import { Input, css as inputCSS } from "./Input";
 
 const cssModuleId = "example";
 
-const [exampleCSS, styles] = /*#__PURE__*/ demi(cssModuleId, {
+const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
   container: {
     display: "flex",
     margin: -2,
@@ -45,5 +45,5 @@ export const Example: VFC<unknown> = () => {
 export const css = /*#__PURE__*/ cssExport(cssModuleId, [
   ...buttonCSS,
   ...inputCSS,
-  ...exampleCSS,
+  ..._css,
 ]);
