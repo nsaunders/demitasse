@@ -1,10 +1,10 @@
 import React, { FC, HTMLProps } from "react";
-import { demi, cssExport } from "demitasse";
+import { cssRules, cssExport } from "demitasse";
 import cx from "classnames";
 
 const cssModuleId = "input";
 
-const [inputCSS, styles] = /*#__PURE__*/ demi(cssModuleId, {
+const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
   appearance: "none",
   outline: "none",
   paddingTop: 4,
@@ -27,4 +27,4 @@ export const Input: FC<HTMLProps<HTMLInputElement>> = ({ className, ...props }) 
   <input className={cx(className, styles)} type="text" {...props} />
 );
 
-export const css = /*#__PURE__*/ cssExport(cssModuleId, inputCSS);
+export const css = /*#__PURE__*/ cssExport(cssModuleId, _css);
