@@ -16,7 +16,7 @@ without the typical runtime cost or configuration burden of other approaches.
 
 🔎 Transparent and uncomplicated build configuration
 
-👼 Pure (no side effects)
+👼 Pure computation / no side effects
 
 ## Installation
 ```bash
