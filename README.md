@@ -29,7 +29,7 @@ npm install demitasse
 
 ```typescript
 import { cssRules, cssExport } from "demitasse";
-import { ComponentBase, css as baseCSS } from "./component-base"; // optional
+import { ComponentBase, css as baseCSS } from "./component-base"; // dependency / optional
 ```
 
 * The `cssRules` function is used to define CSS rules. It outputs a record of
