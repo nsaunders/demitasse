@@ -16,6 +16,8 @@ without the typical runtime cost or configuration burden of other approaches.
 
 🔎 Transparent and uncomplicated build configuration
 
+👼 Pure (no side effects)
+
 ## Installation
 ```bash
 npm install demitasse
@@ -89,7 +91,7 @@ const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
 
 > ℹ️  This example shows a single rule, which is why `styles` references a single
 > generated class name string. It is also possible to specify a record of rules,
-> in which case `styles` would return a record of generated class names.
+> in which case `styles` would reference a record of generated class names.
 
 ### Step 4: Use generated class names
 
