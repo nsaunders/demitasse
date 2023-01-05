@@ -31,7 +31,7 @@ npm install demitasse
 > **Note**
 > This is probably not suitable for non-trivial use cases, but it offers a good starting point for learning [Advanced usage](#advanced-usage).
 
-#### Step 1: Import
+#### Step 1: Import `getCSSBindings`
 
 ```typescript
 // src/components/App.tsx
@@ -65,6 +65,7 @@ export const css = `
 
 ```typescript
 // src/components/App.tsx
+
 const { classes, ids } = getCSSBindings(css);
 ```
 
