@@ -1,4 +1,4 @@
-# ☕ demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/verify.yml"><img src="https://shields.io/github/workflow/status/nsaunders/demitasse/verify" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
+# ☕ demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/verify.yml"><img src="https://img.shields.io/github/actions/workflow/status/nsaunders/demitasse/verify.yml?branch=master" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
 
 **CSS Modules in TypeScript…the _simple_ way**
 
@@ -23,145 +23,78 @@ npm install demitasse
 
 ## How to use
 
-### Step 1: Imports
+> **Note**
+> For illustrative purposes, the steps below show usage with React, but the library is framework-agnostic and not tied to React.
+
+### Basic usage
+
+> **Note**
+> This is probably not suitable for non-trivial use cases, but it offers a good starting point for learning [Advanced usage](#advanced-usage).
+
+#### Step 1: Import
 
 ```typescript
-import { cssRules, cssExport } from "demitasse";
-import { ComponentBase, css as baseCSS } from "./component-base"; // dependency / optional
+// src/components/App.tsx
+
+import { getCSSBindings } from "demitasse";
 ```
 
-* The `cssRules` function is used to define CSS rules. It outputs a record of
-  CSS class names (or just a single class name) along with the CSS model (a data
-  structure from which a style sheet will be generated).
-* The `cssExport` function is used to export the aforementioned CSS models.
-* The `css as baseCSS` import will be used to re-export the CSS model exported
-  from another module. This is required when the current module has some CSS
-  dependency, e.g. when leveraging a base component.
-
-> ℹ️  In the example above, we imported a variable called `css` from the upstream
-> module. This follows a suggested convention of exporting CSS models as `css`.
-
-### Step 2: Create a CSS module ID and options
+#### Step 2: Export CSS
 
 ```typescript
-const
-  cssModuleId = "fancy-button",
-  cssOptions = { debug: !!process.env.DEBUG_CSS }; // optional
-```
+// src/components/App.tsx
 
-* The `cssModuleId` serves dual purposes:
-  * When generating style sheets, the name of the style sheet is the module ID,
-    e.g. `fancy-button.css`.
-  * When the `debug` option is enabled, generated class names will include the
-    module ID to allow CSS rules to be identified more easily.
-* The `options` object supports a single `debug` option. This option expands the
-  generated class names, which usually look something like `a4eds5a`, into more
-  recognizable names like `fancy-button-a4eds5a-container`.
-
-### Step 3: Create style rules
-
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  appearance: "none",
-  font: "inherit",
-  border: 0,
-  padding: "4px 8px 4px 8px",
-  background: "#06f",
-  color: "#fff",
-  "&:hover": {
-    animationKeyframes: {
-      "0%, 100%": {
-        transform: "none",
-      },
-      "50%": {
-        transform: "scale(1.1)",
-      }
-    },
-    animationDuration: 1000,
-    animationIterationCount: "infinite"
+export const css = `
+  #title {
+    margin: 0;
+    font-size: 2rem;
   }
-}, cssOptions);
+  
+  .spinner-large {
+    animation: spin 1s linear infinite;
+    width: 72px;
+    height: 72px;
+  }
+` as const;
 ```
 
-* The `_css` variable references the CSS model that will be exported later in
-  order to generate the style sheet.
-* The `styles` variable references the generated class name.
+> **Warning**
+> Don't forget the `as const` assertion at the end. This allows the class names and IDs to be parsed.
 
-> ℹ️  This example shows a single rule, which is why `styles` references a single
-> generated class name string. It is also possible to specify a record of rules,
-> in which case `styles` would reference a record of generated class names.
-
-### Step 4: Use generated class names
-
-This library is framework-agnostic; but suppose you are building a simple React
-component `FancyButton` on the basis of some other component `ContainerBase`.
-Here is how you would use the `styles` object from the previous step:
+#### Step 3: Get CSS bindings
 
 ```typescript
-export const FancyButton: FC<...> = ({ children, ...props }) => (
-  <ContainerBase as="button" className={styles} {...props}>
-    {children}
-  </ContainerBase>
-);
+// src/components/App.tsx
+const { classes, ids } = getCSSBindings(css);
 ```
 
-### Step 5: Export CSS models
+`getCSSBindings(css)` returns a typed record e.g. `{ classes: { spinnerLarge: string }, ids: { title: string } }`, providing type-safe access to the class names and IDs referenced in the style sheet.
+
+#### Step 4: Use CSS bindings
 
 ```typescript
-export const css = /*#__PURE__*/ cssExport(cssModuleId, [
-  ...baseCSS,
-  ..._css,
-]);
-```
+// src/components/App.tsx
 
-* The `cssExport` function prepares the CSS models to allow the corresponding
-  style sheet outputs to be produced.
-* The `cssModuleId` is provided again to distinguish re-exports. Re-exported CSS
-  is included in a `_common` style sheet to prevent duplication across dependent
-  components' style sheets.
-* The CSS models are spread into a single array. For simpler use cases without
-  CSS dependencies, this is unnecessary: You can simplify this to something like
-  `cssExport(cssModuleId, fancyButtonCSS)`.
-
-> ℹ️  This example follows a suggested convention of naming CSS exports as `css`.
-
-### Step 6: Create style sheet module
-
-e.g. **`src/styles.ts`**:
-```typescript
-import { css as fancyButton } from "./fancy-button";
-import { css as textBox } from "./text-box";
-// ...
-import { sheets } from "demitasse";
-
-export default sheets([
-  ...fancyButton,
-  ...textBox,
-]);
-```
-
-* CSS models are imported from each component module.
-* The `sheets` function is used to produce static CSS style sheet outputs.
-* The style sheets are exported as a record, with each key corresponding to a
-  module name, and values as generated CSS code.
-
-> ℹ️  It is unnecessary to include any modules that client code wouldn't depend
-> on directly. For example, you shouldn't include the CSS for a `ContainerBase`
-> component intended only for internal use because it will automatically be
-> included in the dependent module's CSS output and/or `_common.css`, and it
-> doesn't warrant its own `container-base.css` file.
-
-### Step 7: Generate style sheet outputs
-
-The module shown in Step 6 now exports a record object in the following format:
-
-```json
-{
-  "_common": "/* CSS shared across multiple modules/components */",
-  "fancy-button": "/* CSS from the fancy-button module/component */",
-  "text-box": "/* CSS from the text-box module/component */"
+export default function App() {
+  return (
+    <>
+      <h1 id={ids.title}>Hello world</h1>
+      <Spinner className={classes.spinnerLarge} />
+    </>
+  );
 }
 ```
+
+### Step 5: Create style sheet module
+
+```typescript
+// src/css.ts
+
+import * as App from "./components/App";
+export default App.css;
+```
+
+### Step 6: Generate style sheet outputs
 
 The remaining task is to extend the existing build process for your app or
 component library to include writing the CSS code in this object to CSS files
