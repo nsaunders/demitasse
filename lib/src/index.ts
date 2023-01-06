@@ -177,26 +177,70 @@ type ClassNames<CSS extends string> = Identifiers<".", CSS>;
 
 type Ids<CSS extends string> = Identifiers<"#", CSS>;
 
-export function makeGetCSSBindings<Context>(f: (identifier: string, meta: { type: "class" | "id"; context: Context; }) => string) {
-  return function getCSSBindings<CSS extends string>(css: CSS, context: Context): { classes: Record<ClassNames<CSS>, string>; ids: Record<Ids<CSS>, string>; } {
-    const classes =
-      (css.match(/\.([A-Za-z0-9_-]+)/g) || [])
-        .map(x => [
-          x.substring(1).replace(/[^A-Za-z]([a-z])/g, x => x.toUpperCase()).replace(/[^A-Za-z0-9]/g, ""),
-          f(x.substring(1), { context, type: "class" }),
-        ])
-        .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
+/**
+ * Creates a custom version of {@link getCSSBindings} which allows class name
+ * and ID values to be mapped in some way, for example to match a build-time
+ * scoping mechanism.
+ *
+ * @param f - The mapping function to apply to class names and IDs
+ *
+ * @returns A version of {@link getCSSBindings} that applies the specified
+ * mapping function
+ */
+export function makeGetCSSBindings<Context>(
+  f: (
+    identifier: string,
+    meta: { type: "class" | "id"; context: Context }
+  ) => string
+) {
+  /**
+   * Extracts bindings from the provided CSS string.
+   *
+   * @param css - The CSS from which to extract CSS bindings
+   *
+   * @returns Class and ID bindings to the specified CSS
+   */
+  return function getCSSBindings<CSS extends string>(
+    css: CSS,
+    context: Context
+  ): {
+    /** A map of class names referenced within the specified CSS */
+    classes: Record<ClassNames<CSS>, string>;
 
-    const ids =
-      (css.match(/#([A-Za-z0-9_-]+)/g) || [])
-        .map(x => [
-          x.substring(1).replace(/[^A-Za-z]([a-z])/g, x => x.toUpperCase()).replace(/[^A-Za-z0-9]/g, ""),
-          f(x.substring(1), { context, type: "id" }),
-        ])
-        .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
+    /** A map of IDs referenced within the specified CSS */
+    ids: Record<Ids<CSS>, string>;
+  } {
+    const classes = (css.match(/\.([A-Za-z0-9_-]+)/g) || [])
+      .map((x) => [
+        x
+          .substring(1)
+          .replace(/[^A-Za-z]([a-z])/g, (x) => x.toUpperCase())
+          .replace(/[^A-Za-z0-9]/g, ""),
+        f(x.substring(1), { context, type: "class" }),
+      ])
+      .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
+
+    const ids = (css.match(/#([A-Za-z0-9_-]+)/g) || [])
+      .map((x) => [
+        x
+          .substring(1)
+          .replace(/[^A-Za-z]([a-z])/g, (x) => x.toUpperCase())
+          .replace(/[^A-Za-z0-9]/g, ""),
+        f(x.substring(1), { context, type: "id" }),
+      ])
+      .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
 
     return { classes, ids } as ReturnType<typeof getCSSBindings>;
   };
 }
 
-export const getCSSBindings = makeGetCSSBindings(x => x);
+/**
+ * Extracts bindings from the provided CSS string.
+ *
+ * @param css - The CSS from which to extract CSS bindings
+ *
+ * @returns Class and ID bindings to the specified CSS
+ */
+export function getCSSBindings<CSS extends string>(css: CSS) {
+  return makeGetCSSBindings((x) => x)(css, undefined);
+}
