@@ -94,7 +94,7 @@ export default App.css;
 
 #### Step 6: Generate style sheet output
 
-The remaining task is to extend your existing build process to process the CSS exported from the `./src/css.ts` module. Strictly speaking, this is beyond the scope of this library, but we offer various [examples](#examples) of how to achieve this.
+The remaining task is to extend your existing build process to process the CSS exported from the `src/css.ts` module. Strictly speaking, this is beyond the scope of this library, but we offer various [examples](#examples) of how to achieve this.
 
 ### Advanced usage
 
