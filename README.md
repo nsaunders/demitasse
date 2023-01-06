@@ -89,6 +89,7 @@ export default function App() {
 // src/css.ts
 
 import * as App from "./components/App";
+
 export default App.css;
 ```
 
@@ -98,7 +99,12 @@ The remaining task is to extend your existing build process to process the CSS e
 
 ### Advanced usage
 
-The following steps continue from [Basic usage](#basic-usage) above.
+`src/css.ts` directly exports the CSS from the `App` module, but this wouldn't be suitable for large-scale component architecture given the lack of namespacing. For example, two components could each declare their own `.container` classes, resulting in a conflict.
+
+To solve this problem, we need to implement a scoping mechanism. The solution proposed here will use [PostCSS](https://postcss.org) with the [prefixer](https://github.com/marceloucker/postcss-prefixer) and [prefix-keyframe](https://github.com/VitaliyR/postcss-prefix-keyframe) plugins to achieve this.
+
+> **Note**
+> The following steps continue from [Basic usage](#basic-usage) above.
 
 #### Step 7: Add a context
 
@@ -109,8 +115,6 @@ export const cssContext = "app";
 ```
 
 #### Step 8: Scope the CSS
-
-`src/css.ts` directly exports the CSS from the `App` module, but this wouldn't be suitable for large-scale component architecture given the lack of namespacing. We can resolve this using [PostCSS](https://postcss.org):
 
 ```typescript
 // src/css.ts
@@ -134,11 +138,11 @@ export default [
   .join("\n\n");
 ```
 
-Thus, each module's classes, IDs, and keyframe animation names (if applicable) are prepended with its `cssContext` value.
+Thus, each module's classes, IDs, and animation names (if applicable) are prepended with its `cssContext` value.
 
 #### Step 9. Map the bindings
 
-At this point, the values returned from `getCSSBindings` are incorrect. For example, `getCSSBindings(css).classes.spinnerLarge` will evaluate to `"spinner-large"` instead of the prefixed form `"app___spinner-large"`. We can solve this by creating a custom `getCSSBindings` function:
+At this point, the values returned from `getCSSBindings` are incorrect. For example, `getCSSBindings(css).classes.spinnerLarge` will evaluate to `"spinner-large"` instead of the prefixed form `"app___spinner-large"`. We can solve this by creating a custom `getCSSBindings` function with the required mapping:
 
 ```typescript
 // src/getCSSBindings.ts
@@ -160,95 +164,12 @@ import getCSSBindings from "../getCSSBindings";
 #### Step 11. Add context argument
 
 ```typescript
+// src/components/App.tsx
+
 const { classes, ids } = getCSSBindings(css, cssContext);
 ```
 
-## CSS Features
-
-#### ✅ Single rule
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  color: "black"
-});
-```
-
-#### ✅ Multi rule
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  container: {
-    appearance: "none",
-    padding: 0
-  },
-  content: {
-    padding: 4
-  }
-});
-```
-
-#### ✅ Nested selectors
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  color: "black",
-  "&:hover": {
-    color: "red"
-  }
-});
-```
-
-#### ✅ Animation keyframes
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  animationKeyframes: {
-    "0%, 100%": {
-      opacity: 0
-    },
-    "50%": {
-      opacity: 1
-    }
-  },
-  animationDuration: 1000,
-  animationIterationCount: "infinite"
-});
-```
-
-#### ✅ At-rules
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  "@supports (display: grid)": {
-    display: "grid"
-  }
-});
-```
-
-#### ✅ Implicit units
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  transitionDuration: 1000, // 1000ms
-  width: 100, // 100px
-});
-```
-
-#### 👍 Theming support
-
-via [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-```typescript
-const [_css, styles] = /*#__PURE__*/ cssRules(cssModuleId, {
-  color: "var(--primary-color)",
-});
-```
-
-#### 🤷 Dynamic CSS
-
-For dynamic CSS, probably just use inline styles in addition to style sheets and
-class names. Inline styles are usually criticized because:
-
-* **performance concerns**. But this is not likely a significant factor for
-  these one-off edge cases.
-* **specificity (priority)**. But for dynamic CSS values determined at runtime,
-  high specificity is almost certainly what you want, i.e. feature not bug.
-* **maintainability**. But if you believe that CSS and markup shouldn't be
-  colocated, then CSS-in-JS is probably not the architecture you are looking
-  for. Go [Get BEM](http://getbem.com) or something. 😉
+Now `classes.spinnerLarge` evaluates to `"app___spinner-large"`, matching the PostCSS output.
 
 ## API
 
@@ -256,4 +177,4 @@ Formal API documentation is available [here](./docs).
 
 ## Examples
 
-A few examples are provided [here](examples).
+Examples are provided [here](examples).
