@@ -28,9 +28,6 @@ npm install demitasse
 
 ### Basic usage
 
-> **Note**
-> This is probably not suitable for non-trivial use cases, but it offers a good starting point for learning [Advanced usage](#advanced-usage).
-
 #### Step 1: Import `getCSSBindings`
 
 ```typescript
