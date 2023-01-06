@@ -1,4 +1,4 @@
-# ☕ demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/verify.yml"><img src="https://img.shields.io/github/actions/workflow/status/nsaunders/demitasse/verify.yml?branch=master" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
+# ☕ Demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/verify.yml"><img src="https://img.shields.io/github/actions/workflow/status/nsaunders/demitasse/verify.yml?branch=master" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
 
 **CSS Modules in TypeScript…the _simple_ way**
 
@@ -24,7 +24,7 @@ npm install demitasse
 ## How to use
 
 > **Note**
-> For illustrative purposes, the steps below show usage with React, but the library is framework-agnostic and not tied to React.
+> For illustrative purposes, the steps below show usage with React and Webpack, but the library is framework-agnostic and not tied to these specific technologies.
 
 ### Basic usage
 
@@ -86,7 +86,7 @@ export default function App() {
 }
 ```
 
-### Step 5: Create style sheet module
+#### Step 5: Create style sheet module
 
 ```typescript
 // src/css.ts
@@ -95,13 +95,76 @@ import * as App from "./components/App";
 export default App.css;
 ```
 
-### Step 6: Generate style sheet outputs
+#### Step 6: Generate style sheet output
 
-The remaining task is to extend the existing build process for your app or
-component library to include writing the CSS code in this object to CSS files
-and/or adding it to the JavaScript bundle. Strictly speaking, this is beyond the
-scope of this library, but some [examples](#examples) are provided to help you
-get started.
+The remaining task is to extend your existing build process to process the CSS exported from the `./src/css.ts` module. Strictly speaking, this is beyond the scope of this library, but we offer various [examples](#examples) of how to achieve this.
+
+### Advanced usage
+
+The following steps continue from [Basic usage](#basic-usage) above.
+
+#### Step 7: Add a context
+
+```typescript
+// src/components/App.tsx
+
+export const cssContext = "app";
+```
+
+#### Step 8: Scope the CSS
+
+`src/css.ts` directly exports the CSS from the `App` module, but this wouldn't be suitable for large-scale component architecture given the lack of namespacing. We can resolve this using [PostCSS](https://postcss.org):
+
+```typescript
+// src/css.ts
+
+import postcss from "postcss";
+import prefixer from "postcss-prefixer";
+import prefixKeyframe from "postcss-prefix-keyframe";
+
+import * as App from "./components/App";
+
+export default [
+  App,
+]
+  .map(({ cssContext, css }) =>
+    postcss([
+      prefixer({ prefix: `${cssContext}___` }),
+      prefixKeyframe({ prefix: `${cssContext}___` }),
+    ])
+    .process(css)
+  )
+  .join("\n\n");
+```
+
+Thus, each module's classes, IDs, and keyframe animation names (if applicable) are prepended with its `cssContext` value.
+
+#### Step 9. Map the bindings
+
+At this point, the values returned from `getCSSBindings` are incorrect. For example, `getCSSBindings(css).classes.spinnerLarge` will evaluate to `"spinner-large"` instead of the prefixed form `"app___spinner-large"`. We can solve this by creating a custom `getCSSBindings` function:
+
+```typescript
+// src/getCSSBindings.ts
+
+import { makeGetCSSBindings } from "demitasse";
+export default makeGetCSSBindings(
+  (identifier, { context }) => `${context}___${identifier}`,
+);
+```
+
+#### Step 10. Change `getCSSBindings` import
+
+```typescript
+// src/components/App.tsx
+
+import getCSSBindings from "../getCSSBindings";
+```
+
+#### Step 11. Add context argument
+
+```typescript
+const { classes, ids } = getCSSBindings(css, cssContext);
+```
 
 ## CSS Features
 
