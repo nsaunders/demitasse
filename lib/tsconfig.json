@@ -2,7 +2,7 @@
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "target": "es5",
-    "noEmit": true,
+    "noEmit": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
