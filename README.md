@@ -1,4 +1,4 @@
-# ☕ Demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/verify.yml"><img src="https://img.shields.io/github/actions/workflow/status/nsaunders/demitasse/verify.yml?branch=master" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
+# ☕ Demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/nsaunders/demitasse/ci.yml?branch=master" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
 
 **CSS Modules in TypeScript…the _simple_ way**
 
@@ -173,7 +173,7 @@ Now `classes.spinnerLarge` evaluates to `"app___spinner-large"`, matching the Po
 
 ## API
 
-Formal API documentation is available [here](./docs).
+API documentation is available [here](./docs).
 
 ## Examples
 

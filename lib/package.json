@@ -1,6 +1,20 @@
 {
   "name": "demitasse",
-  "version": "3.0.0",
+  "description": "CSS modules in TypeScript...the simple way",
+  "keywords": [
+    "vanilla",
+    "emotion",
+    "style",
+    "css-in-js",
+    "css-in-ts",
+    "css",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nsaunders/demitasse.git"
+  },
+  "version": "3.0.0-0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/types/index.d.ts",
