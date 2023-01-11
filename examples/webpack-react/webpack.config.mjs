@@ -14,6 +14,7 @@ export default ({ production }) => ({
     app: path.resolve(__dirname, "src", "main"),
   },
   output: {
+    publicPath: "",
     path: path.resolve(__dirname, "public"),
     filename: `[name]${production ? ".[contenthash]" : ""}.js`,
   },
@@ -66,9 +67,6 @@ export default ({ production }) => ({
         type: "asset/resource",
       },
     ],
-  },
-  devServer: {
-    hot: false,
   },
   optimization: {
     minimizer: [
