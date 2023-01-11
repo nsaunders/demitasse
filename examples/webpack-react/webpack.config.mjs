@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import autoprefixer from "autoprefixer";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -10,7 +11,7 @@ export default ({ production }) => ({
   mode: production ? "production" : "development",
   devtool: production ? "source-map" : "inline-source-map",
   entry: {
-    app: path.resolve(__dirname, "src"),
+    app: path.resolve(__dirname, "src", "main"),
   },
   output: {
     path: path.resolve(__dirname, "public"),
@@ -31,15 +32,21 @@ export default ({ production }) => ({
   module: {
     rules: [
       {
-        test: /\.browserslistrc$/,
-        type: "asset/source",      
-      },
-      {
-        test: /src\/css\.ts$/,
+        test: /\.tsx$/,
+        resourceQuery: /css/,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
-          "execute-module-loader",
+          "postcss-loader",
+          path.resolve(__dirname, "component-css-loader.js"),
+          {
+            loader: "execute-module-loader",
+            options: {
+              getResult({ cssContext, css }) {
+                return JSON.stringify({ cssContext, css });
+              },
+            },
+          },
         ],
       },
       {
