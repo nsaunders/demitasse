@@ -67,9 +67,6 @@ export default ({ production }) => ({
       },
     ],
   },
-  watchOptions: {
-    aggregateTimeout: 500,
-  },
   devServer: {
     hot: false,
   },
