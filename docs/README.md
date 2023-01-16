@@ -4,14 +4,14 @@
 
 ### Functions
 
-- [getCSSBindings](README.md#getcssbindings)
-- [makeGetCSSBindings](README.md#makegetcssbindings)
+- [cssBindings](README.md#cssbindings)
+- [makeCSSBindings](README.md#makecssbindings)
 
 ## Functions
 
-### getCSSBindings
+### cssBindings
 
-▸ **getCSSBindings**<`CSS`\>(`css`): `Object`
+▸ **cssBindings**<`CSS`\>(`css`): `Object`
 
 Extracts bindings from the provided CSS string.
 
@@ -35,20 +35,20 @@ Class and ID bindings to the specified CSS
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `classes` | `Record`<`Identifiers`<``"."``, `CSS`\>, `string`\> | A map of class names referenced within the specified CSS |
-| `ids` | `Record`<`Identifiers`<``"#"``, `CSS`\>, `string`\> | A map of IDs referenced within the specified CSS |
+| `classes` | `Record`<`Names`<``"."``, `CSS`, []\>[`number`] extends `Name` ? `Name` extends `string` ? `FieldName`<`Name`, ``""``, ``false``\> : `never` : `never`, `string`\> | A map of class names referenced within the specified CSS |
+| `ids` | `Record`<`Names`<``"#"``, `CSS`, []\>[`number`] extends `Name` ? `Name` extends `string` ? `FieldName`<`Name`, ``""``, ``false``\> : `never` : `never`, `string`\> | A map of IDs referenced within the specified CSS |
 
 #### Defined in
 
-[index.ts:244](https://github.com/nsaunders/demitasse/blob/462ff6f/lib/src/index.ts#L244)
+[index.ts:186](https://github.com/nsaunders/demitasse/blob/579d219/lib/src/index.ts#L186)
 
 ___
 
-### makeGetCSSBindings
+### makeCSSBindings
 
-▸ **makeGetCSSBindings**<`Context`\>(`f`): <CSS\>(`css`: `CSS`, `context`: `Context`) => { `classes`: `Record`<`Identifiers`<``"."``, `CSS`\>, `string`\> ; `ids`: `Record`<`Identifiers`<``"#"``, `CSS`\>, `string`\>  }
+▸ **makeCSSBindings**<`Context`\>(`f`): <CSS\>(`css`: `CSS`, `context`: `Context`) => { `classes`: `Record`<`Names`<``"."``, `CSS`, []\>[`number`] extends `Name` ? `Name` extends `string` ? `FieldName`<`Name`, ``""``, ``false``\> : `never` : `never`, `string`\> ; `ids`: `Record`<`Names`<``"#"``, `CSS`, []\>[`number`] extends `Name` ? `Name` extends `string` ? `FieldName`<`Name`, ``""``, ``false``\> : `never` : `never`, `string`\>  }
 
-Creates a custom version of [getCSSBindings](README.md#getcssbindings) which allows class name
+Creates a custom version of [cssBindings](README.md#cssbindings) which allows class name
 and ID values to be mapped in some way, for example to match a build-time
 scoping mechanism.
 
@@ -68,7 +68,7 @@ scoping mechanism.
 
 `fn`
 
-A version of [getCSSBindings](README.md#getcssbindings) that applies the specified
+A version of [cssBindings](README.md#cssbindings) that applies the specified
 mapping function
 
 ▸ <`CSS`\>(`css`, `context`): `Object`
@@ -92,9 +92,9 @@ mapping function
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `classes` | `Record`<`Identifiers`<``"."``, `CSS`\>, `string`\> | A map of class names referenced within the specified CSS |
-| `ids` | `Record`<`Identifiers`<``"#"``, `CSS`\>, `string`\> | A map of IDs referenced within the specified CSS |
+| `classes` | `Record`<`Names`<``"."``, `CSS`, []\>[`number`] extends `Name` ? `Name` extends `string` ? `FieldName`<`Name`, ``""``, ``false``\> : `never` : `never`, `string`\> | A map of class names referenced within the specified CSS |
+| `ids` | `Record`<`Names`<``"#"``, `CSS`, []\>[`number`] extends `Name` ? `Name` extends `string` ? `FieldName`<`Name`, ``""``, ``false``\> : `never` : `never`, `string`\> | A map of IDs referenced within the specified CSS |
 
 #### Defined in
 
-[index.ts:190](https://github.com/nsaunders/demitasse/blob/462ff6f/lib/src/index.ts#L190)
+[index.ts:116](https://github.com/nsaunders/demitasse/blob/579d219/lib/src/index.ts#L116)
