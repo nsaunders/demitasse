@@ -3,7 +3,8 @@ import cssBindings from "../cssBindings";
 import Button from "./Button";
 import StarIcon from "./StarIcon";
 
-export const cssContext = "app";
+export const moduleId = "app";
+
 export const css = `
   .container {
     width: 200px;
@@ -14,7 +15,7 @@ export const css = `
     justify-content: center;
   }
 ` as const;
-const { classes } = cssBindings(css, cssContext);
+const { classes } = cssBindings(css, moduleId);
 
 export default function App() {
   const [loading, setLoading] = useState(false);

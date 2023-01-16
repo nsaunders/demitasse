@@ -3,7 +3,8 @@ import cx from "clsx";
 import cssBindings from "../cssBindings";
 import LoadingIcon from "./LoadingIcon";
 
-export const cssContext = "button";
+export const moduleId = "button";
+
 export const css = `
   @keyframes spin {
     from {
@@ -52,7 +53,7 @@ export const css = `
   }
 ` as const;
 
-const { classes } = cssBindings(css, cssContext);
+const { classes } = cssBindings(css, moduleId);
 
 type ButtonProps = {
   children: string;
