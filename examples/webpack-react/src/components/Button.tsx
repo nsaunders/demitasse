@@ -1,6 +1,6 @@
 import { MouseEvent, ReactElement, useMemo } from "react";
 import cx from "clsx";
-import getCSSBindings from "../getCSSBindings";
+import cssBindings from "../cssBindings";
 import LoadingIcon from "./LoadingIcon";
 
 export const cssContext = "button";
@@ -52,7 +52,7 @@ export const css = `
   }
 ` as const;
 
-const { classes } = getCSSBindings(css, cssContext);
+const { classes } = cssBindings(css, cssContext);
 
 type ButtonProps = {
   children: string;

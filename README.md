@@ -28,12 +28,12 @@ npm install demitasse
 
 ### Basic usage
 
-#### Step 1: Import `getCSSBindings`
+#### Step 1: Import `cssBindings`
 
 ```typescript
 // src/components/App.tsx
 
-import { getCSSBindings } from "demitasse";
+import { cssBindings } from "demitasse";
 ```
 
 #### Step 2: Export CSS
@@ -63,10 +63,10 @@ export const css = `
 ```typescript
 // src/components/App.tsx
 
-const { classes, ids } = getCSSBindings(css);
+const { classes, ids } = cssBindings(css);
 ```
 
-`getCSSBindings(css)` returns a typed record e.g. `{ classes: { spinnerLarge: string }, ids: { title: string } }`, providing type-safe access to the class names and IDs referenced in the style sheet.
+`cssBindings(css)` returns a typed record e.g. `{ classes: { spinnerLarge: string }, ids: { title: string } }`, providing type-safe access to the class names and IDs referenced in the style sheet.
 
 #### Step 4: Use CSS bindings
 
@@ -111,7 +111,7 @@ To solve this problem, we need to implement a scoping mechanism. The solution pr
 ```typescript
 // src/components/App.tsx
 
-export const cssContext = "app";
+export const moduleId = "app";
 ```
 
 #### Step 8: Scope the CSS
@@ -128,45 +128,45 @@ import * as App from "./components/App";
 export default [
   App,
 ]
-  .map(({ cssContext, css }) =>
+  .map(({ moduleId, css }) =>
     postcss([
-      prefixer({ prefix: `${cssContext}___` }),
-      prefixKeyframe({ prefix: `${cssContext}___` }),
+      prefixer({ prefix: `${moduleId}___` }),
+      prefixKeyframe({ prefix: `${moduleId}___` }),
     ])
     .process(css)
   )
   .join("\n\n");
 ```
 
-Thus, each module's classes, IDs, and animation names (if applicable) are prepended with its `cssContext` value.
+Thus, each module's classes, IDs, and animation names (if applicable) are prepended with its `moduleId` value.
 
 #### Step 9. Map the bindings
 
-At this point, the values returned from `getCSSBindings` are incorrect. For example, `getCSSBindings(css).classes.spinnerLarge` will evaluate to `"spinner-large"` instead of the prefixed form `"app___spinner-large"`. We can solve this by creating a custom `getCSSBindings` function with the required mapping:
+At this point, the values returned from `cssBindings` are incorrect. For example, `cssBindings(css).classes.spinnerLarge` will evaluate to `"spinner-large"` instead of the prefixed form `"app___spinner-large"`. We can solve this by creating a custom `cssBindings` function with the required mapping:
 
 ```typescript
-// src/getCSSBindings.ts
+// src/cssBindings.ts
 
-import { makeGetCSSBindings } from "demitasse";
-export default makeGetCSSBindings(
+import { makeCSSBindings } from "demitasse";
+export default makeCSSBindings(
   (identifier, { context }) => `${context}___${identifier}`,
 );
 ```
 
-#### Step 10. Change `getCSSBindings` import
+#### Step 10. Change `cssBindings` import
 
 ```typescript
 // src/components/App.tsx
 
-import getCSSBindings from "../getCSSBindings";
+import cssBindings from "../cssBindings";
 ```
 
-#### Step 11. Add context argument
+#### Step 11. Add context argument (`moduleId`)
 
 ```typescript
 // src/components/App.tsx
 
-const { classes, ids } = getCSSBindings(css, cssContext);
+const { classes, ids } = cssBindings(css, moduleId);
 ```
 
 Now `classes.spinnerLarge` evaluates to `"app___spinner-large"`, matching the PostCSS output.

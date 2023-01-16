@@ -4,7 +4,7 @@
   "description": "Monorepo root package",
   "version": "3.0.0-0",
   "workspaces": [
-    "examples/*",
+    "examples/webpack-react",
     "lib"
   ],
   "devDependencies": {

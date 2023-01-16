@@ -14,12 +14,15 @@
     "type": "git",
     "url": "https://github.com/nsaunders/demitasse.git"
   },
+  "files": [
+    "dist"
+  ],
   "version": "3.0.0-0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
-    "prepublishOnly": "rimraf dist && tsc --project tsconfig.types.json && tsc --project tsconfig.cjs.json && tsc --project tsconfig.esm.json",
+    "prepare": "rimraf dist && tsc --project tsconfig.types.json && tsc --project tsconfig.cjs.json && tsc --project tsconfig.esm.json",
     "test": "ts-mocha -p tsconfig.test.json test/**/*.ts"
   },
   "devDependencies": {

@@ -3,7 +3,6 @@ import { fileURLToPath } from "url";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import autoprefixer from "autoprefixer";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -40,14 +39,7 @@ export default ({ production }) => ({
           "css-loader",
           "postcss-loader",
           path.resolve(__dirname, "component-css-loader.js"),
-          {
-            loader: "execute-module-loader",
-            options: {
-              getResult({ cssContext, css }) {
-                return JSON.stringify({ cssContext, css });
-              },
-            },
-          },
+          "execute-module-loader?module",
         ],
       },
       {

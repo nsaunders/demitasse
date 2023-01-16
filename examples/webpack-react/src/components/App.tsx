@@ -1,5 +1,5 @@
 import {useState} from "react";
-import getCSSBindings from "../getCSSBindings";
+import cssBindings from "../cssBindings";
 import Button from "./Button";
 import StarIcon from "./StarIcon";
 
@@ -14,7 +14,7 @@ export const css = `
     justify-content: center;
   }
 ` as const;
-const { classes } = getCSSBindings(css, cssContext);
+const { classes } = cssBindings(css, cssContext);
 
 export default function App() {
   const [loading, setLoading] = useState(false);

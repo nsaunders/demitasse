@@ -1,73 +1,4 @@
-type NormalizeWhitespaceChar<C extends string> = C extends
-  | "\f"
-  | "\n"
-  | "\r"
-  | "\t"
-  | "\v"
-  | "\u00A0"
-  | "\u2028"
-  | "\u2029"
-  ? " "
-  : C;
-
-type NormalizeWhitespace<
-  S extends string,
-  Acc extends string = ""
-> = S extends `${infer Head}${infer Tail}`
-  ? NormalizeWhitespace<Tail, `${Acc}${NormalizeWhitespaceChar<Head>}`>
-  : Acc;
-
-type RemoveLeadingBraces<S extends string> = S extends `}${infer X}`
-  ? RemoveLeadingBraces<X>
-  : S;
-
-type Statements<CSS extends string> = CSS extends `${infer Cond}{${infer More}`
-  ? [
-      RemoveLeadingBraces<Cond> extends `@${infer _}`
-        ? []
-        : RemoveLeadingBraces<Cond>,
-      More extends `${infer A}}${infer B}`
-        ? [...Statements<A>, ...Statements<B>]
-        : Statements<More>
-    ]
-  : [];
-
-type Flatten<T> = T extends []
-  ? []
-  : T extends [infer T0]
-  ? [...Flatten<T0>]
-  : T extends [infer T0, ...infer Ts]
-  ? [...Flatten<T0>, ...Flatten<Ts>]
-  : [T];
-
-type Split<
-  S extends string,
-  D extends string,
-  Acc extends string[] = []
-> = S extends `${infer A}${D}${infer B}`
-  ? Split<B, D, [...Acc, A]>
-  : [...Acc, S];
-
-type Join<
-  S extends string[],
-  D extends string,
-  Acc extends string = ""
-> = S extends []
-  ? Acc
-  : S extends [infer Head, ...infer Tail]
-  ? Head extends string
-    ? Tail extends string[]
-      ? Join<Tail, D, `${Acc}${D}${Head}`>
-      : never
-    : never
-  : never;
-
-type Selectors<CSS extends string> = Join<
-  Flatten<Statements<NormalizeWhitespace<CSS>>>,
-  " "
->;
-
-type IdentifierChar<S extends string> = S extends
+type AlphaChars =
   | "A"
   | "B"
   | "C"
@@ -119,75 +50,70 @@ type IdentifierChar<S extends string> = S extends
   | "w"
   | "x"
   | "y"
-  | "z"
-  | "0"
-  | "1"
-  | "2"
-  | "3"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
-  | "_"
-  | "-"
-  ? S
-  : never;
+  | "z";
 
-type ExtractIdentifier<
+type NumChars = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+
+type NameChars = AlphaChars | NumChars | "_" | "-";
+
+type ExtractName<
   S extends string,
   Acc extends string = ""
-> = S extends `${infer H}${infer T}`
-  ? H extends IdentifierChar<H>
-    ? ExtractIdentifier<T, `${Acc}${H}`>
-    : Acc
+> = S extends `${infer Head}${infer Tail}`
+  ? Head extends NameChars
+    ? ExtractName<Tail, `${Acc}${Head}`>
+    : [Acc, S]
+  : [Acc, S];
+
+type Names<
+  Prefix extends string,
+  CSS extends string,
+  Acc extends string[] = []
+> = CSS extends `${infer _}${Prefix}${infer Rest}`
+  ? Rest extends `${infer BeforeOpen}{${infer _}`
+    ? BeforeOpen extends `${infer _};${infer _}`
+      ? Names<Prefix, Rest, Acc>
+      : BeforeOpen extends `${AlphaChars}${infer _}`
+      ? ExtractName<BeforeOpen> extends [infer Name, infer _]
+        ? Name extends string
+          ? Names<Prefix, Rest, [...Acc, Name]>
+          : never
+        : never
+      : Names<Prefix, Rest, Acc>
+    : Names<Prefix, Rest, Acc>
   : Acc;
 
-type IdentifierToCamelCase<
-  Identifier extends string,
-  NewWord extends boolean = false,
-  Acc extends string = ""
-> = Identifier extends `${"_" | "-"}${infer Tail}`
-  ? IdentifierToCamelCase<Tail, true, Acc>
-  : Identifier extends `${infer Head}${infer Tail}`
-  ? IdentifierToCamelCase<
-      Tail,
-      Head extends "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-        ? true
-        : false,
-      `${Acc}${NewWord extends true ? Capitalize<Head> : Head}`
-    >
+type FieldName<
+  S extends string,
+  Acc extends string = "",
+  NewWord extends boolean = false
+> = S extends `${infer Head}${infer Tail}`
+  ? Head extends AlphaChars
+    ? FieldName<
+        Tail,
+        `${Acc}${NewWord extends true
+          ? Uppercase<Head>
+          : Acc extends ""
+          ? Lowercase<Head>
+          : Head}`,
+        false
+      >
+    : Head extends NumChars
+    ? FieldName<Tail, `${Acc}${Head}`, true>
+    : FieldName<Tail, Acc, true>
   : Acc;
-
-type Identifiers<Prefix extends "#" | ".", CSS extends string> = Exclude<
-  Split<Selectors<CSS>, Prefix> extends (infer U)[]
-    ? U extends string
-      ? ExtractIdentifier<U>
-      : never
-    : never,
-  ""
-> extends infer Identifier
-  ? Identifier extends string
-    ? IdentifierToCamelCase<Identifier>
-    : never
-  : never;
-
-type ClassNames<CSS extends string> = Identifiers<".", CSS>;
-
-type Ids<CSS extends string> = Identifiers<"#", CSS>;
 
 /**
- * Creates a custom version of {@link getCSSBindings} which allows class name
+ * Creates a custom version of {@link cssBindings} which allows class name
  * and ID values to be mapped in some way, for example to match a build-time
  * scoping mechanism.
  *
  * @param f - The mapping function to apply to class names and IDs
  *
- * @returns A version of {@link getCSSBindings} that applies the specified
+ * @returns A version of {@link cssBindings} that applies the specified
  * mapping function
  */
-export function makeGetCSSBindings<Context>(
+export function makeCSSBindings<Context>(
   f: (
     identifier: string,
     meta: { type: "class" | "id"; context: Context }
@@ -200,37 +126,53 @@ export function makeGetCSSBindings<Context>(
    *
    * @returns Class and ID bindings to the specified CSS
    */
-  return function getCSSBindings<CSS extends string>(
+  return function cssBindings<CSS extends string>(
     css: CSS,
     context: Context
   ): {
     /** A map of class names referenced within the specified CSS */
-    classes: Record<ClassNames<CSS>, string>;
+    classes: Record<
+      Names<".", CSS>[number] extends infer Name
+        ? Name extends string
+          ? FieldName<Name>
+          : never
+        : never,
+      string
+    >;
 
     /** A map of IDs referenced within the specified CSS */
-    ids: Record<Ids<CSS>, string>;
+    ids: Record<
+      Names<"#", CSS>[number] extends infer Name
+        ? Name extends string
+          ? FieldName<Name>
+          : never
+        : never,
+      string
+    >;
   } {
-    const classes = (css.match(/\.([A-Za-z0-9_-]+)/g) || [])
+    const classes = (css.match(/\.[A-Za-z][A-Za-z0-9_-]*/g) || [])
       .map((x) => [
         x
           .substring(1)
+          .replace(/^[A-Z]/, (x) => x.toLowerCase())
           .replace(/[^A-Za-z]([a-z])/g, (x) => x.toUpperCase())
           .replace(/[^A-Za-z0-9]/g, ""),
         f(x.substring(1), { context, type: "class" }),
       ])
       .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
 
-    const ids = (css.match(/#([A-Za-z0-9_-]+)/g) || [])
+    const ids = (css.match(/#[A-Za-z][A-Za-z0-9_-]*/g) || [])
       .map((x) => [
         x
           .substring(1)
+          .replace(/^[A-Z]/, (x) => x.toLowerCase())
           .replace(/[^A-Za-z]([a-z])/g, (x) => x.toUpperCase())
           .replace(/[^A-Za-z0-9]/g, ""),
         f(x.substring(1), { context, type: "id" }),
       ])
       .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
 
-    return { classes, ids } as ReturnType<typeof getCSSBindings>;
+    return { classes, ids } as ReturnType<typeof cssBindings>;
   };
 }
 
@@ -241,6 +183,6 @@ export function makeGetCSSBindings<Context>(
  *
  * @returns Class and ID bindings to the specified CSS
  */
-export function getCSSBindings<CSS extends string>(css: CSS) {
-  return makeGetCSSBindings((x) => x)(css, undefined);
+export function cssBindings<CSS extends string>(css: CSS) {
+  return makeCSSBindings((x) => x)(css, undefined);
 }

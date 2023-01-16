@@ -1,7 +1,7 @@
 import expect from "expect";
-import { getCSSBindings, makeGetCSSBindings } from "../src";
+import { cssBindings, makeCSSBindings } from "../src";
 
-describe("getCSSBindings", () => {
+describe("cssBindings", () => {
   const css = `
     #my-app {
       font-size: 16px;
@@ -20,7 +20,7 @@ describe("getCSSBindings", () => {
     }
   ` as const;
 
-  const { classes, ids } = getCSSBindings(css);
+  const { classes, ids } = cssBindings(css);
 
   it("gets class bindings", () => {
     expect(classes.headingLevel1).toEqual("heading-level1");
@@ -33,12 +33,12 @@ describe("getCSSBindings", () => {
   });
 });
 
-describe("makeGetCSSBindings", () => {
-  const getCSSBindings = makeGetCSSBindings(
+describe("makeCSSBindings", () => {
+  const cssBindings = makeCSSBindings(
     (identifier, { context, type }) => `${type}___${context}___${identifier}`,
   );
 
-  describe("getCSSBindings", () => {
+  describe("cssBindings", () => {
     const css = `
       #foo {
         display: none;
@@ -51,7 +51,7 @@ describe("makeGetCSSBindings", () => {
 
     const context = "ctx";
 
-    const { classes, ids } = getCSSBindings(css, context);
+    const { classes, ids } = cssBindings(css, context);
 
     it("gets class bindings per mapping function", () => {
       expect(classes.bar).toEqual("class___ctx___bar");
