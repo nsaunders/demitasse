@@ -40,7 +40,7 @@ Class and ID bindings to the specified CSS
 
 #### Defined in
 
-[index.ts:186](https://github.com/nsaunders/demitasse/blob/579d219/lib/src/index.ts#L186)
+[index.ts:186](https://github.com/nsaunders/demitasse/blob/d18100d/lib/src/index.ts#L186)
 
 ___
 
@@ -97,4 +97,4 @@ mapping function
 
 #### Defined in
 
-[index.ts:116](https://github.com/nsaunders/demitasse/blob/579d219/lib/src/index.ts#L116)
+[index.ts:116](https://github.com/nsaunders/demitasse/blob/d18100d/lib/src/index.ts#L116)
