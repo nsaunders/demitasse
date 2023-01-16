@@ -58,7 +58,7 @@ type NameChars = AlphaChars | NumChars | "_" | "-";
 
 type ExtractName<
   S extends string,
-  Acc extends string = ""
+  Acc extends string = "",
 > = S extends `${infer Head}${infer Tail}`
   ? Head extends NameChars
     ? ExtractName<Tail, `${Acc}${Head}`>
@@ -68,7 +68,7 @@ type ExtractName<
 type Names<
   Prefix extends string,
   CSS extends string,
-  Acc extends string[] = []
+  Acc extends string[] = [],
 > = CSS extends `${infer _}${Prefix}${infer Rest}`
   ? Rest extends `${infer BeforeOpen}{${infer _}`
     ? BeforeOpen extends `${infer _};${infer _}`
@@ -86,7 +86,7 @@ type Names<
 type FieldName<
   S extends string,
   Acc extends string = "",
-  NewWord extends boolean = false
+  NewWord extends boolean = false,
 > = S extends `${infer Head}${infer Tail}`
   ? Head extends AlphaChars
     ? FieldName<
@@ -116,8 +116,8 @@ type FieldName<
 export function makeCSSBindings<Context>(
   f: (
     identifier: string,
-    meta: { type: "class" | "id"; context: Context }
-  ) => string
+    meta: { type: "class" | "id"; context: Context },
+  ) => string,
 ) {
   /**
    * Extracts bindings from the provided CSS string.
@@ -128,7 +128,7 @@ export function makeCSSBindings<Context>(
    */
   return function cssBindings<CSS extends string>(
     css: CSS,
-    context: Context
+    context: Context,
   ): {
     /** A map of class names referenced within the specified CSS */
     classes: Record<
@@ -151,22 +151,22 @@ export function makeCSSBindings<Context>(
     >;
   } {
     const classes = (css.match(/\.[A-Za-z][A-Za-z0-9_-]*/g) || [])
-      .map((x) => [
+      .map(x => [
         x
           .substring(1)
-          .replace(/^[A-Z]/, (x) => x.toLowerCase())
-          .replace(/[^A-Za-z]([a-z])/g, (x) => x.toUpperCase())
+          .replace(/^[A-Z]/, x => x.toLowerCase())
+          .replace(/[^A-Za-z]([a-z])/g, x => x.toUpperCase())
           .replace(/[^A-Za-z0-9]/g, ""),
         f(x.substring(1), { context, type: "class" }),
       ])
       .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
 
     const ids = (css.match(/#[A-Za-z][A-Za-z0-9_-]*/g) || [])
-      .map((x) => [
+      .map(x => [
         x
           .substring(1)
-          .replace(/^[A-Z]/, (x) => x.toLowerCase())
-          .replace(/[^A-Za-z]([a-z])/g, (x) => x.toUpperCase())
+          .replace(/^[A-Z]/, x => x.toLowerCase())
+          .replace(/[^A-Za-z]([a-z])/g, x => x.toUpperCase())
           .replace(/[^A-Za-z0-9]/g, ""),
         f(x.substring(1), { context, type: "id" }),
       ])
@@ -184,5 +184,5 @@ export function makeCSSBindings<Context>(
  * @returns Class and ID bindings to the specified CSS
  */
 export function cssBindings<CSS extends string>(css: CSS) {
-  return makeCSSBindings((x) => x)(css, undefined);
+  return makeCSSBindings(x => x)(css, undefined);
 }
