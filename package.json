@@ -5,9 +5,15 @@
   "version": "3.0.0-0",
   "workspaces": [
     "examples/webpack-react",
-    "lib"
+    "eslint-config",
+    "lib",
+    "prettier-config"
   ],
+  "scripts": {
+    "prepare": "husky install"
+  },
   "devDependencies": {
+    "husky": "^8.0.3",
     "typedoc": "^0.23.23",
     "typedoc-plugin-markdown": "^3.14.0"
   }

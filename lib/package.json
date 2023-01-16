@@ -1,6 +1,6 @@
 {
   "name": "demitasse",
-  "description": "CSS modules in TypeScript...the simple way",
+  "description": "CSS modules in TypeScript…the simple way",
   "keywords": [
     "vanilla",
     "emotion",
@@ -22,14 +22,18 @@
   "module": "dist/esm/index.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
+    "precommit": "lint-staged",
     "prepare": "rimraf dist && tsc --project tsconfig.types.json && tsc --project tsconfig.cjs.json && tsc --project tsconfig.esm.json",
     "test": "ts-mocha -p tsconfig.test.json test/**/*.ts"
   },
   "devDependencies": {
+    "@demitasse/eslint-config": "*",
+    "@demitasse/prettier-config": "*",
     "@tsconfig/recommended": "^1.0.1",
     "@types/expect": "^24.3.0",
     "@types/mocha": "^10.0.1",
     "expect": "^29.3.1",
+    "lint-staged": "^13.1.0",
     "mocha": "^10.2.0",
     "rimraf": "^3.0.2",
     "ts-mocha": "^10.0.0",
