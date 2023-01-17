@@ -19,9 +19,10 @@ on:
 
 jobs:
   bump:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: root
         run: echo "version=$(npm version prerelease --preid=alpha --git-tag-version=false --tag-version-prefix='')" >> $GITHUB_OUTPUT
       - run: npm version ${{ steps.root.outputs.version }} --workspaces --git-tag-version=false
@@ -34,7 +35,7 @@ jobs:
         with:
           github-token: ${{ github.token }}
           script: |
-            github.git.createRef({
+            await github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/v${{steps.root.outputs.version}}",
