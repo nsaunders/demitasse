@@ -116,10 +116,7 @@ type FieldName<
  * mapping function
  */
 export function makeCSSBindings<Context>(
-  f: (
-    identifier: string,
-    meta: { type: "class" | "id"; context: Context },
-  ) => string,
+  f: (name: string, meta: { type: "class" | "id"; context: Context }) => string,
 ) {
   /**
    * Extracts bindings from the provided CSS string.
