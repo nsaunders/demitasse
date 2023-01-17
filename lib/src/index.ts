@@ -65,6 +65,7 @@ type ExtractName<
     : [Acc, S]
   : [Acc, S];
 
+/*eslint-disable @typescript-eslint/no-unused-vars*/
 type Names<
   Prefix extends string,
   CSS extends string,
@@ -82,6 +83,7 @@ type Names<
       : Names<Prefix, Rest, Acc>
     : Names<Prefix, Rest, Acc>
   : Acc;
+/*eslint-enable @typescript-eslint/no-unused-vars*/
 
 type FieldName<
   S extends string,
