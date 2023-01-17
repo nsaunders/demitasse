@@ -10,8 +10,8 @@
     "bundle": "webpack -- --env production"
   },
   "devDependencies": {
-    "@demitasse/eslint-config": "^0.0.0",
-    "@demitasse/prettier-config": "^0.0.0",
+    "@demitasse/eslint-config": "*",
+    "@demitasse/prettier-config": "*",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "autoprefixer": "^10.4.13",
