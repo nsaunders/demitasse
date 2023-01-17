@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import cssBindings from "../cssBindings";
 import Button from "./Button";
 import StarIcon from "./StarIcon";

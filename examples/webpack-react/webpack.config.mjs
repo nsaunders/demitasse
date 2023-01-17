@@ -61,9 +61,6 @@ export default ({ production }) => ({
     ],
   },
   optimization: {
-    minimizer: [
-      "...",
-      new CssMinimizerPlugin(),
-    ],
+    minimizer: ["...", new CssMinimizerPlugin()],
   },
 });
