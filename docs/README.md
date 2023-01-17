@@ -40,7 +40,7 @@ Class and ID bindings to the specified CSS
 
 #### Defined in
 
-[index.ts:188](https://github.com/nsaunders/demitasse/blob/f6fb634/lib/src/index.ts#L188)
+[index.ts:185](https://github.com/nsaunders/demitasse/blob/5a9e0fa/lib/src/index.ts#L185)
 
 ___
 
@@ -62,7 +62,7 @@ scoping mechanism.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `f` | (`identifier`: `string`, `meta`: { `context`: `Context` ; `type`: ``"class"`` \| ``"id"``  }) => `string` | The mapping function to apply to class names and IDs |
+| `f` | (`name`: `string`, `meta`: { `context`: `Context` ; `type`: ``"class"`` \| ``"id"``  }) => `string` | The mapping function to apply to class names and IDs |
 
 #### Returns
 
@@ -97,4 +97,4 @@ mapping function
 
 #### Defined in
 
-[index.ts:118](https://github.com/nsaunders/demitasse/blob/f6fb634/lib/src/index.ts#L118)
+[index.ts:118](https://github.com/nsaunders/demitasse/blob/5a9e0fa/lib/src/index.ts#L118)
