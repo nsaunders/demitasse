@@ -54,10 +54,6 @@ export default ({ production }) => ({
           },
         },
       },
-      {
-        test: /\.woff2?$/,
-        type: "asset/resource",
-      },
     ],
   },
   optimization: {
