@@ -111,3 +111,7 @@ npm install -D prefix-loader
 
 1. We have replaced `execute-module-loader`'s `export` option with the `module` option. Thus, rather than only the `css` export, the loader will output the stringified JSON content of the entire module, providing additional context to `prefix-loader`.
 2. [`prefix-loader`](https://github.com/nsaunders/prefix-loader) reads the `moduleId` and `css` fields from the JSON content and outputs scoped CSS using the `moduleId` as a prefix for each class name, ID, and animation name appearing within the provided `css` string.
+
+### Custom `cssBindings`
+
+At this point, the `cssBindings` function is no longer providing accurate class names or IDs. Where the build process emits a scoped name, e.g. `button___label`, the `cssBindings` function still reports the original name, e.g. `label`. We need to update this simplistic behavior of `cssBindings` to reflect the new reality of scoped class names and IDs.
