@@ -154,7 +154,7 @@ const { classes } = cssBindings(css, moduleId); // [3]
 
 ## Conclusion
 
-Well done! ✋ We now have a system in place that provides typed bindings to CSS extracted at build time. Best of all, since we configured it ourselves instead of using an opaque plugin, we can continue to make adjustments with less fear of breaking code we don't control and/or might not understand.
+Well done! We now have a system in place that provides typed bindings to CSS extracted at build time. Best of all, since we configured it ourselves instead of using an opaque plugin, we can continue to make adjustments with less fear of breaking code we don't control and/or might not understand.
 
 ### Configuration next steps
 From here, you can configure Webpack to handle CSS as you normally would. For example:
