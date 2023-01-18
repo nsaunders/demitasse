@@ -86,7 +86,7 @@ The loader chain continues from the previous TypeScript rule according to Webpac
 At this point, we have achieved:
 * type-safe CSS bindings;
 * build-time extraction of static CSS; and
-* the ability to colocate CSS and related markup.
+* the ability to colocate CSS and related markup within a single TypeScript module.
 
 However, our solution depends on manual scoping, e.g. using a class name `app-container` instead of just `container`. With a few additional steps, scoping can be automated so that a namespace doesn't need to be repeated throughout a given module.
 
