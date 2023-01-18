@@ -1,0 +1,24 @@
+name: docs
+
+on:
+  push:
+    paths:
+      - lib/src/**/*.ts
+      - lib/tsconfig.json
+      - typedoc.json
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - run: npm install
+      - run: npm exec typedoc -- --tsconfig lib/tsconfig.json lib/src/index.ts
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: 'docs'
+          author_name: GitHub Actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: Update API documentation.
