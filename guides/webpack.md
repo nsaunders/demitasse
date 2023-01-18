@@ -20,7 +20,7 @@ export const css = `
   .app-container {
     background: pink;
   }
-` as const;
+` as const; // Note the const assertion.
 
 const { classes } = cssBindings(css);
 
