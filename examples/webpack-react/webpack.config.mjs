@@ -25,9 +25,6 @@ export default ({ production }) => ({
   ],
   resolve: {
     extensions: [".js", ".ts", ".tsx", ".css"],
-    fallback: {
-      path: false,
-    },
   },
   module: {
     rules: [
