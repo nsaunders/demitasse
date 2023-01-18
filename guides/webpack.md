@@ -114,4 +114,40 @@ npm install -D prefix-loader
 
 ### Custom `cssBindings`
 
-At this point, the `cssBindings` function is no longer providing accurate class names or IDs. Where the build process emits a scoped name, e.g. `button___label`, the `cssBindings` function still reports the original name, e.g. `label`. We need to update this simplistic behavior of `cssBindings` to reflect the new reality of scoped class names and IDs.
+At this point, the `cssBindings` function is no longer providing accurate class names or IDs. Where the build process emits a scoped name, e.g. `button___label`, the `cssBindings` function still reports the original name, e.g. `label`. We need to update this simplistic behavior of `cssBindings` to reflect the new reality of scoped class names and IDs. To achieve this, let's create a custom implementation:
+
+```typescript
+// src/cssBindings.ts
+import { makeCSSBindings } from "demitasse";
+export default makeCSSBindings( // [1]
+  (name, { context }) => `${context}___${name}`, // [2]
+);
+```
+
+1. The `makeCSSBindings` "factory" function returns a `cssBindings` function that applies a user-defined mapping to each class name and ID.
+2. The mapping function describes how class names and IDs are transformed in the build process (e.g. by `prefix-loader`).
+
+### Component updates
+
+```typescript
+// src/components/App.ts
+
+import cssBindings from "../cssBindings"; // [1]
+
+export const moduleId = "app"; // [2]
+
+export const css = `
+  .container {
+    background: pink;
+  }
+` as const;
+
+const { classes } = cssBindings(css, moduleId); // [3]
+
+// Now we have access to a type-checked `classes.container` reference in our component HTML. 👍 [4]
+```
+
+1. Instead of importing `cssBindings` directly from Demitasse, we import the [custom version](#custom-cssbindings) created earlier.
+2. `prefix-loader` will prepend the `moduleId` to each class name, ID, and animation name that appears within the style sheet.
+3. `moduleId` is passed as a second `context` argument to `cssBindings`. Review the [custom `cssBindings` implementation](#custom-cssbindings) to see how we used `context`.
+4. Note that the namespace can be dropped from the class name and ID maps; e.g. we can just reference `classes.container` and our mapping function will provide the scoped name `"app___container"`.
