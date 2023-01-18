@@ -82,3 +82,29 @@ The loader chain continues from the previous TypeScript rule according to Webpac
 3. [`style-loader`](https://github.com/webpack-contrib/style-loader) adds the CSS to the DOM.
 
 ## Advanced configuration
+
+At this point, we have achieved:
+* type-safe CSS bindings;
+* build-time extraction of static CSS; and
+* the ability to colocate CSS and related markup.
+
+However, our solution depends on manual scoping, e.g. using a class name `app-container` instead of just `container`. With a few additional steps, scoping can be automated so that a namespace doesn't need to be repeated throughout a given module.
+
+### Loader configuration
+
+#### Install additional loader
+
+```bash
+npm install -D prefix-loader
+```
+
+#### Updated Webpack rule
+
+```javascript
+  use: [
+    "style-loader",
+    "css-loader",
+    "prefix-loader", // [1]
+    "execute-module-loader", // [2]
+  ],
+```
