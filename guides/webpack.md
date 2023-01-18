@@ -104,7 +104,10 @@ npm install -D prefix-loader
   use: [
     "style-loader",
     "css-loader",
-    "prefix-loader", // [1]
-    "execute-module-loader", // [2]
+    "prefix-loader", // [2]
+    "execute-module-loader?module", // [1]
   ],
 ```
+
+1. We have replaced `execute-module-loader`'s `export` option with the `module` option. Thus, rather than only the `css` export, the loader will output the stringified JSON content of the entire module, providing additional context to `prefix-loader`.
+2. [`prefix-loader`](https://github.com/nsaunders/prefix-loader) reads the `moduleId` and `css` fields from the JSON content and outputs scoped CSS using the `moduleId` as a prefix for each class name, ID, and animation name appearing within the provided `css` string.
