@@ -150,4 +150,16 @@ const { classes } = cssBindings(css, moduleId); // [3]
 1. Instead of importing `cssBindings` directly from Demitasse, we import the [custom version](#custom-cssbindings) created earlier.
 2. `prefix-loader` will prepend the `moduleId` to each class name, ID, and animation name that appears within the style sheet.
 3. `moduleId` is passed as a second `context` argument to `cssBindings`. Review the [custom `cssBindings` implementation](#custom-cssbindings) to see how we used `context`.
-4. Note that the namespace can be dropped from the class name and ID maps; e.g. we can just reference `classes.container` and our mapping function will provide the scoped name `"app___container"`.
+4. Note that the namespace can be dropped from the class name and ID maps; e.g. we can just reference `classes.container` and our mapping function will provide the scoped name `app___container`.
+
+## Conclusion
+
+Well done! ✋ We now have a system in place that provides typed bindings to CSS extracted at build time. Best of all, since we configured it ourselves instead of using an opaque plugin, we can continue to make adjustments with less fear of breaking code we don't control and/or might not understand.
+
+### Configuration next steps
+From here, you can configure Webpack to handle CSS as you normally would. For example:
+* You may be interested in adding [postcss-loader](https://github.com/webpack-contrib/postcss-loader) to the loader chain, the most popular use case being to apply [autoprefixer](https://github.com/postcss/autoprefixer). The only caveat is that PostCSS plugins which modify class name and ID selectors must be avoided.
+* Instead of [style-loader](https://github.com/webpack-contrib/style-loader), many projects use [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to produce CSS files separate from the main JavaScript bundle.
+
+### Additional components
+Each time you add a new component to the application, just add a corresponding import to `src/css.ts`, remembering to include the `?css` query string in order to activate the Webpack CSS rule.
