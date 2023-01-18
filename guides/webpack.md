@@ -162,4 +162,4 @@ From here, you can configure Webpack to handle CSS as you normally would. For ex
 * Instead of [style-loader](https://github.com/webpack-contrib/style-loader), many projects use [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to produce CSS files separate from the main JavaScript bundle.
 
 ### Additional components
-Each time you add a new component to the application, just add a corresponding import to `src/css.ts`, remembering to include the `?css` query string in order to activate the Webpack CSS rule.
+Each time you add a new component to the application, add a corresponding import to `src/css.ts`, remembering to include the `?css` query string in order to activate the Webpack CSS rule. Ensure that the component module exports `moduleId` and `css` string values.
