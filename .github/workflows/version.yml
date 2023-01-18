@@ -26,18 +26,19 @@ jobs:
       - id: root
         run: echo "version=$(npm version prerelease --preid=alpha --git-tag-version=false --tag-version-prefix='')" >> $GITHUB_OUTPUT
       - run: npm version ${{ steps.root.outputs.version }} --workspaces --git-tag-version=false
-      - uses: EndBug/add-and-commit@v9
+      - id: commit
+        uses: EndBug/add-and-commit@v9
         with:
           author_name: GitHub Actions
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
-          message: Version bump v${{ steps.root.outputs.version }}
+          message: Version bump v${{steps.root.outputs.version}}
       - uses: actions/github-script@v3
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{github.token}}
           script: |
             await github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/v${{steps.root.outputs.version}}",
-              sha: "${{github.sha}}"
+              sha: "${{steps.commit.outputs.commit_long_sha}}"
             })
