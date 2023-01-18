@@ -8,10 +8,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          ref: master
-      - run: npm install
-      - run: npm publish
+          ref: ${{github.ref}}
+      - run: npm ci
+      - run: npm publish --workspace=lib
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
