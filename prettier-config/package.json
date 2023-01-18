@@ -2,5 +2,5 @@
   "private": true,
   "name": "@demitasse/prettier-config",
   "description": "Shared Prettier configuration for Demitasse projects",
-  "version": "3.0.0-0"
+  "version": "3.0.0-alpha.0"
 }
