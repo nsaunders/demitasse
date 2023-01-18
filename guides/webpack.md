@@ -61,7 +61,7 @@ npm install -D execute-module-loader css-loader style-loader
 
 At this point, you should have an existing rule that applies to `.ts` (and/or `.tsx`) extensions. If not, review the [TypeScript](#typescript) section above.
 
-Add a new rule _above_ the existing TypeScript rule, following Webpack's [right-to-left loader order](https://webpack.js.org/configuration/module/#ruleuse):
+Add a new rule _above_ the existing TypeScript rule:
 
 ```javascript
 // webpack.config.js
@@ -75,5 +75,10 @@ Add a new rule _above_ the existing TypeScript rule, following Webpack's [right-
   ],
 },
 ```
+
+The loader chain continues from the previous TypeScript rule according to Webpack's [right-to-left loader order](https://webpack.js.org/configuration/module/#ruleuse), whenever the `resourceQuery` is matched (i.e. a `?css` query string is appended to the import path):
+1. [`execute-module-loader`](http://github.com/nsaunders/execute-module-loader) receives transpiled JavaScript code, executes the module, and outputs the value of the `css` export.
+2. [`css-loader`](https://github.com/webpack-contrib/css-loader) resolves `@import` and `url()` as needed. (Note that these will be resolved relative to the source TypeScript module.)
+3. [`style-loader`](https://github.com/webpack-contrib/style-loader) adds the CSS to the DOM.
 
 ## Advanced configuration
