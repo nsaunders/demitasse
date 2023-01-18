@@ -52,6 +52,7 @@ Given a mapping function `mapFn`, returns a function similar to [`cssBindings`](
 
 Generated API documentation is available [here](./docs).
 
-## Examples
+## Additional resources
 
-Examples are provided [here](./examples).
+* [Examples](./examples)
+* [Guides](./guides)
