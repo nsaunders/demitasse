@@ -166,4 +166,4 @@ Each time you add a new component to the application, add a corresponding import
 
 ## Example
 
-See [webpack-react](../examples/webpack-react).
+See [examples/webpack-react](../examples/webpack-react).
