@@ -1,4 +1,4 @@
-# ☕ Webpack / React
+# ☕ Webpack/React
 
 This example project demonstrates how to use Demitasse with Webpack and React.
 
