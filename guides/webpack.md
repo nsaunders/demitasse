@@ -69,9 +69,9 @@ Add a new rule _above_ the existing TypeScript rule:
   test: /\.ts$/, // or /\.tsx$/
   resourceQuery: /css/,
   use: [
-    "style-loader",
-    "css-loader",
-    "execute-module-loader?export=css",
+    "style-loader", // [3]
+    "css-loader", // [2]
+    "execute-module-loader?export=css", // [1]
   ],
 },
 ```
