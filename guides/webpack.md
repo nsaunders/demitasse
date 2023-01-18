@@ -163,3 +163,7 @@ From here, you can configure Webpack to handle CSS as you normally would. For ex
 
 ### Additional components
 Each time you add a new component to the application, add a corresponding import to `src/css.ts`, remembering to include the `?css` query string in order to activate the Webpack CSS rule. Ensure that the component module exports `moduleId` and `css` string values.
+
+## Example
+
+See the [webpack-react](../examples/webpack-react) for a complete example.
