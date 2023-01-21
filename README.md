@@ -1,5 +1,9 @@
 # ☕ Demitasse <a href="https://github.com/nsaunders/demitasse/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/nsaunders/demitasse/ci.yml?branch=master" alt="Build status"></a> <a href="https://www.npmjs.com/package/demitasse"><img src="https://img.shields.io/npm/v/demitasse.svg" alt="Latest Release"></a> <a href="https://github.com/nsaunders/demitasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nsaunders/demitasse.svg" alt="License"></a>
 
+<table>
+<tr>
+<td>
+
 **CSS Modules in TypeScript…the _simple_ way**
 
 Demitasse offers a component development experience comparable to Typed CSS Modules or CSS-in-TypeScript (CSS-in-JS) without the typical runtime cost or unwieldy configuration of those approaches.
@@ -15,6 +19,15 @@ Demitasse offers a component development experience comparable to Typed CSS Modu
 🔎 Transparent and uncomplicated build configuration
 
 👼 Pure computation / no side effects
+
+</td>
+<td>
+
+<img src="https://user-images.githubusercontent.com/2517229/213830781-1cac776b-f72a-4988-8091-e7f035b7e198.gif" alt="Live code demo" width="400" height="400" />
+
+</td>
+</tr>
+</table>
 
 ## Installation
 ```bash
