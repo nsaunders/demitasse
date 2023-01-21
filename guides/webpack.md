@@ -158,7 +158,7 @@ Well done! We now have a system in place that provides typed bindings to CSS ext
 
 ### Configuration next steps
 From here, you can configure Webpack to handle CSS as you normally would. For example:
-* You may be interested in adding [postcss-loader](https://github.com/webpack-contrib/postcss-loader) to the loader chain, the most popular use case being to apply [autocomponent-csser](https://github.com/postcss/autocomponent-csser). The only caveat is that PostCSS plugins which modify class name and ID selectors must be avoided.
+* You may be interested in adding [postcss-loader](https://github.com/webpack-contrib/postcss-loader) to the loader chain, the most popular use case being to apply [autoprefixer](https://github.com/postcss/autoprefixer). The only caveat is that PostCSS plugins which modify class name and ID selectors must be avoided.
 * Instead of [style-loader](https://github.com/webpack-contrib/style-loader), many projects use [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to produce CSS files separate from the main JavaScript bundle.
 
 ### Additional components
