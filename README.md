@@ -16,7 +16,7 @@ Demitasse offers a component development experience comparable to Typed CSS Modu
 
 📦 Locally-scoped class names
 
-🔎 Transparent and uncomplicated build configuration
+🔎 Transparent, uncomplicated build configuration
 
 👼 Pure computation / no side effects
 
