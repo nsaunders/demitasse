@@ -10,7 +10,7 @@ Demitasse offers a component development experience comparable to Typed CSS Modu
 
 💅 Author style rules within TypeScript.
 
-👬 Colocate styles and markup in the same module.
+👬 Colocate styles and markup.
 
 ⚒️  Extract static CSS at build time.
 
