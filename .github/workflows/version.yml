@@ -24,8 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: root
-        run: echo "version=$(npm version prerelease --preid=alpha --git-tag-version=false --tag-version-prefix='')" >> $GITHUB_OUTPUT
-      - run: npm version ${{ steps.root.outputs.version }} --workspaces --git-tag-version=false
+        run: echo "version=$(npm version ${{inputs.bump}} --preid=alpha --git-tag-version=false --tag-version-prefix='')" >> $GITHUB_OUTPUT
+      - run: npm version ${{steps.root.outputs.version}} --workspaces --git-tag-version=false
       - id: commit
         uses: EndBug/add-and-commit@v9
         with:
