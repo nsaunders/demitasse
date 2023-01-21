@@ -110,7 +110,7 @@ npm install -D component-css-loader
 ```
 
 1. We have replaced `execute-module-loader`'s `export` option with the `module` option. Thus, rather than only the `css` export, the loader will output the stringified JSON content of the entire module, providing additional context to `component-css-loader`.
-2. [`component-css-loader`](https://github.com/nsaunders/component-css-loader) reads the `moduleId` and `css` fields from the JSON content and outputs scoped CSS using the `moduleId` as a component-css for each class name, ID, and animation name appearing within the provided `css` string.
+2. [`component-css-loader`](https://github.com/nsaunders/component-css-loader) reads the `moduleId` and `css` fields from the JSON content and outputs scoped CSS using the `moduleId` as a prefix for each class name, ID, and animation name appearing within the provided `css` string.
 
 ### Custom `cssBindings`
 
