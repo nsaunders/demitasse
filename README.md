@@ -23,7 +23,7 @@ Demitasse offers a component development experience comparable to Typed CSS Modu
 </td>
 <td>
 
-<img src="https://user-images.githubusercontent.com/2517229/213830781-1cac776b-f72a-4988-8091-e7f035b7e198.gif" alt="Live code demo" width="400" height="400" />
+<img src="https://user-images.githubusercontent.com/2517229/213875430-b7065a2d-98eb-4d0f-a30c-a71a10130fb5.gif" alt="Live code demo" width="400" height="400" />
 
 </td>
 </tr>
