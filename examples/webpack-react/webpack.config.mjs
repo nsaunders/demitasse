@@ -35,7 +35,7 @@ export default ({ production }) => ({
           MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
-          "prefix-loader",
+          "component-css-loader",
           "execute-module-loader?module",
         ],
       },

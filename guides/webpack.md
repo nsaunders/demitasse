@@ -95,7 +95,7 @@ However, our solution depends on manual scoping, e.g. using a class name `app-co
 #### Install additional loader
 
 ```bash
-npm install -D prefix-loader
+npm install -D component-css-loader
 ```
 
 #### Updated Webpack rule
@@ -104,13 +104,13 @@ npm install -D prefix-loader
   use: [
     "style-loader",
     "css-loader",
-    "prefix-loader", // [2]
+    "component-css-loader", // [2]
     "execute-module-loader?module", // [1]
   ],
 ```
 
-1. We have replaced `execute-module-loader`'s `export` option with the `module` option. Thus, rather than only the `css` export, the loader will output the stringified JSON content of the entire module, providing additional context to `prefix-loader`.
-2. [`prefix-loader`](https://github.com/nsaunders/prefix-loader) reads the `moduleId` and `css` fields from the JSON content and outputs scoped CSS using the `moduleId` as a prefix for each class name, ID, and animation name appearing within the provided `css` string.
+1. We have replaced `execute-module-loader`'s `export` option with the `module` option. Thus, rather than only the `css` export, the loader will output the stringified JSON content of the entire module, providing additional context to `component-css-loader`.
+2. [`component-css-loader`](https://github.com/nsaunders/component-css-loader) reads the `moduleId` and `css` fields from the JSON content and outputs scoped CSS using the `moduleId` as a component-css for each class name, ID, and animation name appearing within the provided `css` string.
 
 ### Custom `cssBindings`
 
@@ -125,7 +125,7 @@ export default makeCSSBindings( // [1]
 ```
 
 1. The `makeCSSBindings` "factory" function returns a `cssBindings` function that applies a user-defined mapping to each class name and ID.
-2. The mapping function describes how class names and IDs are transformed in the build process (e.g. by `prefix-loader`).
+2. The mapping function describes how class names and IDs are transformed in the build process (e.g. by `component-css-loader`).
 
 ### Component updates
 
@@ -148,7 +148,7 @@ const { classes } = cssBindings(css, moduleId); // [3]
 ```
 
 1. Instead of importing `cssBindings` directly from Demitasse, we import the [custom version](#custom-cssbindings) created earlier.
-2. `prefix-loader` will prepend the `moduleId` to each class name, ID, and animation name that appears within the style sheet.
+2. `component-css-loader` will prepend the `moduleId` to each class name, ID, and animation name that appears within the style sheet.
 3. `moduleId` is passed as a second `context` argument to `cssBindings`. Review the [custom `cssBindings` implementation](#custom-cssbindings) to see how we used `context`.
 4. Note that the namespace can be dropped from the class name and ID maps; e.g. we can just reference `classes.container` and our mapping function will provide the scoped name `app___container`.
 
@@ -158,7 +158,7 @@ Well done! We now have a system in place that provides typed bindings to CSS ext
 
 ### Configuration next steps
 From here, you can configure Webpack to handle CSS as you normally would. For example:
-* You may be interested in adding [postcss-loader](https://github.com/webpack-contrib/postcss-loader) to the loader chain, the most popular use case being to apply [autoprefixer](https://github.com/postcss/autoprefixer). The only caveat is that PostCSS plugins which modify class name and ID selectors must be avoided.
+* You may be interested in adding [postcss-loader](https://github.com/webpack-contrib/postcss-loader) to the loader chain, the most popular use case being to apply [autocomponent-csser](https://github.com/postcss/autocomponent-csser). The only caveat is that PostCSS plugins which modify class name and ID selectors must be avoided.
 * Instead of [style-loader](https://github.com/webpack-contrib/style-loader), many projects use [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to produce CSS files separate from the main JavaScript bundle.
 
 ### Additional components
