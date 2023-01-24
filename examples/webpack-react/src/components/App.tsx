@@ -15,6 +15,7 @@ export const css = `
     justify-content: center;
   }
 ` as const;
+
 const { classes } = cssBindings(css, moduleId);
 
 export default function App() {
