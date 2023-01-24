@@ -1,6 +1,7 @@
 name: release
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -17,6 +18,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: cp LICENSE README.md packages/demitasse
-      - run: npm publish --workspace=packages/*
+      - run: npm publish --workspace="packages/**"
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
