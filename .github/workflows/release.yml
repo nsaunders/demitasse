@@ -16,7 +16,7 @@ jobs:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: cp LICENSE README.md lib
-      - run: npm publish --workspace=lib
+      - run: cp LICENSE README.md packages/demitasse
+      - run: npm publish --workspace=packages/* --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

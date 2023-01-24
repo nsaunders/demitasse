@@ -1,5 +1,5 @@
 {
-  "name": "@demitasse/prettier-config",
+  "name": "prettier-config-demitasse",
   "description": "Shared Prettier configuration for Demitasse projects",
   "keywords": [
     "config",

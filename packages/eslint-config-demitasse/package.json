@@ -1,5 +1,5 @@
 {
-  "name": "@demitasse/eslint-config",
+  "name": "eslint-config-demitasse",
   "description": "Shared ESLint configuration for Demitasse projects featuring Prettier and TypeScript",
   "keywords": [
     "config",

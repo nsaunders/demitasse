@@ -4,10 +4,8 @@
   "description": "Monorepo root package",
   "version": "3.0.0",
   "workspaces": [
-    "examples/webpack-react",
-    "eslint-config",
-    "lib",
-    "prettier-config"
+    "examples/*",
+    "packages/*"
   ],
   "scripts": {
     "prepare": "husky install"

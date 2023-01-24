@@ -3,19 +3,19 @@ name: docs
 on:
   push:
     paths:
-      - lib/src/**/*.ts
-      - lib/tsconfig.json
-      - typedoc.json
+      - packages/demitasse/src/**/*.ts
+      - packages/demitasse/tsconfig.json
+      - packages/demitasse/typedoc.json
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 2
       - run: npm install
-      - run: npm exec typedoc -- --tsconfig lib/tsconfig.json lib/src/index.ts
+      - run: npm exec typedoc -- --tsconfig packages/demitasse/tsconfig.json packages/demitasse/src/index.ts
       - uses: EndBug/add-and-commit@v9
         with:
           add: 'docs'

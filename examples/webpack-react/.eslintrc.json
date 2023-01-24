@@ -3,7 +3,7 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "@demitasse/eslint-config"
+    "demitasse"
   ],
   "settings": {
     "react": {
