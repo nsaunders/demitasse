@@ -129,8 +129,30 @@
     },
     "timestamp": "2023-01-22T00:00:00Z",
     "clones": {
+      "uniques": 4,
+      "count": 5
+    }
+  },
+  {
+    "views": {
+      "uniques": 3,
+      "count": 34
+    },
+    "timestamp": "2023-01-23T00:00:00Z",
+    "clones": {
+      "uniques": 2,
+      "count": 2
+    }
+  },
+  {
+    "views": {
       "uniques": 1,
-      "count": 1
+      "count": 42
+    },
+    "timestamp": "2023-01-24T00:00:00Z",
+    "clones": {
+      "uniques": 7,
+      "count": 60
     }
   }
 ]
