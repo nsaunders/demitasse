@@ -1,4 +1,4 @@
-name: Traffic
+name: traffic
 
 on:
   push:
