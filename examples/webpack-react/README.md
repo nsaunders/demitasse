@@ -12,4 +12,4 @@ This example project demonstrates how to use Demitasse with Webpack and React.
 
 ## Guide
 
-If you would prefer a detailed walkthrough, we recommend the [Webpack guide](../../guides/webpack.md).
+If you would prefer a detailed walkthrough, we recommend the [Webpack guide](../../docs/guides/webpack.md).
