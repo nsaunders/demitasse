@@ -1,6 +1,13 @@
 {
-  "private": true,
   "name": "@demitasse/prettier-config",
   "description": "Shared Prettier configuration for Demitasse projects",
-  "version": "3.0.0"
+  "keywords": [
+    "config",
+    "prettier"
+  ],
+  "version": "3.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nsaunders/demitasse.git"
+  }
 }

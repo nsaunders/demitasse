@@ -1,8 +1,17 @@
 {
-  "private": true,
   "name": "@demitasse/eslint-config",
   "description": "Shared ESLint configuration for Demitasse projects featuring Prettier and TypeScript",
+  "keywords": [
+    "config",
+    "eslint",
+    "prettier",
+    "typescript"
+  ],
   "version": "3.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nsaunders/demitasse.git"
+  },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
