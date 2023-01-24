@@ -68,4 +68,4 @@ Generated API documentation is available [here](./docs).
 ## Additional resources
 
 * [Examples](./examples)
-* [Guides](./guides)
+* [Guides](./docs/guides)
