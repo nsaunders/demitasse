@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "demitasse-example-webpack-react",
-  "version": "3.0.0",
+  "version": "3.1.0-alpha.0",
   "description": "Example of using demitasse to create a style sheet at build time in a webpack-based react application",
   "scripts": {
     "lint": "eslint *.js *.mjs src",

@@ -5,7 +5,7 @@
     "config",
     "prettier"
   ],
-  "version": "3.0.0",
+  "version": "3.1.0-alpha.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/nsaunders/demitasse.git"
