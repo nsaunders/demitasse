@@ -2,10 +2,7 @@
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "noEmit": true,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "target": "es5",
-    "jsx": "react-jsx"
+    "jsx": "preserve"
   },
   "include": ["src"]
 }
