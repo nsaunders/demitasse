@@ -5,7 +5,7 @@ import StarIcon from "./StarIcon";
 
 export const moduleId = "app";
 
-export const css = `
+export const css = /*css*/ `
   .container {
     width: 200px;
     height: 200px;

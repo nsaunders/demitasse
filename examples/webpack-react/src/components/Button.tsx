@@ -5,7 +5,7 @@ import LoadingIcon from "./LoadingIcon";
 
 export const moduleId = "button";
 
-export const css = `
+export const css = /*css*/ `
   @keyframes spin {
     from {
       transform: rotate(0);
