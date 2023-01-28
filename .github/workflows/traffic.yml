@@ -10,12 +10,11 @@ on:
 
 jobs:
   update:
-    name: Update
 
     runs-on: ubuntu-latest
 
     env:
-      TRAFFIC_PATH: meta/traffic.json
+      TRAFFIC_PATH: .github/traffic.json
 
     steps:
       - uses: actions/checkout@v3
