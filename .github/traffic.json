@@ -187,5 +187,24 @@
       "uniques": 2,
       "count": 3
     }
+  },
+  {
+    "views": {
+      "uniques": 1,
+      "count": 34
+    },
+    "timestamp": "2023-01-28T00:00:00Z",
+    "clones": {
+      "uniques": 5,
+      "count": 21
+    }
+  },
+  {
+    "views": {
+      "uniques": 1,
+      "count": 4
+    },
+    "timestamp": "2023-01-29T00:00:00Z",
+    "clones": null
   }
 ]
