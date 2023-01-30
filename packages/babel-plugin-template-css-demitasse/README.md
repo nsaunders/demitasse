@@ -5,7 +5,7 @@ This [Babel](http://babeljs.io) plugin converts CSS code embedded within a [temp
 Use this plugin in your production build to remove unused CSS code (e.g. large declaration blocks) since Demitasse only needs the class names and IDs to produce CSS bindings.
 
 > **Note**
-> This is an aggressive optimization and assumes you are following our recommended approach of build-time CSS extraction. For more information, see our [guides](../../docs/guides) and [examples](../../examples).
+> This is an aggressive optimization and assumes you are following our recommended approach of build-time CSS extraction. For more information, see our [guides](https://github.com/nsaunders/demitasse/tree/master/docs/guides) and [examples](https://github.com/nsaunders/demitasse/tree/master/examples).
 
 ## Example
 
