@@ -1,7 +1,12 @@
 {
-  "name": "demitasse",
-  "description": "CSS modules in TypeScript…the simple way",
+  "name": "babel-plugin-template-css-demitasse",
+  "description": "Reduces CSS embedded in template literals to an efficient format used by Demitasse.",
   "keywords": [
+    "babel",
+    "plugin",
+    "css",
+    "minifier",
+    "minify",
     "vanilla",
     "emotion",
     "style",
@@ -22,6 +27,9 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/types/index.d.ts",
+  "engines": {
+    "node": ">=12"
+  },
   "scripts": {
     "lint": "eslint src test",
     "precommit": "lint-staged",
@@ -30,6 +38,7 @@
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
+    "@types/babel__core": "^7.20.0",
     "@types/mocha": "^10.0.1",
     "eslint-config-demitasse": "*",
     "expect": "^29.3.1",
