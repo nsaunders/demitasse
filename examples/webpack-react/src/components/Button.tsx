@@ -57,7 +57,7 @@ const { classes } = cssBindings(css, moduleId);
 
 type ButtonProps = {
   children: string;
-  icon?: (props: { className: string; size: "small" }) => ReactElement;
+  icon?: (props: { className: string }) => ReactElement;
   loading?: boolean;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 };
@@ -73,9 +73,7 @@ export default function Button({
   const Icon = useMemo(() => (loading ? LoadingIcon : icon), [icon, loading]);
   return (
     <button className={classes.container} onClick={onClick}>
-      {Icon && (
-        <Icon className={cx(loading && classes.iconLoading)} size="small" />
-      )}
+      {Icon && <Icon className={cx(loading && classes.iconLoading)} />}
       <div className={classes.label}>{label}</div>
     </button>
   );
