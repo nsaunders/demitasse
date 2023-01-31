@@ -33,7 +33,7 @@ export default ({ production }) => ({
     }),
   ],
   resolve: {
-    extensions: [".js", ".ts", ".tsx", ".css"],
+    extensions: [".js", ".ts", ".tsx"],
   },
   module: {
     rules: [
