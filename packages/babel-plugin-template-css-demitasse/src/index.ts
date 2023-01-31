@@ -13,10 +13,15 @@ export default function () {
                 .trim()
                 .toLowerCase() === "css";
             if (isCSS) {
-              const names = path.node.quasis.flatMap(
-                ({ value }) =>
-                  value.raw.match(/[.#][A-Za-z_-][A-Za-z0-9_-]*/g) || [],
-              );
+              const names = path.node.quasis
+                .flatMap(
+                  ({ value }) =>
+                    value.raw.match(/[.#][A-Za-z_-][A-Za-z0-9_-]*/g) || [],
+                )
+                .reduce(
+                  (acc: string[], x) => (acc.includes(x) ? acc : [...acc, x]),
+                  [],
+                );
               path.replaceWithSourceString(
                 `"/*extracted*/ ${names.join(" ")}"`,
               );

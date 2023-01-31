@@ -70,4 +70,42 @@ describe("plugin", () => {
     );
     expect(result?.code).toEqual('const css = /*css*/"/*extracted*/ ";');
   });
+
+  it("doesn't duplicate class names", async () => {
+    const result = await transformAsync(
+      `
+      const css = /*css*/\`
+        .foo {
+          background: black;
+        }
+
+        .foo:hover {
+          background: gray;
+        }
+      \`;
+    `,
+      { plugins: [plugin] },
+    );
+    expect(result?.code).toEqual('const css = /*css*/"/*extracted*/ .foo";');
+  });
+
+  it("doesn't duplicate IDs", async () => {
+    const result = await transformAsync(
+      `
+      const css = /*css*/\`
+        #header1 {
+          background: black;
+        }
+
+        #header1:hover {
+          background: gray;
+        }
+      \`;
+    `,
+      { plugins: [plugin] },
+    );
+    expect(result?.code).toEqual(
+      'const css = /*css*/"/*extracted*/ #header1";',
+    );
+  });
 });
