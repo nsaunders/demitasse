@@ -54,10 +54,12 @@ export default ({ production }) => ({
         use: {
           loader: "babel-loader",
           options: {
+            babelrc: false,
+            configFile: false,
             presets: [
               ["@babel/env", { useBuiltIns: "usage", corejs: "3.27" }],
               ["@babel/react", { runtime: "automatic" }],
-              ["@babel/typescript", { isTSX: true, allExtensions: true }],
+              ["@babel/typescript"],
             ],
             plugins: production ? ["babel-plugin-template-css-minifier"] : [],
           },
