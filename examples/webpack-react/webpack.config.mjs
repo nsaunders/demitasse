@@ -59,7 +59,7 @@ export default ({ production }) => ({
             presets: [
               ["@babel/env", { useBuiltIns: "usage", corejs: "3.27" }],
               ["@babel/react", { runtime: "automatic" }],
-              ["@babel/typescript"],
+              "@babel/typescript",
             ],
             plugins: production ? ["babel-plugin-template-css-minifier"] : [],
           },
