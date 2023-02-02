@@ -319,3 +319,33 @@ function serializeCSS(obj) {
     })
     .join("\n");
 }
+
+export const cssBindings = makeCSSBindings(function(x) { return x; });
+
+export function makeCSSBindings(f) {
+  return function cssBindings(css, context) {
+    const classes = (css.match(/\.[A-Za-z][A-Za-z0-9_-]*/g) || [])
+      .map(x => [
+        x
+          .substring(1)
+          .replace(/^[A-Z]/, x => x.toLowerCase())
+          .replace(/[^A-Za-z]([a-z])/g, x => x.toUpperCase())
+          .replace(/[^A-Za-z0-9]/g, ""),
+        f(x.substring(1), { context, type: "class" }),
+      ])
+      .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
+
+    const ids = (css.match(/#[A-Za-z][A-Za-z0-9_-]*/g) || [])
+      .map(x => [
+        x
+          .substring(1)
+          .replace(/^[A-Z]/, x => x.toLowerCase())
+          .replace(/[^A-Za-z]([a-z])/g, x => x.toUpperCase())
+          .replace(/[^A-Za-z0-9]/g, ""),
+        f(x.substring(1), { context, type: "id" }),
+      ])
+      .reduce((xs, [k, v]) => ({ ...xs, [k]: v }), {});
+
+    return { classes, ids };
+  };
+}

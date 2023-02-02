@@ -1,4 +1,4 @@
-import { demi, cssExport, sheets } from "./index.mjs";
+import { demi, cssExport, sheets, cssBindings, makeCSSBindings } from "./index.mjs";
 import { strict as assert } from "assert";
 
 test("CSS output for single rule", function () {
@@ -365,6 +365,38 @@ test("css common re-export", function () {
     new RegExp(`\\.${containerBase[1]}`)
   );
   assert.match(output["_common"], new RegExp(`\\.${containerBase[1]}`));
+});
+
+test("cssBindings", function () {
+  var bindings = cssBindings(`
+    .foo-bar {
+      height: 100%;
+    }
+
+    #header_nav {
+      width: 100%;
+    }
+  `);
+
+  assert.equal(bindings.classes.fooBar, "foo-bar");
+  assert.equal(bindings.ids.headerNav, "header_nav");
+});
+
+test("makeCSSBindings", function () {
+  var bindings = makeCSSBindings(function map(name, { type, context }) {
+    return `${type}___${name}___${context}`;
+  })(`
+    .foo-bar {
+      height: 100%;
+    }
+
+    #header_nav {
+      width: 100%;
+    }
+  `, "ctx");
+
+  assert.equal(bindings.classes.fooBar, "class___foo-bar___ctx");
+  assert.equal(bindings.ids.headerNav, "id___header_nav___ctx");
 });
 
 function test(label, run) {
