@@ -157,13 +157,15 @@ const { classes } = cssBindings(css, moduleId); // [3]
 Well done! We now have a system in place that provides typed bindings to CSS extracted at build time. Best of all, since we configured it ourselves instead of using an opaque plugin, we can continue to make adjustments with less fear of breaking code we don't control and/or might not understand.
 
 ### Configuration next steps
+
 From here, you can configure Webpack to handle CSS as you normally would. For example:
 * You may be interested in adding [postcss-loader](https://github.com/webpack-contrib/postcss-loader) to the loader chain, the most popular use case being to apply [autoprefixer](https://github.com/postcss/autoprefixer). The only caveat is that PostCSS plugins which modify class name and ID selectors must be avoided.
 * Instead of [style-loader](https://github.com/webpack-contrib/style-loader), many projects use [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to produce CSS files separate from the main JavaScript bundle.
 
 ### Additional components
+
 Each time you add a new component to the application, add a corresponding import to `src/css.ts`, remembering to include the `?css` query string in order to activate the Webpack CSS rule. Ensure that the component module exports `moduleId` and `css` string values.
 
-## Example
+## Examples
 
-If you would prefer to see an example working end-to-end, we recommend the [Webpack/React example](../../examples/webpack-react).
+We offer some examples working end-to-end [here](../../examples).
