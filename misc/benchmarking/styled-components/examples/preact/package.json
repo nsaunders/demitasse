@@ -9,7 +9,7 @@
     "url": "https://github.com/nsaunders/demitasse.git"
   },
   "scripts": {
-    "lint": "eslint *.js *.mjs src",
+    "lint": "eslint *.mjs src",
     "precommit": "lint-staged",
     "start": "webpack-dev-server",
     "bundle": "webpack -- --env production"
