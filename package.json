@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "husky": "^8.0.3",
+    "solid-js": "^1.6.10",
     "typedoc": "^0.23.23",
     "typedoc-plugin-markdown": "^3.14.0"
   }

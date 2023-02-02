@@ -1,0 +1,9 @@
+{
+  "extends": "@tsconfig/recommended",
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "preserve",
+    "jsxImportSource": "preact"
+  },
+  "include": ["src"]
+}
