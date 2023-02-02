@@ -13,9 +13,11 @@
 
 ### Functions
 
+- [cssBindings](#cssbindings)
 - [cssExport](#cssexport)
 - [cssRules](#cssrules)
 - [demi](#demi)
+- [makeCSSBindings](#makecssbindings)
 - [sheets](#sheets)
 
 ## Type aliases
@@ -37,7 +39,7 @@ determining to which style sheet generated CSS should be written
 
 #### Defined in
 
-[index.d.ts:45](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L45)
+[index.d.ts:45](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L45)
 
 ___
 
@@ -51,7 +53,7 @@ A length value
 
 #### Defined in
 
-[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L9)
+[index.d.ts:9](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L9)
 
 ___
 
@@ -72,7 +74,7 @@ significantly longer but can be used to identify CSS rules more easily.
 
 #### Defined in
 
-[index.d.ts:35](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L35)
+[index.d.ts:35](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L35)
 
 ___
 
@@ -84,7 +86,7 @@ The type of a rule
 
 #### Defined in
 
-[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L21)
+[index.d.ts:21](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L21)
 
 ___
 
@@ -96,7 +98,7 @@ The type of either a rule or a record of rules
 
 #### Defined in
 
-[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L27)
+[index.d.ts:27](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L27)
 
 ___
 
@@ -110,9 +112,44 @@ A time value
 
 #### Defined in
 
-[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L16)
+[index.d.ts:16](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L16)
 
 ## Functions
+
+### cssBindings
+
+▸ **cssBindings**<`CSS`\>(`css`): `Object`
+
+Extracts bindings from the provided CSS string.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `CSS` | extends `string` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `css` | `CSS` | The CSS from which to extract CSS bindings |
+
+#### Returns
+
+`Object`
+
+Class and ID bindings to the specified CSS
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `classes` | `Record`<`Names`<``"."``, `CSS`\>[`number`] extends infer Name ? `Name` extends `string` ? `FieldName`<`Name`\> : `never` : `never`, `string`\> | A map of class names referenced within the specified CSS |
+| `ids` | `Record`<`Names`<``"#"``, `CSS`\>[`number`] extends infer Name ? `Name` extends `string` ? `FieldName`<`Name`\> : `never` : `never`, `string`\> | A map of IDs referenced within the specified CSS |
+
+#### Defined in
+
+[index.d.ts:262](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L262)
+
+___
 
 ### cssExport
 
@@ -141,7 +178,7 @@ CSS that is ready to convert into style sheets
 
 #### Defined in
 
-[index.d.ts:98](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L98)
+[index.d.ts:98](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L98)
 
 ___
 
@@ -175,7 +212,7 @@ record thereof, when multiple rules are defined)
 
 #### Defined in
 
-[index.d.ts:63](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L63)
+[index.d.ts:63](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L63)
 
 ___
 
@@ -206,7 +243,71 @@ ___
 
 #### Defined in
 
-[index.d.ts:85](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L85)
+[index.d.ts:85](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L85)
+
+___
+
+### makeCSSBindings
+
+▸ **makeCSSBindings**<`Context`\>(`f`): <CSS\>(`css`: `CSS`, `context`: `Context`) => { `classes`: `Record`<`Names`<``"."``, `CSS`\>[`number`] extends infer Name ? `Name` extends `string` ? `FieldName`<`Name`\> : `never` : `never`, `string`\> ; `ids`: `Record`<`Names`<``"#"``, `CSS`\>[`number`] extends infer Name ? `Name` extends `string` ? `FieldName`<`Name`\> : `never` : `never`, `string`\>  }
+
+Creates a custom version of [cssBindings](#cssbindings) which allows class name
+and ID values to be mapped in some way, for example to match a build-time
+scoping mechanism.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `Context` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `f` | (`name`: `string`, `meta`: { `context`: `Context` ; `type`: ``"class"`` \| ``"id"``  }) => `string` | The mapping function to apply to class names and IDs |
+
+#### Returns
+
+`fn`
+
+A version of [cssBindings](#cssbindings) that applies the specified
+mapping function
+
+▸ <`CSS`\>(`css`, `context`): `Object`
+
+Creates a custom version of [cssBindings](#cssbindings) which allows class name
+and ID values to be mapped in some way, for example to match a build-time
+scoping mechanism.
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `CSS` | extends `string` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `css` | `CSS` |
+| `context` | `Context` |
+
+##### Returns
+
+`Object`
+
+A version of [cssBindings](#cssbindings) that applies the specified
+mapping function
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `classes` | `Record`<`Names`<``"."``, `CSS`\>[`number`] extends infer Name ? `Name` extends `string` ? `FieldName`<`Name`\> : `never` : `never`, `string`\> | A map of class names referenced within the specified CSS |
+| `ids` | `Record`<`Names`<``"#"``, `CSS`\>[`number`] extends infer Name ? `Name` extends `string` ? `FieldName`<`Name`\> : `never` : `never`, `string`\> | A map of IDs referenced within the specified CSS |
+
+#### Defined in
+
+[index.d.ts:231](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L231)
 
 ___
 
@@ -232,4 +333,4 @@ static CSS content
 
 #### Defined in
 
-[index.d.ts:112](https://github.com/nsaunders/demitasse/blob/b362831/index.d.ts#L112)
+[index.d.ts:112](https://github.com/nsaunders/demitasse/blob/8c565cd/index.d.ts#L112)
