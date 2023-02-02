@@ -28,7 +28,8 @@ export default function App() {
         onClick={() => {
           setLoading(true);
           setTimeout(() => {
-            location.href = "https://github.com/nsaunders/demitasse";
+            (top || window).location.href =
+              "https://github.com/nsaunders/demitasse";
           }, 1000);
         }}>
         Star
