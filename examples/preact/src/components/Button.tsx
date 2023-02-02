@@ -1,3 +1,4 @@
+import { ComponentType } from "preact";
 import { useMemo } from "preact/hooks";
 import cx from "clsx";
 import cssBindings from "../cssBindings";
@@ -57,7 +58,7 @@ const { classes } = cssBindings(css, moduleId);
 
 type ButtonProps = {
   children: string;
-  icon?: (props: { class: string }) => JSX.Element;
+  icon?: ComponentType<{ class: string }>;
   loading?: boolean;
   onClick: (e: MouseEvent) => void;
 };
