@@ -38,6 +38,20 @@ export default ({ production }) => ({
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        resourceQuery: { not: /css/ },
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            babelrc: false,
+            configFile: false,
+            presets: [["@babel/env", { useBuiltIns: "usage", corejs: "3.27" }]],
+            plugins: production ? ["babel-plugin-template-css-minifier"] : [],
+          },
+        },
+      },
+      {
         test: /\.tsx$/,
         resourceQuery: /css/,
         use: [
@@ -49,6 +63,18 @@ export default ({ production }) => ({
         ],
       },
       {
+        test: /\.tsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            babelrc: false,
+            configFile: false,
+            presets: [["@babel/react", { runtime: "automatic" }]],
+          },
+        },
+      },
+      {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
@@ -56,12 +82,7 @@ export default ({ production }) => ({
           options: {
             babelrc: false,
             configFile: false,
-            presets: [
-              ["@babel/env", { useBuiltIns: "usage", corejs: "3.27" }],
-              ["@babel/react", { runtime: "automatic" }],
-              "@babel/typescript",
-            ],
-            plugins: production ? ["babel-plugin-template-css-minifier"] : [],
+            presets: ["@babel/typescript"],
           },
         },
       },
