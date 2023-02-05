@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "demitasse-example-usecss",
+  "name": "demitasse-example-hook",
   "version": "3.2.0",
   "description": "Example of using Demitasse to provide typed bindings for a custom useCSS hook",
   "license": "MIT",
