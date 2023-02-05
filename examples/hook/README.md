@@ -1,4 +1,4 @@
-# ☕ Hook
+# ☕ `useCSS` hook
 
 [![Open in StackBlitz](https://d33wubrfki0l68.cloudfront.net/4d7187e512872845bd2a0fb616d6d7919b53d3df/c2f2f/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/nsaunders/demitasse/tree/master/examples/hook?file=src%2Fcomponents%2FApp.tsx)
 
