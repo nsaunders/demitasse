@@ -21,6 +21,7 @@
     "eslint-config-demitasse": "*",
     "execute-module-loader": "^1.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.2",
     "postcss-loader": "^7.0.2",
     "prettier-config-demitasse": "*",
     "style-loader": "^3.3.1",
