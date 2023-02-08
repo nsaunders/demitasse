@@ -1,9 +1,0 @@
-{
-  "extends": "@tsconfig/recommended",
-  "compilerOptions": {
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
-  },
-  "include": ["src"]
-}
