@@ -992,6 +992,17 @@
       "count": 32
     },
     "timestamp": "2023-07-09T00:00:00Z",
-    "clones": null
+    "clones": {
+      "uniques": 3,
+      "count": 4
+    }
+  },
+  {
+    "views": null,
+    "timestamp": "2023-07-10T00:00:00Z",
+    "clones": {
+      "uniques": 2,
+      "count": 2
+    }
   }
 ]
